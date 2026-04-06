@@ -1,0 +1,37 @@
+&control
+ calculation='scf'
+ restart_mode='from_scratch',
+ prefix='linbo'
+ pseudo_dir = '/home/puma/pseudo_set/nc-sr-05_pbe_standard_upf/',
+ outdir='/home/puma/tmp/'
+ tprnfor=.true.
+ tstress=.true.
+/
+&system
+ space_group=161
+ celldm(1)=10.28
+ celldm(4)=0.6390
+ nat=  3,
+ ntyp= 3,
+ ecutwfc = 100.0
+ rhombohedral=.false.
+/
+&electrons
+ diagonalization='david',
+ conv_thr =  1.0d-8,
+ mixing_beta = 0.5,
+ startingwfc='random',
+/
+ATOMIC_SPECIES
+Li 6.941 Li.upf
+Nb 92.906  Nb.upf
+O 16.0  O.upf
+
+ATOMIC_POSITIONS crystal_sg 
+Li   6a 0  
+Nb   6a  0.21956
+O   18b  0.0476  0.3434  0.0634
+K_POINTS (automatic)
+4 4 4 1 1 1
+
+

@@ -3,15 +3,15 @@
     restart_mode='from_scratch',
     prefix='ch4',
     tprnfor = .true.,
-    pseudo_dir = '/home/puma/QEtutorials/pseudo_potentials',
-    outdir=  '/home/puma/tmp/',
+    pseudo_dir = '/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial1',
+    outdir=  '/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial1/out',
  /
  &system
     ibrav=  1,
-    celldm(1) =20.0,
+    celldm(1) = 20.0,
     nat=5,
     ntyp= 2,
-    ecutwfc =40.0,
+    ecutwfc = 40.0,
     nbnd=5
  /
  &electrons

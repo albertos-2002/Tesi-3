@@ -3,8 +3,8 @@
     restart_mode='from_scratch',
     prefix='ch4',
     tprnfor = .true.,
-    pseudo_dir = '/home/puma/QEtutorials/pseudo_potentials',
-    outdir=  '/home/puma/tmp/',
+    pseudo_dir = '/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial2',
+    outdir=  '/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial2/out',
  /
  &system
     ibrav=  1,

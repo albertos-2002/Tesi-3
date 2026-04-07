@@ -1,9 +1,9 @@
 &control
  calculation='scf'
  restart_mode='from_scratch',
- prefix='linbo'
- pseudo_dir = '/home/puma/pseudo_set/nc-sr-05_pbe_standard_upf/',
- outdir='/home/puma/tmp/'
+ prefix='linbo+str'
+ pseudo_dir = '/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial3',
+ outdir='/home/alberto/UniPd-GitHub/Tesi/tutorial/example-files/tutorial3/out'
  tprnfor=.true.
  tstress=.true.
 /

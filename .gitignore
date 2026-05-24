@@ -5,3 +5,6 @@ doc/main.log
 doc/main.out
 doc/main.synctex.gz
 doc/pdfa.xmpi
+doc/main.bcf
+doc/main.blg
+doc/main.bbl

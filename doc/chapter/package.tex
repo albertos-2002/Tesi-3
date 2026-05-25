@@ -8,7 +8,8 @@
 \usepackage[small]{caption}
 \usepackage{eucal}
 \usepackage{eso-pic}
-\usepackage{url}
+%\usepackage{url}
+\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{afterpage}
 \usepackage{parskip}
@@ -23,6 +24,57 @@
 \usepackage[a-3a]{pdfx}
 \pagestyle{fancy} 
 
+\usepackage{mhchem}
 
-\usepackage[backend=biber, style=alphabetic]{biblatex}
-\addbibresource{chapters/bib/bibliography.bib}
+
+% Definiamo il nuovo tipo "schema"
+% Sintassi: \DeclareCaptionType{nome_ambiente}[Etichetta_Didascalia][Titolo_Indice]
+\DeclareCaptionType{schema}[Schema][Elenco degli Schemi]
+
+
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\addbibresource{chapter/bib/bibliography.bib}
+
+
+
+
+
+\usepackage{xcolor}
+
+% --- Custom Colors for Python Syntax Highlighting ---
+\definecolor{pybackground}{RGB}{248, 248, 248}  % Soft light gray
+\definecolor{pyborder}{RGB}{80, 80, 80}         % Kinda black / dark gray
+\definecolor{pycomments}{RGB}{63, 127, 95}      % Classic green for comments
+\definecolor{pykeywords}{RGB}{0, 0, 225}        % Python blue for keywords
+\definecolor{pystrings}{RGB}{186, 33, 33}       % Dark red for strings
+\definecolor{pynumbers}{RGB}{120, 120, 120}     % Medium gray for line numbers
+\definecolor{pybuiltins}{RGB}{0, 130, 0}        % Green for built-in functions (print, len, etc.)
+
+% --- Global Listings Setup ---
+\lstset{
+    language=Python,
+    backgroundcolor=\color{pybackground},
+    % --- Width and Centering ---
+    linewidth=0.85\textwidth,               % Makes the block 85% of text width
+    xleftmargin=0.075\textwidth,            % Centers the block (100% - 85% = 15% remaining / 2 = 7.5%)
+    % --- Border and Framing ---
+    frame=single,                           % Single frame border around the code
+    rulecolor=\color{pyborder},             % Color of the border
+    frameround=ffff,                        % Square corners (change to tttt for round)
+    % --- Typography ---
+    basicstyle=\ttfamily\small,             % Monospace font for code
+    keywordstyle=\color{pykeywords}\bfseries,
+    commentstyle=\color{pycomments}\itshape,
+    stringstyle=\color{pystrings},
+    morekeywords={as, assert, break, class, continue, def, del, elif, else, except, False, finally, for, from, global, if, import, in, is, lambda, None, nonlocal, not, or, pass, raise, return, True, try, while, with, yield}, % Ensure all modern keywords are caught
+    % --- Line Numbers ---
+    numbers=left,                           % Line numbers on the left
+    numberstyle=\tiny\color{pynumbers},     % Style and color of line numbers
+    numbersep=10pt,                         % Distance between numbers and code
+    % --- Whitespace and Formatting ---
+    breaklines=true,                        % Automatically wrap long lines
+    breakatwhitespace=false,                % Wrap lines anywhere, not just at spaces
+    showstringspaces=false,                 % Don't show ugly visual indicators for spaces in strings
+    keepspaces=true,                        % Keeps alignment spaces intact
+    columns=flexible                        % Better character spacing
+}

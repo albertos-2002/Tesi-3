@@ -1,1 +1,22 @@
--
+\section{ASE}
+Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che svolge il ruolo di ponte tra la struttura fatta di coordinate e una che sia computazionalente utilizzabile. Ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
+\\
+
+In particolare per QE abbiamo utilizzato i seguenti:
+
+\begin{lstlisting}[language=Python]
+    frame = ase.io.read(file_name, index=":", format="espresso-out")
+\end{lstlisting}
+
+dove \textit{index=":"} viene utilizzato per leggere tutti i frame presenti nel file di input e \textit{format="espresso-out"} serve per impostare la tipologia di file da leggere.
+\footnote{
+La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/io/io.html}
+}
+
+La funzione \textit{read} ci restituisce un oggetto di tipo \textit{atoms}
+\footnote{
+La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
+}, che costituisce l'oggetto python che contiene le informazioni che definiscono il materiale da simulare che sono state estratte dai file di output di QE.
+
+
+\section{DScribe}

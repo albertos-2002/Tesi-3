@@ -1,1 +1,28 @@
--
+Lo scopo che ci poniamo per questo lavoro è quello di partire da simulazioni di dinamica molecolare (MD) eseguite con Quantum Espresso (QE), simulazioni che sono costose sia dal punto di vista computazionale che temporale, ed arrivare ad un modello di machine learning (ML) che sia in grado di svolgere una simulazione il più possibile accurate e con tempi di esecuzione sensibilmente minori.
+
+\noindent
+Il processo che andiamo a seguire è descritto in modo schematico qui sotto:
+
+\begin{center}
+Quantum Espresso
+
+$\downarrow$
+
+ASE
+
+$\downarrow$
+
+SOAP (describe)
+
+$\downarrow$
+
+Feature
+
+\captionof{schema}{Struttura schematica del processo di creazione dei feature vector}
+\label{sch:processo-creazione-feature-vector}
+\end{center}
+
+
+
+\subsection{Dataset A}
+Questo dataset consiste di una simulazione di DM eseguita con QE per una struttura cristallina costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). Questi dati seguono il processo descritto sopra per generare un vettore di \textit{feature}, per una descrizione di questo si veda la sezione successiva.

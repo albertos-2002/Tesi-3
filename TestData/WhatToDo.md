@@ -2,7 +2,7 @@
 
 Il risultato che vogliamo ottenere è un modello di ML che sia in grado di fare simulazioni fisiche di materiali.
 
-1) abbiamo definito la il materiale e la sua struttura cristallina
+1) abbiamo definito il materiale e la sua struttura cristallina
 
 2) usiamo qunatum espresso per generare la struttura del materiale secondo la teoria del DFT e i relativi potenziali
 

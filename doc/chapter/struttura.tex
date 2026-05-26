@@ -34,9 +34,14 @@ Il punto fondamentale per comprendere la necessità di utilizzare una procedura 
 
 Il primo step è quello di costruire la densità atomica assiciata ad un determinato $Z$ tramite una funzione gaussiana. Questo ci permette di passare da una forma discreta ad una continua. Questo si ottiene applicando la seguente:
 
+%\begin{equation}
+%    \LARGE
+%    \fcharDensity_Z (\,\uaVecr{r}\,) = \sum_{\alpha}^{Z} e^{-\frac{|\,\uaVecr{r}-\uaVecr{r}_{\alpha}\,|^2}{2\sigma^2}}
+%\end{equation}
+
 \begin{equation}
     \LARGE
-    \rho_Z(r) = \sum_{\alpha}^{Z} e^{-\frac{|r-r_{\alpha}|^2}{2\sigma^2}}
+    \rho_Z (\vec{r}) = \sum_{\alpha}^{Z} e^{-\frac{|\vec{r}-\vec{r}_{\alpha}\,|^2}{2\sigma^2}}
 \end{equation}
 
 quello che stiamo facendo è considerare un atomo con $Z$ fissato qualunque e lo consideriamo come l'ogigine di un sistema di coordinate e per ogni singolo atomo $\alpha$ con lo stesso numero $Z$ costruiamo una gaussiana. Nella formulazione sopra indicata $r_{\alpha}$ indica la distanza tra il centro dell'atomo $\alpha$ vicino e quello centrato con il sistema di riferimento definito sopra. Questa possiede quindi un picco in presenza dell'atomo. Mentre $\sigma$ viene utilizzato per definire lo zoom con cui analizziamo il sistema, minore è il valore di $\sigma$ più il risultato sarà perturbato anche da minime modifiche alla struttura, come una leggera modifica alla lunghezza dei legami (e conseguentemente della posizione relativa).
@@ -44,4 +49,3 @@ quello che stiamo facendo è considerare un atomo con $Z$ fissato qualunque e lo
 Questo primo step ci permette di slegarci dal sistema di coordnate, usando infatti solo informazioni riguardanti la posizione relativa rendiamo il tutto invariante per traslazioni. La somma su tutti gli atomo con il medesimo $Z$ rende inoltre invariante la rappresentazione rispetto allo scambio di due atomi uguali. La nuovola che viene così creata non è invariante per rotazioni in quanto se il centro del sistema di riferimento temporaneo menzionato sopra non è simmetrico per rotazione allora non lo sarà neanche la nuvola risultate.
 
 DEFINIRE LA SOMMA PER DIVERSI Z
-

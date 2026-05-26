@@ -12,5 +12,5 @@ doc/main.run.xml
 doc/biber2-21
 doc/main.tex.bbl
 doc/main.tex.blg
-doc/chapter/bib/.xdp-bibliography.bib~-JHDXKF
+doc/chapter/bib/.xdp*
 article/*

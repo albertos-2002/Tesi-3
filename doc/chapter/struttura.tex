@@ -25,7 +25,16 @@ Feature
 
 
 \subsection{Dataset A}
-Questo dataset consiste di una simulazione di DM eseguita con QE per una struttura cristallina costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). Questi dati seguono il processo descritto sopra per generare un vettore di \textit{feature}, per una descrizione di questo si veda la sezione successiva. Questo dataset è composto da una serie di file di QE che costituiscono la dinamica molecosare di una struttura di tantala a circa 3000K.
+Questo dataset consiste di una simulazione di MD eseguita con QE per una struttura cristallina costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). Questi dati seguono il processo descritto sopra per generare un vettore di \textit{feature}, per una descrizione di questo si veda la sezione successiva. Questo dataset è composto da una serie di file di QE che costituiscono la dinamica molecosare di una struttura di tantala a circa 3000K.
 
 \section{SOAP}
-In questa sezione ci poniamo come obiettivo quello di dare una breve ma decente spiegazione, per quanto possibile completa e chiusa, del metodo SOAP (Smooth Overlap of Atomic Positions). Come indicato sopra questa procedura è implementata tramite DScribe.
+In questa sezione ci poniamo come obiettivo quello di dare una breve ma decente spiegazione, per quanto possibile completa e chiusa, del metodo SOAP (Smooth Overlap of Atomic Positions). Come indicato sopra questa procedura è implementata tramite DScribe. 
+
+Il punto fondamentale per comprendere la necessità di utilizzare una procedura come SOAP risiede nel concetto di invarianze, è infatti comune per le leggi della fisica essere invarianti per determinate proprietà, come lo possono essere le rotazioni, le traslazioni spaziali e lo scambio tra atomi uguali. Queste simmetrie emergono in modo naturale dalle leggi utilizzate, ma come un fisico deve impararle e con fatica ricavarle anche un modello di ML necessiterebbe di imparare queste simmetrie ogni singola volta, questo richiede una spesa sia dal punto di vista computazionale che da quello temporale. Questo problema viene facilmente risolto utilizzando una rappresentazione che sia naturale espressione delle simmetrie del sistema, in questo modo non sarà necessario questo step di training rendendo il tutto più semplice.
+
+Il primo step è quello di costruire la densità atomica assiciata ad un determinato $Z$ tramite una funzione gaussiana. Questo ci permette di passare da una forma discreta ad una continua. Questo si ottiene applicando la seguente:
+
+\begin{equation}
+    \LARGE
+    \rho_Z(r) = \sum_{\alpha}^{Z} e^{-\frac{|r-r_{\alpha}|^2}{2\sigma^2}}
+\end{equation}

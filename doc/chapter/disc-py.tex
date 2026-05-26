@@ -4,16 +4,16 @@ Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinam
 
 In particolare per QE abbiamo utilizzato i seguenti:
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[caption={Snippet usato per il dataset A}, label={code:ase-dataset-a}, language=Python]
     frame = ase.io.read(file_name, index=":", format="espresso-out")
 \end{lstlisting}
 
-dove \textit{index=":"} viene utilizzato per leggere tutti i frame presenti nel file di input e \textit{format="espresso-out"} serve per impostare la tipologia di file da leggere.
+dove \texttt{index=":"} viene utilizzato per leggere tutti i frame presenti nel file di input e \texttt{format="espresso-out"} serve per impostare la tipologia di file da leggere.
 \footnote{
 La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/io/io.html}
 }
 
-La funzione \textit{read} ci restituisce un oggetto di tipo \textit{atoms}
+La funzione \texttt{read} ci restituisce un oggetto di tipo \texttt{atoms}
 \footnote{
 La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
 }, che costituisce l'oggetto python che contiene le informazioni che definiscono il materiale da simulare che sono state estratte dai file di output di QE.
@@ -25,7 +25,7 @@ Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttu
 
 Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[caption={Snippet usato per il detaset A}, label={code:soap-dataset-a}, language=Python]
     soap_obj = SOAP(
         species=["Ta", "O"],
         periodic=True,       
@@ -36,3 +36,11 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
     
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
+
+dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche. \footnote{La dedicata documentazione è reperibile al seguente link \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}
+
+In particolare l'accuratezza della rappresentazione, come il numero delle feature cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
+
+La funzione \texttt{create} si occupa poi di creare il vero e proprio SOAP, in input viene passato \texttt{QE\_data}, ovvero la struttura atomica in analisi definita tramite la libreria ASE.
+
+Il risultato di queti calcoli è ....

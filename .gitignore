@@ -14,3 +14,4 @@ doc/main.tex.bbl
 doc/main.tex.blg
 doc/chapter/bib/.xdp*
 article/*
+doc/pkg/*

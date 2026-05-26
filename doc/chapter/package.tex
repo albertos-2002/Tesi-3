@@ -1,44 +1,42 @@
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
 \usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
-\usepackage[pdftex]{graphicx} %per poter inserire le figure
-\usepackage{amssymb,amsmath,amsthm,amsfonts}
-\usepackage{xspace}
-\usepackage{tabularx}
 \usepackage{indentfirst}
+\usepackage{parskip}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{graphicx}
 \usepackage{subfigure}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{multirow}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{hyperref}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{mhchem}
+%--------------------------------------------------------------------------------------------------------------
+\usepackage{xspace}
 \usepackage[small]{caption}
 \usepackage{eucal}
 \usepackage{eso-pic}
-%\usepackage{url}
-\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{afterpage}
-\usepackage{parskip}
-\usepackage{listings}
 \usepackage{fancyhdr}
 \usepackage{textcomp}
-%\usepackage{cite}
-\usepackage{multirow}
-\usepackage[utf8]{inputenc}   %per riuscire a scrivere gli accenti
-\usepackage[italian]{babel}   %per riuscire a scrivere gli accenti
 \usepackage{setspace}
 \usepackage[a-3a]{pdfx}
 \pagestyle{fancy} 
-
-\usepackage{mhchem}
-
-
+%--------------------------------------------------------------------------------------------------------------
+\usepackage[backend=biber, style=numeric, sorting=none, maxbibnames=99, minbibnames=99]{biblatex}
+\addbibresource{chapter/bib/bibliography.bib}
+%--------------------------------------------------------------------------------------------------------------
 % Definiamo il nuovo tipo "schema"
 % Sintassi: \DeclareCaptionType{nome_ambiente}[Etichetta_Didascalia][Titolo_Indice]
 \DeclareCaptionType{schema}[Schema][Elenco degli Schemi]
-
-
-\usepackage[backend=biber, style=numeric, sorting=none, maxbibnames=99, minbibnames=99]{biblatex}
-\addbibresource{chapter/bib/bibliography.bib}
-
-
-
-
-
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\usepackage{listings}
 \usepackage{xcolor}
 
 % --- Custom Colors for Python Syntax Highlighting ---
@@ -78,3 +76,7 @@
     keepspaces=true,                        % Keeps alignment spaces intact
     columns=flexible                        % Better character spacing
 }
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+

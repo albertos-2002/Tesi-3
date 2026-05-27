@@ -41,6 +41,8 @@ In questa sezione ci poniamo come obiettivo quello di dare una breve ma decente 
 
 Il punto fondamentale per comprendere la necessità di utilizzare una procedura come SOAP risiede nel concetto di invarianze, è infatti comune per le leggi della fisica essere invarianti per determinate proprietà, come lo possono essere le rotazioni, le traslazioni spaziali e lo scambio tra atomi uguali. Queste simmetrie emergono in modo naturale dalle leggi utilizzate, ma come un fisico deve impararle e con fatica ricavarle anche un modello di ML necessiterebbe di imparare queste simmetrie ogni singola volta, questo richiede una spesa sia dal punto di vista computazionale che da quello temporale. Questo problema viene facilmente risolto utilizzando una rappresentazione che sia naturale espressione delle simmetrie del sistema, in questo modo non sarà necessario questo step di training rendendo il tutto più semplice.
 
+\subsubsection{Generazione della mappa di densità}
+
 Il primo step è quello di costruire la densità atomica assiciata ad un determinato $Z$ tramite una funzione gaussiana. Questo ci permette di passare da una forma discreta ad una continua. Questo si ottiene applicando la seguente:
 
 %\begin{equation}
@@ -83,3 +85,21 @@ Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresent
 \end{figure}
 
 dove il pannello a sx rappresenta il caso di una $\sigma$ eccessivamente piccola e quello a dx il caso di una $\sigma$ eccessivamente grande. In entrambi i casi è possibile notare come l'informazione che se ne ricava non è adeguata agli scopi descritti sopra. Infatti come detto vogliamo che l'aggiunta di una piccola quantità di rumore non modifichi in modo sensibile il fattore si somiglianza tra le due strutture, nel primo caso la minima variazione di posizione porta a decretare che gli ambienti sono semsibilmente diversi, mentre nel secondo caso anche una decisa modifica delle posizioni porta alla conclusione che i due ambienti siano simili.
+
+Per quanto riguarda il valore di $r_{cut}$, esso controlla il significato che diamo ad "atomi vicini". Se esso è troppo piccolo si perdono informazioni riguardanti la struttura in esame, mentre se troppo grande arriviamo ad avere un vettore di feature complesso e pesante che non fornisce particolare vantaggi.
+
+\subsubsection{Espansione in funzioni di base}
+In questo punto ci poniamo di trovare un metodo che ci permetta di riassumete in modo compatto una funzione continua come quella rappresentata dalla mappa di densità. Per fare questo ci procuriamo delle funzioni di base, nel nostro caso radiali e angolari.
+
+L'espanzione in serie per la mappa di densità è data da:
+
+\begin{equation}
+    \rho_Z(\vec{r}) = \sum_{n=1}^{n_{max}} \sum_{l=1}^{l_{max}} \sum_{m=-l}^{l} c_Z(n,l,m) g(r \,;n) Y(\theta, \phi \,; l,m)
+\end{equation}
+
+dove il ; è posto a separatore tra le variabili e i parametri da cui dipendono le funzioni.
+
+
+\subsubsection{Calcolo del power spectrum}
+
+\subsubsection{Risultato finale}

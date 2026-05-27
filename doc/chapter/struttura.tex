@@ -59,7 +59,7 @@ Questo step viene ripetuto per ogni singolo atomo, ottenendo come risultato che 
 
 Questo primo step ci permette di slegarci dal sistema di coordnate, usando infatti solo informazioni riguardanti la posizione relativa rendiamo il tutto invariante per traslazioni. La somma su tutti gli atomo con il medesimo $Z$ rende inoltre invariante la rappresentazione rispetto allo scambio di due atomi uguali. La nuovola che viene così creata non è invariante per rotazioni in quanto se il centro del sistema di riferimento temporaneo menzionato sopra non è simmetrico per rotazione allora non lo sarà neanche la nuvola risultate.
 
-DEFINIRE LA SOMMA PER DIVERSI Z
+Nel caso siano presenti elementi con diverso numero atomico, come non di rado succede, la mappa di densità viene separata in base ad esso, quindi nel caso avessimo $Z_1$ e $Z_2$ allora avremmo due mappe distinte, $\rho_{Z_1}$ e $\rho_{Z_2}$. Questo mantiene l'invarianza per permutazione e permette anche di distinguere le diverse specie chimice presenti.
 
 
 Vogliamo dare adesso una rappresentazione grafica di questo concetto, facciamo riferimento alla seguente immagine \ref{fig:soap-step1-example}:
@@ -73,4 +73,13 @@ Vogliamo dare adesso una rappresentazione grafica di questo concetto, facciamo r
 
 questa immagine è il risultato della somma di tutte le singole mappe prodotte per gli atomi interni al $r_{cut}$, dove è stato preso come riferimento l'atomo color oro posto al centro del sistema di coordinate. Il risultato finale si ottiene prendendo come atomo d'orato, a turno, ognuno degli atomi presenti. Per semplicità di rappresentazione la struttura atomica è stata generata come rumore di un cristallo periodico, questo non rappresenta nessuna struttura particolare, è solo una semplice griglia sulle cui intersezioni è stato posizionato un generico atomo.
 
-Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresentato nella seguente:
+Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresentato nella seguente \ref{fig:soap-step1-example-sigma-big_small}:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{./img/soap-step1-example-sigma-big_small.png}
+    \caption{Rappresentazione generata tramite matplotlib del primo step della procedura SOAP per diversi valori del parametro $\sigma$}
+    \label{fig:soap-step1-example-sigma-big_small}
+\end{figure}
+
+dove il pannello a sx rappresenta il caso di una $\sigma$ eccessivamente piccola e quello a dx il caso di una $\sigma$ eccessivamente grande. In entrambi i casi è possibile notare come l'informazione che se ne ricava non è adeguata agli scopi descritti sopra. Infatti come detto vogliamo che l'aggiunta di una piccola quantità di rumore non modifichi in modo sensibile il fattore si somiglianza tra le due strutture, nel primo caso la minima variazione di posizione porta a decretare che gli ambienti sono semsibilmente diversi, mentre nel secondo caso anche una decisa modifica delle posizioni porta alla conclusione che i due ambienti siano simili.

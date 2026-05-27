@@ -62,4 +62,15 @@ Questo primo step ci permette di slegarci dal sistema di coordnate, usando infat
 DEFINIRE LA SOMMA PER DIVERSI Z
 
 
-Vogliamo dare adesso una rappresentazione grafica di questo concetto, facciamo riferimento alla seguente immagine:
+Vogliamo dare adesso una rappresentazione grafica di questo concetto, facciamo riferimento alla seguente immagine \ref{fig:soap-step1-example}:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{./img/soap-step1-example.png}
+    \caption{Rappresentazione generata tramite matplotlib del primo step della procedura SOAP}
+    \label{fig:soap-step1-example}
+\end{figure}
+
+questa immagine è il risultato della somma di tutte le singole mappe prodotte per gli atomi interni al $r_{cut}$, dove è stato preso come riferimento l'atomo color oro posto al centro del sistema di coordinate. Il risultato finale si ottiene prendendo come atomo d'orato, a turno, ognuno degli atomi presenti. Per semplicità di rappresentazione la struttura atomica è stata generata come rumore di un cristallo periodico, questo non rappresenta nessuna struttura particolare, è solo una semplice griglia sulle cui intersezioni è stato posizionato un generico atomo.
+
+Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresentato nella seguente:

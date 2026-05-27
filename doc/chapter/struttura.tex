@@ -51,7 +51,7 @@ Il primo step è quello di costruire la densità atomica assiciata ad un determi
 %\end{equation}
 
 \begin{equation}
-    \LARGE
+    \Large
     \rho_Z (\vec{r}) = \sum_{\alpha}^{Z} e^{-\frac{|\vec{r}-\vec{r}_{\alpha}\,|^2}{2\sigma^2}}
 \end{equation}
 
@@ -99,6 +99,17 @@ L'espanzione in serie per la mappa di densità è data da:
 
 dove il ; è posto a separatore tra le variabili e i parametri da cui dipendono le funzioni. Il coefficiente $c_Z$ è per la relativa specie in considerazione, come indicato sopra in presenza di specie diverse si costruiscono mappe separate.
 
+In particolare si ha che:
+
+\begin{equation}
+    c_Z(; n,l,m) = \int_{\mathbb{R}^3} \mathrm{d}r\, \mathrm{d}\theta\, \mathrm{d}\phi \;\; g(r \,;n) Y(\theta, \phi \,; l,m) \rho_Z(\vec{r}) 
+\end{equation}
+
+dove le $g(r \,;n)$ sono funzioni radiali e $Y(\theta, \phi \,; l,m)$ sono armoniche sferiche. Quello che stiamo andando a determinare tramite il coefficiente $c_Z$ è la "misura" della nostra mappa di densità lungo una determinata componente di base, in questo caso funzioni radiali e armoniche sferiche (si utilizzano queste funzioni per le loro proprietà matematiche). Possiamo quindi adesso utilizzare questi coefficienti (un semplice vettore numerico) per ricostruire un oggetto tridimensionale come lo è la mappa di densità. 
+
+In questa sezione non ci dilunghiamo sui dettagli della forma di queste funzioni.
+
+Lo scopo di questo step è quello di semplificare la rappresentazione, come detto passiamo da una struttura tridimensionale complessa ad un singolo vettore numerico. Non abbiamo ancora aggiustato le restanti invarianze, in quanto alla fine di questo step manca ancora l'invarianza per rotazione, la sua risoluzione sarà il cardine dello step successivo.
 
 \subsubsection{Calcolo del power spectrum}
 

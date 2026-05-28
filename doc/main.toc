@@ -10,3 +10,4 @@
 \contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}ASE}{5}{section.2.1}%
 \contentsline {section}{\numberline {2.2}DScribe}{5}{section.2.2}%
+\contentsline {subsubsection}{Note sulla struttura matematica}{6}{section*.10}%

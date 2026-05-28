@@ -119,6 +119,10 @@ Per rendere la nostra rappresentazione andiamo a caolcolare il power spectrum pa
     p_{Z_1Z_2}(n,n',l) = \pi \sqrt{\frac{8}{2l+1}} \sum_{m=-l}^{l} \overline{c_{Z_1}}(n,l,m) c_{Z_2}(n',l,m)
 \end{equation}
 
-dove il primo coefficiente è sotto complessa coniugazione, nel caso si usino solo armoniche sferiche reali, diventa superfluo.
+dove il primo coefficiente è sotto complessa coniugazione, nel caso si usino solo armoniche sferiche reali, diventa superfluo. La presenza di $Z_1$ e $Z_2$ indica che questo viene calcolato per ogni coppia unica (indipendentemente dall'ordine) di specie chimice presenti. Nel contesto del dataset A, quello che si produce è $(Z_{Ta},Z_{Ta})$, $(Z_{O},Z_{O})$ e $(Z_{Ta},Z_{O})$.
+
+Senza entrare nei dettagli, diciamo che questo processo rende il risultato invariante dal punto di vista delle rotazioni in quanto le rotazioni possono essere rappresentate tramite matrici unitarie (oppure ortogonali nel caso reale), il processo descritto sopra "trasforma" la matrice di rotazione (con cui possiamo rappresentare la rotazione della mappa di densità rispetto ad un qualunque sistema di riferimento) nella matrice identità, che quindi non modifica il valore del coefficiente.
+
+Le correlazioni che si trovano per valori di $Z_1$ e $Z_2$ diversi servono per tenere traccia delle posizioni relative delle diverse specie atomiche.
 
 \subsubsection{Risultato finale}

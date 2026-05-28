@@ -51,7 +51,6 @@ Il primo step è quello di costruire la densità atomica assiciata ad un determi
 %\end{equation}
 
 \begin{equation}
-    \Large
     \rho_Z (\vec{r}) = \sum_{\alpha}^{Z} e^{-\frac{|\vec{r}-\vec{r}_{\alpha}\,|^2}{2\sigma^2}}
 \end{equation}
 
@@ -117,6 +116,7 @@ Per rendere la nostra rappresentazione andiamo a caolcolare il power spectrum pa
 
 \begin{equation}
     p_{Z_1Z_2}(n,n',l) = \pi \sqrt{\frac{8}{2l+1}} \sum_{m=-l}^{l} \overline{c_{Z_1}}(n,l,m) c_{Z_2}(n',l,m)
+    \label{eq:power-spectrum}
 \end{equation}
 
 dove il primo coefficiente è sotto complessa coniugazione, nel caso si usino solo armoniche sferiche reali, diventa superfluo. La presenza di $Z_1$ e $Z_2$ indica che questo viene calcolato per ogni coppia unica (indipendentemente dall'ordine) di specie chimice presenti. Nel contesto del dataset A, quello che si produce è $(Z_{Ta},Z_{Ta})$, $(Z_{O},Z_{O})$ e $(Z_{Ta},Z_{O})$.
@@ -126,3 +126,65 @@ Senza entrare nei dettagli, diciamo che questo processo rende il risultato invar
 Le correlazioni che si trovano per valori di $Z_1$ e $Z_2$ diversi servono per tenere traccia delle posizioni relative delle diverse specie atomiche.
 
 \subsubsection{Risultato finale}
+
+Dopo aver calcolato tutti i vari elementi del power spectrum, si strutturano come un vettore la cui dimensione viene determinata dalla seguente formula:
+
+\begin{equation}
+    \mathrm{dimensione} = (l_{max} + 1) \,\frac{1}{2}\, (S\cdot n_{max}) (S\cdot n_{max} +1)
+    \label{eq:formula-dimensione-semplificata}
+\end{equation}
+
+Dove $S$ rappresenta il numero totale di specie diverse presenti nel materiale in analisi, $n_{max}$ e $l_{max}$ sono gli stessi parametri precedentemente definiti. 
+
+Non è immediato capire come siamo arrivati alla seguente formula, diamo quindi di seguito una spiegazione. Per prima cosa consideriamo il caso in cui $Z_1$ e $Z_2$, il più seplice e che usiamo come punto di partenza per la successiva generalizzazione.
+
+Ci serve mantenere come riferimento \eqref{eq:power-spectrum}. In questa reference se si ha un solo $Z$ allora il numero finale di $p_{Z_1Z_2}(n,n',l)$ è dato solo da $n$, $n'$ e $l$. Per quanto riguarda $l$ ci sono esattamente $l_{max} + 1$ valori disponibili (in quanto si parte da zero), per capire come comportarsi con gli $n$, utilizziamo un piccolo aiuto grafico:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|cccc}
+                 & $n_1$    & $n_2$    & $\cdots$ & $n_m$\\ \hline
+        $n'_1$   &   11     &   12     & $\cdots$ & 1m\\ 
+        $n'_2$   &   21     &   22     & $\cdots$ & 2m\\ 
+        $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$\\ 
+        $n'_m$   &   m1     &   m2     & $\cdots$ & mm\\ 
+    \end{tabular}
+    \captionof{schema}{Struttura schematica per la combinazione dei valori di $n$ e $n'$ nel power spectrum}
+    \label{sch:tabella-coefficienti-n-combinazione-power-spectrum}
+\end{table}
+
+dato che nel power spectrum compaiono su coefficienti, che definiscono l'informazione strutturale, con $Z$ diversi, allora fanno riverimento a mappe di densità diverse, inoltre ricordiamo che $n$ indica una sorta di distanza radiale. Questo significa che per il medesimo $Z$, la combinazione di $(n, n')$ produce lo stesso risultato di $(n', n)$ in quanto la mappa di densità è la medesima. Per diminuire la dimensione del vettore finale consideriamo solo gli elementi unici, ad esempio la parte triangolare superiore, ma allora il numero di elementi è la somma di $n_m$ elementi sulla prima riga, $n_m - 1$ sulla seconda e così via fino ad arrivare ad un singolo elemento, questo coincide con la somma dei primi $n_m$ numeri naturali, risolta da Gauss come:
+
+\begin{equation}
+    \mathrm{somma}(a) = \frac{a(a + 1)}{2}
+    \label{eq:somma-gauss-naturali}
+\end{equation}
+
+Consideriamo adesso la presenza di un numero di specie maggiore di 1 allora dobbiamo considerare il fatto che lo scambio degli $n$ produce risultati diversi in quanto fa riferimento a mappe di densità diverse. Le combinazioni di $Z$ (che sono simmetriche per lo scambio in quanto lo è il prodotto) si possono immaginare con uno schema identico a quello \ref{sch:tabella-coefficienti-n-combinazione-power-spectrum} dove al posto di $n$ mettiamo i vari $Z$, da questo ricaviamo la seguente distinzione:
+
+\begin{itemize}
+    \item[-] $(Z_i,Z_i)$ gli elementi sulla diagonale, sono esattamente pari al numero di specie chimiche distinti presenti, ognuno di essi ha una combinazione di $n$ pari al numero definito in precedenza \eqref{eq:somma-gauss-naturali}
+    
+    \item[-] $(Z_i,Z_j)$ con $i \neq j$, questi per la simmetria già menzionata sono esattamente gli elementi sul triangolo superiore meno quelli sulla diagonale, possiamo facilmente vedere che questa somma di ottiene con la formula di Gauss \eqref{eq:somma-gauss-naturali} dove adesso $a = S - 1$, con $S$ numero di specie presenti, data la pardita di simmetria ognuna di queste coppie ha $n^2$ elementi distinti da tenere in considerazione
+\end{itemize}
+
+Se procediamo a mettere tutto assieme allora otteniamo la seguente espressione:
+
+\begin{equation}
+    \mathrm{dimensione} = (l_{max} + 1) \left( \frac{S\cdot n_{m}(n_m + 1)}{2} + \frac{S(S-1)n_m^2}{2} \right)
+\end{equation}
+
+che se procediamo a semplificare otteniamo l'espressione indicata in \eqref{eq:formula-dimensione-semplificata}.
+
+In coclusione possiamo rappresentare l'insieme di questi coefficienti come un vettore la cui dimensione è fissata e non dipende dall'input (quanti vicini / come è strutturato l'ambiente per un dato atomo) ma solo dai parametri che abbiamo utilizzato per descriverlo.
+
+\subsubsection{Schema riassuntivo}
+
+Diamo adesso una rappresentazione riassuntiva del processo completo, compresa anche la possibiltà di dinamica molecolare suddivisa per frames. In particolare il metodo di archiviazine della struttura di SOAP e la sua indicizzazione / organizzazione è lasciato pienamente in gestione a DScribe, notiamo che l'odine del vettore di feature non è trascurabile.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{./img/schema-riassunto-soap.png}
+    \caption{Rappresentazione schematica della totalità del processo SOAP}
+    \label{fig:schema-riassunto-soap}
+\end{figure}

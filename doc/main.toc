@@ -2,11 +2,12 @@
 \babel@toc {italian}{}\relax 
 \contentsline {chapter}{\numberline {1}Struttura di lavoro}{1}{chapter.1}%
 \contentsline {subsection}{\numberline {1.0.1}Dataset A}{1}{subsection.1.0.1}%
-\contentsline {section}{\numberline {1.1}SOAP}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.1}Quantum Espresso}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}SOAP}{2}{section.1.2}%
 \contentsline {subsubsection}{Generazione della mappa di densità}{2}{section*.4}%
-\contentsline {subsubsection}{Espansione in funzioni di base}{3}{section*.7}%
+\contentsline {subsubsection}{Espansione in funzioni di base}{4}{section*.7}%
 \contentsline {subsubsection}{Calcolo del power spectrum}{4}{section*.8}%
-\contentsline {subsubsection}{Risultato finale}{4}{section*.9}%
+\contentsline {subsubsection}{Risultato finale}{5}{section*.9}%
 \contentsline {subsubsection}{Schema riassuntivo}{6}{section*.11}%
 \contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{7}{chapter.2}%
 \contentsline {section}{\numberline {2.1}ASE}{7}{section.2.1}%

@@ -1,5 +1,5 @@
 \section{ASE}
-Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che svolge il ruolo di ponte tra la struttura fatta di coordinate e una che sia computazionalente utilizzabile. Ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
+Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
 \\
 
 In particolare per QE abbiamo utilizzato i seguenti:
@@ -16,11 +16,11 @@ La specifica sezione della documentazione riguardante questo punto è reperibile
 La funzione \texttt{read} ci restituisce un oggetto di tipo \texttt{atoms}
 \footnote{
 La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
-}, che costituisce l'oggetto python che contiene le informazioni che definiscono il materiale da simulare che sono state estratte dai file di output di QE.
+}, che costituisce l'oggetto python che contiene le informazioni, le quali, definiscono il materiale da simulare, estratte dai file di output di QE.
 
 
 \section{DScribe}
-Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica definita tramite ASE in una qualcosa comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più facile possibile. L'idea è quella di creare un ogetto che identifichi in modo univoco una determinata struttura atomica, e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a trining anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}
+Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica, definita tramite ASE, in un qualcosa di comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più semplice possibile. L'idea è quella di creare un oggetto che identifichi in modo univoco una determinata struttura atomica e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a training anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature, che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}
 \\
 
 Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
@@ -39,15 +39,15 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
 
 dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche. \footnote{La dedicata documentazione è reperibile al seguente link \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}
 
-In particolare l'accuratezza della rappresentazione, come il numero delle feature cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
+In particolare l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
 La funzione \texttt{create} si occupa poi di creare il vero e proprio SOAP, in input viene passato \texttt{QE\_data}, ovvero la struttura atomica in analisi definita tramite la libreria ASE.
 
-Il risultato di questi calcoli è un complesso oggetto indicizzato come segue:
+Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 
 {\centering \verb|[num frames, num atomi, feature vector]|}
 
 
 \subsubsection{Note sulla struttura matematica}
 
-DScribe in particolare per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa, e come funzioni radiale delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
+DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.

@@ -51,3 +51,33 @@ Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 \subsubsection{Note sulla struttura matematica}
 
 DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
+
+\subsubsection{Esempio di utilizzo}
+Considerando la discussione svolta per spiegare SOAP unita alla spiegazione riguardante DScribe, vogliamo dare un esempio pratico di utilizzo del metodo considerando un contesto sul quale conosciamo già il risultato.
+
+Considerando il Dataset A, selezioniamo l'atomo 42 e calcoliamo un \textit{kernel} tra i frame successivi, questo significa che seguiamo un singolo atomo lungo tutta la dinamica molecolare.
+
+Un kernel è una funzione che ci permette di misurare quanto due descrittori soap (il power spectrum) siano simili, e conseguentemente gli ambienti da cui derivano. Nel nostro caso usiamo il kernel più semplice possibile:
+
+\begin{equation}
+    \mathrm{Kernel}(\vec{p_1},\vec{p_2}) = \frac{\vec{p_1}\cdot\vec{p_2}}{|\vec{p_1}|\,|\vec{p_2}|}
+    \label{eq:kernel-lineare}
+\end{equation}
+
+Il risultato che ci aspettiamo è che lungo tutti i frame il valore di questa funzione sia circa uno, data la struttura dei dati, infatti ogni frame rappresenta un piccolo scostamento temporale di una dinemica molecolare continua.
+
+Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il confrnto tra il frame 1 e 2, e così per tutti gli altri indici) e sull'asse delle y mettiamo il valore del kernel ottenimo:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/kernel.png}
+    \caption{Rappresentazione del kernel per i frame del Datase A}
+    \label{fig:kernel-dataset-a}
+\end{figure}
+
+Il risultato è esattamente quello atteso, l'unico punto che si discosta è il primo, non riteniamo questo punto particolarmente problematico.
+\\
+
+%Volendo adesso enfatizzare le differenze, eleviamo a potenza il kernel definito in \eqref{eq:kernel-lineare}, in particolare quadriamo, facendo così otteniamo il seguente grafico:
+
+

@@ -13,6 +13,7 @@ doc/biber2-21
 doc/main.tex.bbl
 doc/main.tex.blg
 doc/chapter/bib/.xdp*
+doc/chapter/.log*
 article/*
 doc/pkg/*
 doc/img/soap-step1-example-sigma-big (Copy).png~

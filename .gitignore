@@ -1,4 +1,4 @@
-TestData/features_soap.npy
+TestData/code/features_soap.npy
 doc/SESSION.stzs
 doc/main.aux
 doc/main.log
@@ -16,3 +16,4 @@ doc/chapter/bib/.xdp*
 article/*
 doc/pkg/*
 doc/img/soap-step1-example-sigma-big (Copy).png~
+material/*

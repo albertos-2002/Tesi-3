@@ -1,0 +1,35 @@
+=======================================================
+Lettura dati quantum espresso                         |
+=======================================================
+
+python TestDataExtraction.py
+
+OUTPUT ------------------------------------------------
+----> traiettoria_unita.traj
+il risultato che da ASE dopo aver letto i file di quantum espresso
+
+----> features_soap.npy
+la matrice soap creata da dscribe a partire dalla traiettoria
+
+=======================================================
+Generazione dei grafici, celle e kernel               |
+=======================================================
+
+python make-cell-img.py
+python soap-graph.py
+python soap-graph-quad.py
+
+=======================================================
+Dataset cutting                                       |
+=======================================================
+
+python datacutter.py
+
+OUTPUT ------------------------------------------------
+---->train_data.extxyz
+---->test_data.extxyz
+file di traiettoria divisi e convertiti
+
+---->soap_train.npy
+---->soap_test.npy
+matrici soap divise

@@ -1,0 +1,10 @@
+
+
+\section{Addestramento}
+
+Per la fase di training andremo ad utilizzare dati generati da Quantum Espresso e un potenziale GAP. Partiamo esponendo in breve la struttura del processo che andremo ad utilizzare.
+
+La funzione svolta dal potenziale GAP è quella di associare determinate energie e forze, fornite come detto da Qauntum Espresso, ad una specifica configurazione geometrica, questa descritta tramite SOAP. 
+
+Questa associazione viene poi utilizzata per indovinare il valore di energia di un atomo dato il suo introno geometrico, in particolare, preso un atomo X ne viene calcolato il SOAP, questo, tramite una funzione di kernel, viene confrontato con gli ambienti della fase di training ed infine viene estratto un valore probabile per l'energia.
+Data la struttura del metodo, un punto che vogliamo sottolineare è che l'accuratezza decresce velocemente fuori da scenari compatibili con i dati di training, è ovviamente possibile arginare se non risolvere il problema addizionando diverse tecnologie al metodo, queste non sono però esaminate in questa trattazione.

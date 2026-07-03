@@ -20,3 +20,8 @@ doc/img/soap-step1-example-sigma-big (Copy).png~
 material/*
 *.log
 dyor/ml-search.rnote
+TestData/code/soap_test.npy
+TestData/code/soap_train.npy
+TestData/ErrorMessages/tantala_md_temp3000.out
+TestData/ErrorMessages/debug_espresso.py
+TestData/workflow_addestramento_e_test_gap.py

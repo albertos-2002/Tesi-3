@@ -1,21 +1,22 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
 \contentsline {chapter}{\numberline {1}Struttura di lavoro}{1}{chapter.1}%
-\contentsline {subsection}{\numberline {1.0.1}Dataset A}{1}{subsection.1.0.1}%
 \contentsline {section}{\numberline {1.1}Quantum Espresso}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}SOAP}{2}{section.1.2}%
-\contentsline {subsubsection}{Generazione della mappa di densità}{2}{section*.5}%
-\contentsline {subsubsection}{Espansione in funzioni di base}{4}{section*.8}%
-\contentsline {subsubsection}{Calcolo del power spectrum}{4}{section*.9}%
-\contentsline {subsubsection}{Risultato finale}{5}{section*.10}%
-\contentsline {subsubsection}{Schema riassuntivo}{6}{section*.12}%
-\contentsline {section}{\numberline {1.3}Potenziali GAP}{7}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Addestramento}{7}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Simulazione}{7}{section.1.5}%
+\contentsline {section}{\numberline {1.2}SOAP}{1}{section.1.2}%
+\contentsline {subsubsection}{Generazione della mappa di densità}{2}{section*.4}%
+\contentsline {subsubsection}{Espansione in funzioni di base}{3}{section*.7}%
+\contentsline {subsubsection}{Calcolo del power spectrum}{4}{section*.8}%
+\contentsline {subsubsection}{Risultato finale}{4}{section*.9}%
+\contentsline {subsubsection}{Schema riassuntivo}{5}{section*.11}%
+\contentsline {section}{\numberline {1.3}Potenziali GAP}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Addestramento}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Simulazione}{6}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{9}{chapter.2}%
 \contentsline {section}{\numberline {2.1}ASE}{9}{section.2.1}%
 \contentsline {section}{\numberline {2.2}DScribe}{9}{section.2.2}%
-\contentsline {subsubsection}{Note sulla struttura matematica}{10}{section*.14}%
-\contentsline {subsubsection}{Nota sui parametri}{10}{section*.15}%
-\contentsline {subsubsection}{Esempio di utilizzo}{10}{section*.16}%
-\contentsline {section}{\numberline {2.3}Quippy}{11}{section.2.3}%
+\contentsline {subsubsection}{Note sulla struttura matematica}{10}{section*.13}%
+\contentsline {section}{\numberline {2.3}Quippy}{10}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Test: dataset A}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}SOAP con DScribe}{11}{section.3.1}%
+\contentsline {subsubsection}{Nota sui parametri}{12}{section*.15}%
+\contentsline {section}{\numberline {3.2}Potenziale con Quippy}{12}{section.3.2}%

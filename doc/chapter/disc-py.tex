@@ -27,13 +27,13 @@ Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttu
 
 Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
 
-\begin{lstlisting}[caption={Snippet usato per il detaset A}, label={code:soap-dataset-a}, language=Python]
+\begin{lstlisting}[caption={Snippet usato per la creazione delle feature tramite SOAP}, label={code:soap-dscribe}, language=Python]
     soap_obj = SOAP(
-        species=["Ta", "O"],
-        periodic=True,       
-        r_cut=5.0,      
-        n_max=8,         
-        l_max=6 
+        species= ,  # tutti gli atomi nella struttura in esame
+        periodic= , # condizione di periodicità    
+        r_cut= ,    # raggio di cutoff
+        n_max= ,    # numero funzione radiali     
+        l_max=      # grado massimo armoniche sferiche
     )
     
     features = soap_obj.create(QE_data, n_jobs=-1)
@@ -50,43 +50,11 @@ Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 {\centering \verb|[num frames, num atomi, feature vector]|}
 
 
-\subsubsection{Note sulla struttura matematica}
+\subsubsection{Note sulla struttura matematica} 
 
 DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
 
-\subsubsection{Nota sui parametri}
-Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
-Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
 
-\subsubsection{Esempio di utilizzo}
-Considerando la discussione svolta per spiegare SOAP unita alla spiegazione riguardante DScribe, vogliamo dare un esempio pratico di utilizzo del metodo considerando un contesto sul quale conosciamo già il risultato.
-
-Considerando il Dataset A, selezioniamo l'atomo 42 e calcoliamo un \textit{kernel} tra i frame successivi, questo significa che seguiamo un singolo atomo lungo tutta la dinamica molecolare.
-
-Un kernel è una funzione che ci permette di misurare quanto due descrittori soap (il power spectrum) siano simili, e conseguentemente gli ambienti da cui derivano. Nel nostro caso usiamo il kernel più semplice possibile:
-
-\begin{equation}
-    \mathrm{Kernel}(\vec{p_1},\vec{p_2}) = \frac{\vec{p_1}\cdot\vec{p_2}}{|\vec{p_1}|\,|\vec{p_2}|}
-    \label{eq:kernel-lineare}
-\end{equation}
-
-Il risultato che ci aspettiamo è che lungo tutti i frame il valore di questa funzione sia circa uno, data la struttura dei dati, infatti ogni frame rappresenta un piccolo scostamento temporale di una dinemica molecolare continua.
-
-Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il confrnto tra il frame 1 e 2, e così per tutti gli altri indici) e sull'asse delle y mettiamo il valore del kernel ottenimo:
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/kernel.png}
-    \caption{Rappresentazione del kernel per i frame del Datase A}
-    \label{fig:kernel-dataset-a}
-\end{figure}
-
-Il risultato è esattamente quello atteso, l'unico punto che si discosta è il primo, non riteniamo questo punto particolarmente problematico.
-\\
-
-%Volendo adesso enfatizzare le differenze, eleviamo a potenza il kernel definito in \eqref{eq:kernel-lineare}, in particolare quadriamo, facendo così otteniamo il seguente grafico:
-
-
-\section{Quippy}
+\section{Quippy} %-----------------------------------------------------------------------------------------------------
 
 Questa è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.

@@ -1,3 +1,5 @@
+
+
 \section{ASE}
 Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
 \\
@@ -51,6 +53,10 @@ Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 \subsubsection{Note sulla struttura matematica}
 
 DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
+
+\subsubsection{Nota sui parametri}
+Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
+Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
 
 \subsubsection{Esempio di utilizzo}
 Considerando la discussione svolta per spiegare SOAP unita alla spiegazione riguardante DScribe, vogliamo dare un esempio pratico di utilizzo del metodo considerando un contesto sul quale conosciamo già il risultato.

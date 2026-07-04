@@ -33,3 +33,21 @@ file di traiettoria divisi e convertiti
 ---->soap_train.npy
 ---->soap_test.npy
 matrici soap divise
+
+
+=======================================================
+Training del potenziale                               |
+=======================================================
+#eseguire il seguente comando su shell bash
+
+gap_fit at_file=train_data.extxyz \
+default_sigma={0.0002 0.1 0.0 0.0} \
+gap={soap l_max=6 n_max=8 atom_sigma=0.5 zeta=4 cutoff=5.0 covariance_type=dot_product n_sparse=1000 sparse_method=cur_points} \
+e0={Ta:0:O:0} \
+energy_parameter_name=energy \
+force_parameter_name=forces \
+gp_file=out_potenziale_gap.xml
+
+OUTPUT ------------------------------------------------
+----> out_potenziale_gap.xml
+contiene il potenziale addestrato da utilizzare per il test

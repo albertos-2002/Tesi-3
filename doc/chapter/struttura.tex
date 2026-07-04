@@ -13,18 +13,6 @@ Il processo che andiamo a seguire è descritto in modo schematico qui sotto:
 
 
 
-\subsection{Dataset A}
-Questo dataset consiste di una simulazione di MD eseguita con QE per una struttura cristallina costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). Questi dati seguono il processo descritto sopra per generare un vettore di \textit{feature}, per una descrizione di questo, si veda la sezione successiva. Questo dataset è composto da una serie di file di QE che costituiscono la dinamica molecolare di una struttura di tantala a circa 3000K.
-
-Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica dai dati di QE analizzati, essendo una simulazione di dinamica molecolare, riportiamo solo uno degli step, a cui diamo il nome di frame. Riportiamo di seguito questa immagine, disegnata tramite matplotlib \ref{fig:cristallo-from-ase-frame-0-dataset-a}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/cristallo-from-ase-frame-0-dataset-a.png}
-    \caption{Rappresentazione generata tramite ASE della struttura atomica del dataset A}
-    \label{fig:cristallo-from-ase-frame-0-dataset-a}
-\end{figure}
-
 \section{Quantum Espresso}
 
 Quantum Espresso \cite{qe-2009, qe-2017, qe-2020} è il motore della dinamica molecolare, esso si occupa di utilizzare i principi della meccanica quantistica per produrre i frame che descrivono la dinamica molecolare per il materiale in esame.

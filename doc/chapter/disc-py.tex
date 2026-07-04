@@ -32,14 +32,14 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
         species= ,  # tutti gli atomi nella struttura in esame
         periodic= , # condizione di periodicità    
         r_cut= ,    # raggio di cutoff
-        n_max= ,    # numero funzione radiali     
+        n_max= ,    # numero funzioni radiali     
         l_max=      # grado massimo armoniche sferiche
     )
     
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
-dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche. \footnote{La dedicata documentazione è reperibile al seguente link \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}
+dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La dedicata documentazione è reperibile al seguente link \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il valore di $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
 
 In particolare l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
@@ -58,3 +58,38 @@ DScribe, in particolare, per le armoniche sferiche usa la loro versione purament
 \section{Quippy} %-----------------------------------------------------------------------------------------------------
 
 Questa è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.
+
+In particolare andremo ad utilizzare la funzione \texttt{gap\_fit} 
+\footnote{La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://libatoms.github.io/GAP/gap_fit.html} }
+
+
+\begin{lstlisting}[caption={Snippet per il calcolo del GAP}, label={code:gap-libatom}, language=bash]
+
+    gap_fit 
+    at_file=               #nome file.extxyz con i dati di training 
+    default_sigma={        #definisce le incertezze sui dati:
+                   -       #incertezza sull'energia
+                   -       #incertezza sulle forze 
+                   -       #non presente nei dati
+                   -       #non presente nei dati
+                   } 
+    gap={soap                #tipologia di descrittore, nel 
+                             # nostro caso SOAP
+        l_max=               #numero funzioni radiali
+        n_max=               #grado massimo armoniche sferiche  
+        atom_sigma=          #"zoom" della mappa di densità  
+        zeta=                #esponente per il kernel
+        cutoff=              #raggio di cutoff
+        covariance_type=     #tipologia di kernel per il 
+                             # confronto degli ambienti
+        n_sparse=            #numero punti per lo sparse method
+        sparse_method=       #tipolgia di sparse method
+        } 
+    e0=                           #energia di atomo libero
+    energy_parameter_name=energy  #config name per file input
+    force_parameter_name=forces   #config name per file input
+    gp_file=                      #nome file.xml di output 
+
+\end{lstlisting}
+
+dopo aver generato il file del potenziale, esso può essere utilizzato come \texttt{calculator} per la dimanica molecolare tramite ASE.

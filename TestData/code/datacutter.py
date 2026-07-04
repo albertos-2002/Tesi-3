@@ -31,3 +31,28 @@ print(f"Shape blocco Test: {soap_test.shape}")
 np.save("soap_train.npy", soap_train)
 np.save("soap_test.npy", soap_test)
 print("File SOAP salvati con successo!")
+
+
+#Scrittura delle traiettorie con numeri atomici
+
+for atoms in train_set:
+    # Creiamo un array esplicito di stringhe con i simboli chimici
+    # e lo salviamo come array di informazioni aggiuntive dell'atomo.
+    # Questo assicura che ASE crei la formattazione corretta "species:S:1" nel file XYZ.
+    atoms.arrays['species'] = atoms.get_chemical_symbols()
+
+# 2. Salviamo in formato extxyz forzando la sintassi compatibile con QUIP
+write("train_data_natom.extxyz", train_set, format="extxyz")
+print("File salvato correttamente con i simboli chimici formattati per QUIP!")
+
+
+for atoms in test_set:
+    # Creiamo un array esplicito di stringhe con i simboli chimici
+    # e lo salviamo come array di informazioni aggiuntive dell'atomo.
+    # Questo assicura che ASE crei la formattazione corretta "species:S:1" nel file XYZ.
+    atoms.arrays['species'] = atoms.get_chemical_symbols()
+
+# 2. Salviamo in formato extxyz forzando la sintassi compatibile con QUIP
+write("train_test_natom.extxyz", test_set, format="extxyz")
+print("File salvato correttamente con i simboli chimici formattati per QUIP!")
+

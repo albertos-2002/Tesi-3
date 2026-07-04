@@ -64,9 +64,43 @@ Il risultato è esattamente quello atteso, l'unico punto che si discosta è il p
 \\
 
 
-
-
 \section{Potenziale con Quippy}
+
+\begin{lstlisting}[caption={Snippet usato per il calcolo del GAP per il detaset A}, label={code:gap-dataset-a}, language=bash]
+
+    gap_fit 
+    at_file=train_data.extxyz 
+    default_sigma={0.0002 0.1 0.0 0.0} 
+    gap={soap 
+        l_max=6 
+        n_max=8 
+        atom_sigma=0.5 
+        zeta=4 
+        cutoff=5.0 
+        covariance_type=dot_product 
+        n_sparse=1000 
+        sparse_method=cur_points
+        } 
+    e0={Ta:0:O:0} 
+    energy_parameter_name=energy 
+    force_parameter_name=forces 
+    gp_file=out_potenziale_gap.xml
+
+\end{lstlisting}
+
+\subsubsection{Nota sui parametri}
+Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
+Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
+
+Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che quantum espresso utilizzava per decretare la convergenza della simulazione.
+
+La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file con ASE.
+
+Il valore di \texttt{e0} è stato impostato su zero in quanto non abbiamo a disposizione i valori di energia per atomi isolati, per questi dati si necessita di una simulazione di QE con gli stessi potenziali usati per creare il dataset A, potenziali che non abbiamo a disposizione. 
+Questo è certo generare problemi di accuratezza del risultato.
+
+Gli altri parametri, come detto sono stati forniti presi dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
+\\
 
 
 

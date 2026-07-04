@@ -48,6 +48,8 @@ energy_parameter_name=energy \
 force_parameter_name=forces \
 gp_file=out_potenziale_gap.xml > potenziale_quippy.log
 
+tail -f potenziale_quippy.log
+
 OUTPUT ------------------------------------------------
 ----> out_potenziale_gap.xml
 contiene il potenziale addestrato da utilizzare per il test

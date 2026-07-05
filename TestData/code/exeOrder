@@ -50,6 +50,16 @@ gp_file=out_potenziale_gap.xml > potenziale_quippy.log
 
 tail -f potenziale_quippy.log
 
+#per il caso con numeri----------------------------------------
+
+gap_fit at_file=train_numeri_puri.extxyz \
+default_sigma={0.0002 0.1 0.0 0.0} \
+gap={soap l_max=6 n_max=8 atom_sigma=0.5 zeta=4 cutoff=5.0 covariance_type=dot_product n_sparse=1000 sparse_method=uniform delta=1} \
+e0={73:0:8:0} \
+energy_parameter_name=energy \
+force_parameter_name=forces \
+gp_file=out_potenziale_gap.xml > potenziale_quippy.log
+
 OUTPUT ------------------------------------------------
 ----> out_potenziale_gap.xml
 contiene il potenziale addestrato da utilizzare per il test

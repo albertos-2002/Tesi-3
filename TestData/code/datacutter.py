@@ -1,5 +1,6 @@
 import numpy as np
 from ase.io import read, write
+from ase import Atoms
 
 print("CARICAMENTO E DIVISIONE DEL DATASET (TRAIN / TEST)")
 
@@ -35,24 +36,25 @@ print("File SOAP salvati con successo!")
 
 #Scrittura delle traiettorie con numeri atomici
 
-for atoms in train_set:
-    # Creiamo un array esplicito di stringhe con i simboli chimici
-    # e lo salviamo come array di informazioni aggiuntive dell'atomo.
-    # Questo assicura che ASE crei la formattazione corretta "species:S:1" nel file XYZ.
-    atoms.arrays['species'] = atoms.get_chemical_symbols()
+configs = train_set
+nuove_configs = []
 
-# 2. Salviamo in formato extxyz forzando la sintassi compatibile con QUIP
-write("train_data_natom.extxyz", train_set, format="extxyz")
-print("File salvato correttamente con i simboli chimici formattati per QUIP!")
+for atoms in configs:
+    # Crea un nuovo oggetto usando i numeri atomici puri (Ta -> 73, O -> 8)
+    nuovo = Atoms(
+        numbers=atoms.get_atomic_numbers(),
+        positions=atoms.get_positions(),
+        cell=atoms.get_cell(),
+        pbc=atoms.get_pbc()
+    )
+    if 'forces' in atoms.arrays:
+        nuovo.arrays['forces'] = atoms.arrays['forces']
+    nuovo.info.update(atoms.info)
+    # Forza la colonna delle specie come numeri interi (Integer)
+    nuovo.arrays['species'] = np.array(atoms.get_atomic_numbers(), dtype=np.int32)
+    nuove_configs.append(nuovo)
 
-
-for atoms in test_set:
-    # Creiamo un array esplicito di stringhe con i simboli chimici
-    # e lo salviamo come array di informazioni aggiuntive dell'atomo.
-    # Questo assicura che ASE crei la formattazione corretta "species:S:1" nel file XYZ.
-    atoms.arrays['species'] = atoms.get_chemical_symbols()
-
-# 2. Salviamo in formato extxyz forzando la sintassi compatibile con QUIP
-write("train_test_natom.extxyz", test_set, format="extxyz")
-print("File salvato correttamente con i simboli chimici formattati per QUIP!")
+# Salva il nuovo file
+write("train_numeri.extxyz", nuove_configs, format="extxyz")
+print("File 'train_numeri.extxyz' generato con successo!")
 

@@ -64,7 +64,7 @@ Il risultato è esattamente quello atteso, l'unico punto che si discosta è il p
 \\
 
 
-\section{Potenziale con Quippy}
+\section{Potenziale con Quippy - Test 1}
 
 \begin{lstlisting}[caption={Snippet usato per il calcolo del GAP per il detaset A}, label={code:gap-dataset-a}, language=bash]
 
@@ -72,36 +72,73 @@ Il risultato è esattamente quello atteso, l'unico punto che si discosta è il p
     at_file=train_data.extxyz 
     default_sigma={0.0002 0.1 0.0 0.0} 
     gap={soap 
-        l_max=6 
-        n_max=8 
+        l_max=2 
+        n_max=2 
         atom_sigma=0.5 
         zeta=4 
         cutoff=5.0 
         covariance_type=dot_product 
-        n_sparse=1000 
+        n_sparse=500 
         sparse_method=cur_points
+        delta=1
         } 
-    e0={Ta:0:O:0} 
+    e0={Ta:-9884.889316093:O:-561.82449957} 
     energy_parameter_name=energy 
     force_parameter_name=forces 
-    gp_file=out_potenziale_gap.xml
+    gp_file=out_potenziale_gap-500-n2-l2.xml
+    > potenziale_quippy-500-n2-l2.log
 
 \end{lstlisting}
+
+
 
 \subsubsection{Nota sui parametri}
 Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
 Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
 
 Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che quantum espresso utilizzava per decretare la convergenza della simulazione.
+Le energie per gli atomi isolati \texttt{e0} sono state determinate tramite una simulazione di QE.
+Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche sono stati impostati come tali per la limitatezza della RAM disponibile sul sistema usato per il training, i problemi relativi all'accuratezza dei dati, come si può vedere sotto, in prima analisi possono essere imputabili a queta brusca approssimazione.
+
 
 La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file con ASE.
 
-Il valore di \texttt{e0} è stato impostato su zero in quanto non abbiamo a disposizione i valori di energia per atomi isolati, per questi dati si necessita di una simulazione di QE con gli stessi potenziali usati per creare il dataset A, potenziali che non abbiamo a disposizione. 
-Questo è certo generare problemi di accuratezza del risultato.
-
 Gli altri parametri, come detto sono stati forniti presi dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
-\\
 
 
+\subsubsection{Analisi energia potenziale}
 
+Abbiamo utilizzato il primo frame dei dati di test come configurazione iniziale per la dinamica molecolare. Questa è stata svolta con ASE e ha utilizzato il potenziale che abbiamo addestrato al punto precedente.
+
+Per prima cosa vogliamo notare come già dopo pochi step la temperatura e l'energia cinetica esplodano in modo incontrollato.
+
+Per verificare se i risultati siano compatibili con le energie potenziali prodotte da Quantum Espresso è stato generato un grafico che posiziona sull'asse delle x i valori prodotti da QE e sull'asse delle y quelli generati dalla simulazione, il risultato è il seguente:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/confronto_energie_qe_gap-500-sim2.png}
+    \captionof{schema}{Grafico del confronto tra le energie di QE e quelle di una simulazione con potenziali ML}
+    \label{fig:confronto_energie_qe_gap-500-sim2}
+\end{figure}
+
+Come possiamo notare il range di energia restituito dalla simulazione non è affatto compatibile con quelle fornite da QE, la distanza massima è dell'ordine di $10'000 \;\mathrm{eV}$.
+
+Vogliamo adesso verificare se, come anticipato alla sezione precedente, il problema sia riconducibile al descrittore soap, per fare questo utilizziamo DScribe, creiamo un descrittore SOAP ed un kernel identici a quelli utilizzati da ASE. Se il risultato del confronto tra i vari frame di dinamica molecolere restituisce un risulato di bassa qualità, allora possiamo essere ragionevolmente sicuri che il grado del descrittore SOAP sia il principale responsabile della bassa accuratezza dei dati prodotti dalla simulazione.
+Questo è rappresentato dal seguente grafico:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/kernel-4-qe-badsoap22-cut.png}
+    \captionof{schema}{Confronto tra i frame di simulazione tramite SOAP (n=2, l=2), dove abbiamo eliminato il primo punto (outlier anhe nei casi precedenti)}
+    \label{fig:kernel-4-qe-badsoap22-cut}
+\end{figure}
+
+questo risultato sembra buono, lo confrontiamo adesso con un SOAP di grado maggiore:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/kernel-4-qe-goodsoap22-cut.png}
+    \captionof{schema}{Confronto tra i frame di simulazione tramite SOAP (n=8, l=6), dove abbiamo eliminato il primo punto (outlier anhe nei casi precedenti)}
+    \label{fig:kernel-4-qe-goodsoap22-cut}
+\end{figure}
 

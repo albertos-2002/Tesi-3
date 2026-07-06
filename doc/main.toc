@@ -19,5 +19,6 @@
 \contentsline {chapter}{\numberline {3}Test: dataset A}{13}{chapter.3}%
 \contentsline {section}{\numberline {3.1}SOAP con DScribe}{13}{section.3.1}%
 \contentsline {subsubsection}{Nota sui parametri}{14}{section*.15}%
-\contentsline {section}{\numberline {3.2}Potenziale con Quippy}{14}{section.3.2}%
+\contentsline {section}{\numberline {3.2}Potenziale con Quippy - Test 1}{14}{section.3.2}%
 \contentsline {subsubsection}{Nota sui parametri}{15}{section*.17}%
+\contentsline {subsubsection}{Analisi energia potenziale}{15}{section*.18}%

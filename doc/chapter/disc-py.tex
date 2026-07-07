@@ -1,8 +1,11 @@
 
 
-\section{ASE}
+\section{ASE} %----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
+Inoltre questa libreria ci permette di svolgere semplici simulazioni di dinamica molecolare.
 \\
+
+\subsection{Lettura dei file di Quentum Espresso}
 
 In particolare per QE abbiamo utilizzato i seguenti:
 
@@ -12,16 +15,77 @@ In particolare per QE abbiamo utilizzato i seguenti:
 
 dove \texttt{index=":"} viene utilizzato per leggere tutti i frame presenti nel file di input e \texttt{format="espresso-out"} serve per impostare la tipologia di file da leggere.
 \footnote{
-La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/io/io.html}
+La specifica sezione della documentazione è reperibile al seguente \url{https://ase-lib.org/ase/io/io.html}
 }
 
 La funzione \texttt{read} ci restituisce un oggetto di tipo \texttt{atoms}
 \footnote{
-La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
+La specifica sezione della documentazione è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
 }, che costituisce l'oggetto python che contiene le informazioni, le quali, definiscono il materiale da simulare, estratte dai file di output di QE.
 
 
-\section{DScribe}
+\subsection{Simulazione con un potenziale ML}
+
+I potenziali generati tramite ML vengo utilizzati come dei \textit{calulator} \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/calculators/calculators.html}} per la dinamica molecolare.
+Questo oggetto può essere decritto come una calcolatrice che data una configurazione restituisce i valori delle energie e delle forze.
+
+Lo step successivo è utilizzare un motore di dinamica molecolare \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/md.html}}
+per muovere gli atomi ed ottenere il frame successivo.
+
+Diamo adesso una descrizione del codice utilizzato per svolgere questo processo, notiamo che il potenziale addestrato tramite QUIP, deve essere caricato tramite la libreria quippy, essendo necessario per la discussione sulla dinamica molecolare, lo riportiamo in questa sezione.
+
+\begin{lstlisting}[caption={Loading delle librerie}, label={code:lib-loading-ase-md}, language=Python]
+    from ase.md.langevin import Langevin
+    from ase.md.velocitydistribution import       MaxwellBoltzmannDistribution
+    from ase import units
+
+    # Importiamo il calcolatore Quippy per leggere il potenziale GAP
+    from quippy.potential import Potential
+\end{lstlisting}
+
+dove \texttt{Langevin} è il motore di dimanica molecolare che ci permette di mantenere la temperatura costante, \texttt{MaxwellBoltzmannDistribution} ci permette di assegnare una velocità iniziale agli atomi da simulare.
+
+Il passo successivo prevede di caricare il potenziale di ML e di trasformarlo in un calcolatore:
+
+\begin{lstlisting}[caption={Loading del potenziale}, label={code:potenziale-loading-ase-md}, language=Python]
+    calc = Potential('IP GAP', param_filename=file_potenziale)
+    calc.name = "GAP"
+\end{lstlisting}
+
+Come step iniziale della simulazione carichiamo il primo frame dei dati di training e assegnamo a questo oggetto \textit{atoms} il calcolatore definito allo step precedente
+
+\begin{lstlisting}[caption={Loading del frame iniziale e assegnazione del calcolatore}, label={code:frame-start-calculator-ase-md}, language=Python]
+    atomi = read(file_iniziale, index=0)
+    atomi.set_calculator(calc)
+\end{lstlisting}
+
+Possiamo adesso procedere alla costruzione del motore della dinamica molecolare
+
+\begin{lstlisting}[caption={Costruzione del motore per la dinamica molecolare}, label={code:engine-construction-ase-md}, language=Python]
+    temperatura_K = #setting per la temperatura in kelvin da mantenere durante la dinamica
+    MaxwellBoltzmannDistribution(atomi, temperature_K=temperatura_K) #assegna le velocità iniziali
+    timestep =  * units.fs #l'intervallo temporale tra uno step ed il successivo
+    
+    dyn = Langevin(
+        atomi, 
+        timestep, 
+        temperature_K=temperatura_K, 
+        friction=  / units.fs, # Coefficiente di attrito per il termostato
+        trajectory='.traj' # Il file dove salveremo i risultati
+    )
+\end{lstlisting}
+
+in particolare dove troviamo \texttt{units.fs}, lo scopo è quello di convertire in automatico i valori \textit{human frinedly} nelle unità che utilizza ASE.
+Lo scopo del parametro \texttt{frinction} è quello di definire l'attrito del bagno termico, questo serve per mantenere la temperatura il più possibile costante.
+Il motore utilizzato è \texttt{Langevin}, questo ci permette di mantenere il valore di temperatura costante, come per le simulazioni di Quantum Espresso.
+
+Lo step finale precede di avviare la simulazione e farla correre per un determinato numero di iterazioni
+
+\begin{lstlisting}[caption={Running della simulazione}, label={code:running-ase-md}, language=Python]
+    dyn.run(passi_totali)
+\end{lstlisting}
+
+\section{DScribe} %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica, definita tramite ASE, in un qualcosa di comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più semplice possibile. L'idea è quella di creare un oggetto che identifichi in modo univoco una determinata struttura atomica e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a training anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature, che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}
 \\
 
@@ -39,7 +103,7 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
-dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La dedicata documentazione è reperibile al seguente link \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il valore di $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
+dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il valore di $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
 
 In particolare l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
@@ -60,7 +124,7 @@ DScribe, in particolare, per le armoniche sferiche usa la loro versione purament
 Questa è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.
 
 In particolare andremo ad utilizzare la funzione \texttt{gap\_fit} 
-\footnote{La specifica sezione della documentazione riguardante questo punto è reperibile al seguente \url{https://libatoms.github.io/GAP/gap_fit.html} }
+\footnote{La documentazione è reperibile al seguente: \url{https://libatoms.github.io/GAP/gap_fit.html} }
 
 
 \begin{lstlisting}[caption={Snippet per il calcolo del GAP}, label={code:gap-libatom}, language=bash]

@@ -16,8 +16,8 @@ def run_md_test():
     # Assicurati che il nome corrisponda esattamente al file .xml generato!
     file_potenziale = "../results-test2/out_potenziale_gap-500-n2-l2.xml"
     print(f"Caricamento del potenziale da: {file_potenziale}...")
-    calc = Potential(param_filename=file_potenziale)
-    calc.name_ = "GAP"
+    calc = Potential('IP GAP', param_filename=file_potenziale)
+    calc.name = "GAP"
 
     # 2. CARICAMENTO DELLA CONFIGURAZIONE INIZIALE
     # ---------------------------------------------------------
@@ -31,7 +31,8 @@ def run_md_test():
     atomi = read(file_iniziale, index=0)
     
     # Assegniamo il calcolatore GAP agli atomi
-    atomi.calc = calc
+    #atomi.calc = calc
+    atomi.set_calculator(calc)
     
     print(f"Sistema caricato: {len(atomi)} atomi nella cella.")
     

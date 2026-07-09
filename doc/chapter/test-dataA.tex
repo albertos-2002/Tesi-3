@@ -105,122 +105,33 @@ Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche sono stati imposta
 
 La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file con ASE.
 
-Gli altri parametri, come detto sono stati forniti presi dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
+Gli altri parametri, come detto sono stati forniti dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
 
 
-\subsection{Simulazione con ASE}
-
-La simulazione viene svolta come descritto nella sezione dedicata, riportiamo di seguito una versione stipped down del codice utilizzato, in modo da poter discutere dei parametri inseriti.
-
-\begin{lstlisting}[caption={Snippet usato per la simulazione del detaset A}, label={code:simulation-dataset-a}, language=Python]
-    file_potenziale = "../out_potenziale_gap-500-n2-l2.xml"
-    calc = Potential('IP GAP', param_filename=file_potenziale)
-    calc.name = "GAP"
-
-    file_iniziale = "../test_data.extxyz"
-    
-    atomi = read(file_iniziale, index=0)
-    
-    atomi.set_calculator(calc)
-    
-    temperatura_K = 3000.0
-
-    MaxwellBoltzmannDistribution(atomi, temperature_K=temperatura_K)
-
-    timestep = 4.8 * units.fs
-    
-    dyn = Langevin(
-        atomi, 
-        timestep, 
-        temperature_K=temperatura_K, 
-        friction=0.01 / units.fs, 
-        trajectory='md_gap_test-500.traj' 
-    )
-
-    passi_totali = #ricavato dalla lunghezza del file file_iniziale
-    
-    dyn.run(passi_totali)
-\end{lstlisting}
-
-i parametri di temperatura e di timestep sono stati ricavati a partire dai file .out di Quantum Espresso.
 
 
-\subsection{Analisi energia potenziale}
 
-Abbiamo utilizzato il primo frame dei dati di test come configurazione iniziale per la dinamica molecolare. Questa è stata svolta con ASE e ha utilizzato il potenziale che abbiamo addestrato al punto precedente.
 
-Per prima cosa vogliamo notare come già dopo pochi step la temperatura e l'energia cinetica esplodano in modo incontrollato.
 
-Per verificare se i risultati siano compatibili con le energie potenziali prodotte da Quantum Espresso è stato generato un grafico che posiziona sull'asse delle x i valori prodotti da QE e sull'asse delle y quelli generati dalla simulazione, il risultato è il seguente:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/confronto_energie_qe_gap-500-sim2.png}
-    \caption{Grafico del confronto tra le energie di QE e quelle di una simulazione con potenziali ML}
-    \label{fig:confronto_energie_qe_gap-500-sim2}
-\end{figure}
 
-Come possiamo notare il range di energia restituito dalla simulazione non è affatto compatibile con quelle fornite da QE, la distanza massima è dell'ordine di $10'000 \;\mathrm{eV}$.
 
-Vogliamo adesso verificare se, come anticipato alla sezione precedente, il problema sia riconducibile al descrittore soap, per fare questo utilizziamo DScribe, creiamo un descrittore SOAP ed un kernel identici a quelli utilizzati da ASE. Se il risultato del confronto tra i vari frame di dinamica molecolere restituisce un risulato di bassa qualità, allora possiamo essere ragionevolmente sicuri che il grado del descrittore SOAP sia il principale responsabile della bassa accuratezza dei dati prodotti dalla simulazione.
-Questo è rappresentato dal seguente grafico:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/kernel-4-qe-badsoap22-cut.png}
-    \caption{Confronto tra i frame di simulazione tramite SOAP (n=2, l=2), dove abbiamo eliminato il primo punto (outlier anhe nei casi precedenti)}
-    \label{fig:kernel-4-qe-badsoap22-cut}
-\end{figure}
 
-questo risultato sembra buono, lo confrontiamo adesso con un SOAP di grado maggiore:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/kernel-4-qe-goodsoap22-cut.png}
-    \caption{Confronto tra i frame di simulazione tramite SOAP (n=8, l=6), dove abbiamo eliminato il primo punto (outlier anhe nei casi precedenti)}
-    \label{fig:kernel-4-qe-goodsoap22-cut}
-\end{figure}
 
-Questi risultati sono compatibili con il fatto che un SOAP di grado inferiore vede meno dettagli, possiamo anche dire che restituisca una visione più sfuocata.
-\\
 
-Per poter però escludere che il problema sia dato dal motore della dinamica molecolare, mantenendo il medesimo potenziale proviamo a svolgere una simulazione in cui riduciamo di un fattore 10 il timestep, e aumentiamo di un fattore 10 gli step totali calcolati. Successivamente proviamo anche a modificare il valore dell'attrito del termostato, inoltre se i precedenti non danno risultati proveremo una combinazione dei due.
 
-\subsubsection{Diminuzione del timestep}
-Per questa prova abbiamo posto il timestep pari a $0.48$ fs, un decimo di quello di Quantum Espresso e abbiamo fatto correre la simulazione per 10 volte il numero di iterazioni precedenti. 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.3]{./img/confronto_energie_timestep-500_1_e.png}
-    \caption{Confronto tra i frame di simulazione con timestep 4.8fs e 0.48fs, dove come reference sono usati i dati di QE}
-    \label{fig:confronto_energie_timestep-500_1_e}
-\end{figure}
 
-La fase iniziale sembra essere migliorata ed essere più vicina alla reference, la parte successiva però peggio sensibilmente.
 
-\subsubsection{Aumento del parametro di friction}
-Per questa prova abbiamo posto il parametro di friction pari a 1.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.3]{./img/confronto_energie_friction-500_1_e.png}
-    \caption{Confronto tra i frame di simulazione con friction 0.01 e 1, dove come reference sono usati i dati di QE}
-    \label{fig:confronto_energie_friction-500_1_e}
-\end{figure}
 
-Notiamo che questo parametro ci permette di diminuire i valori tra cui oscilla l'energia potenziale.
 
-\subsubsection{Combinazione}
-Per questa prova abbiamo combinato la modifica del parametro di friction e di timestep descritti precedentemente.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.3]{./img/confronto_energie_comb-500_1_e.png}
-    \caption{Confronto tra i frame di simulazione con friction 1, timestep di 4.8fs e 0.48fs, dove come reference sono usati i dati di QE}
-    \label{fig:confronto_energie_comb-500_1_e}
-\end{figure}
 
-La stabilizzazione data dal parametro di friction rimane ma i valori di energia non migliorano.
-\\
 
-Al momento a meno di ipotizzare problemi con il potenziale non possiamo spiegarci come una diminuzione del time step porti ad un peggioramento dei valori di energia predetti.
+
+
+
+

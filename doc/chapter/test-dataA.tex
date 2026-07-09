@@ -140,13 +140,36 @@ In questa fase invece vogliamo verificare come si comporta il potenziale nel cas
 Possiamo vedere che i risultati non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
 
 
+\subsection{Verifica delle forze}
+
+Oltre a verificare le energie abbiamo deciso di verificare anche le forze. Abbiamo estratto le forze da Quantum Espresso da utilizzare come reference, successivamente abbiamo determinato il valore delle forze usando il potenziale addestrato a partire dalle configurazioni usate da Quantum Espresso.
+
+\subsubsection{Training set}
+
+Il seguente grafico mostra il confronto tra le forze calcolate da Qauntum Espresso e quelle predette dal potenziale, essendo queste le configurazioni usate nel training ci aspettiamo un buon accordo.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{./img/parity_plot_forze-traindata.png}
+    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da Qauntum Espresso e dal potenziale addestrato}
+    \label{fig:parity_plot_forze-traindata}
+\end{figure}
 
 
+\subsubsection{Test set}
 
+Procediamo adesso come sopra ad utilizzare l'altra parte del dataset per verificare la compatibilità tra calcolo e predizioni.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{./img/parity_plot_forze-testdata.png}
+    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da Qauntum Espresso e dal potenziale addestrato}
+    \label{fig:parity_plot_forze-testdata}
+\end{figure}
 
+anche in questo caso i risultati mostra un buon accordo.
 
-
+Possiamo ipotizzare che questo grado di accordo superiore rispetto alle energie, sia almeno in parte dovuto al fatto che l'errore stima per le energie, e inserito nei parametri di affestramento del potenziale, è di tre ordini di grandezza superiore.
 
 
 

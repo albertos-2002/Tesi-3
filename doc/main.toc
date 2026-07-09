@@ -24,8 +24,3 @@
 \contentsline {section}{\numberline {3.2}Prima sessione di testing}{14}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{15}{subsection.3.2.1}%
 \contentsline {subsubsection}{Nota sui parametri}{15}{section*.17}%
-\contentsline {subsection}{\numberline {3.2.2}Simulazione con ASE}{15}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Analisi energia potenziale}{16}{subsection.3.2.3}%
-\contentsline {subsubsection}{Diminuzione del timestep}{18}{section*.21}%
-\contentsline {subsubsection}{Aumento del parametro di friction}{18}{section*.23}%
-\contentsline {subsubsection}{Combinazione}{19}{section*.25}%

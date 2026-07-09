@@ -108,12 +108,36 @@ La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file co
 Gli altri parametri, come detto sono stati forniti dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
 
 
+\subsection{Verifica delle energie}
+
+Per verificare se il potenziale così addestrato sia in grado di predirre in modo corretto le energie abbiamo estratto le configurazioni geometriche prodotte da Quantum Espresso e utilizzato il potenziale addestrato per predirre l'energia, successivamente abbiamo confrontato i valori predetti con quelli calcolati da Quantum Espresso.
+
+\subsubsection{Training set}
+
+Per prima cosa verifichiamo se utilizzando come dati di input quelli usati durante la fase di addestramento otteniamo il risultato atteso, se così non fosse potremmo velocemente concludere che l'addestramento non è andato a buon fine.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/parity_plot_gap_vs_qe-traindata.png}
+    \caption{}
+    \label{fig:parity_plot_gap_vs_qe-traindata}
+\end{figure}
+
+Dal grafico sopra possiamo vedere che il risultato è compatibile con le aspettative, e le energie predettre assomigliano a quelle prodotte da Qauntum Espresso.
 
 
+\subsubsection{Test set}
 
+In questa fase invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato, ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta dalla totalità del dataset A.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{./img/parity_plot_gap_vs_qe-testdata.png}
+    \caption{}
+    \label{fig:parity_plot_gap_vs_qe-testdata}
+\end{figure}
 
-
+Possiamo vedere che i risultati non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
 
 
 

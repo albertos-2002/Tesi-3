@@ -36,3 +36,6 @@ TestData/code/sim2/comb/md_gap_test-500-comb.traj
 TestData/code/sim2/md_gap_test-500.traj
 TestData/code/sim2/md_gap_test-500.traj
 /deprecated
+TestData/code/sim-nve/zero-kelvin/md_gap_nve-traindata_0k.traj
+TestData/code/sim-nve/md_gap_nve-traindata.traj
+TestData/code/sim-nve/md_gap_nve-testdata.traj

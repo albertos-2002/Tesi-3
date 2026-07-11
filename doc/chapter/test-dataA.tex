@@ -173,10 +173,37 @@ Possiamo ipotizzare che questo grado di accordo superiore rispetto alle energie,
 
 
 
+\subsection{Simulazione NVE}
+
+Abbiamo provato ad effettuare una simulazione di tipo NVE, sia sui dati di training che di test, dove abbiamo impostato il time step pari a $4.8$fs, come quello usato in Quantum Espresso, e lo stesso numero di step.
+Data la diversa configurazione i risultati non possono essere confrontati direttamente con quelli prodotti da QE. 
+Per verificare la stabilità dei risultati facciamo un grafico della temepratura e dell'energia in funzione dello step temporale.
+Abbiamo provato a reperire i valori delle velocità iniziali dal file di output di QE, ma non essendo presenti, le abbiamo estratte da una distribuzione di Maxwell-Boltzman per una temperatura di $3000$K.
 
 
+\subsubsection{Training set}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{./img/andamento_nve-traindata.png}
+    \caption{Grafico dell'andamento temporale per i valori di energia e temperatura}
+    \label{fig:andamento_nve-traindata}
+\end{figure}
 
+possiamo vedere \ref{fig:andamento_nve-traindata} che, anche se per valori leggermente più contenuti rispetto ai dati di test, sia l'energia che la temperatura divergono a valori spaventosamente elevati. 
+L'energia potenziale anche se per un range relativamente ampio oscilla in modo limitato.
+
+\subsubsection{Test set}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{./img/andamento_nve-testdata.png}
+    \caption{Grafico dell'andamento temporale per i valori di energia e temperatura}
+    \label{fig:andamento_nve-testdata}
+\end{figure}
+
+possiamo notare \ref{fig:andamento_nve-testdata} che i valori di energia e temperatura divergono a valori fisicamente insensati.
+L'energia potenziale oscilla entro valori limite, notiamo comunque che l'intervallo di oscillazione è relativamente ampio.
 
 
 

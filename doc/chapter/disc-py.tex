@@ -34,56 +34,51 @@ per muovere gli atomi ed ottenere il frame successivo.
 
 Diamo adesso una descrizione del codice utilizzato per svolgere questo processo, notiamo che il potenziale addestrato tramite QUIP, deve essere caricato tramite la libreria quippy, essendo necessario per la discussione sulla dinamica molecolare, lo riportiamo in questa sezione.
 
-\begin{lstlisting}[caption={Loading delle librerie}, label={code:lib-loading-ase-md}, language=Python]
-    from ase.md.langevin import Langevin
-    from ase.md.velocitydistribution import       MaxwellBoltzmannDistribution
+\begin{lstlisting}[caption={Loading del potenziale addestrato}, label={code:potential-loading-ase-md}, language=Python]
+    from quippy.potential import Potential
+    
+    calc = Potential(param_filename=file_potenziale)
+    calc.name_ = "GAP" 
+\end{lstlisting}
+
+sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \textit{atoms} di ASE tramite \verb|atomi.calc = calc|.
+
+\subsubsection{Simulazione NVE}
+
+Questa simulazione impone la conservazione dell'energia totale del sistema, oltre che al volume e al numero di particelle.
+
+Abbiamo impostato la simulazione al modo seguente, la versione riportata è una semplificazione del codice effettivamente utilizzato:
+
+\begin{lstlisting}[caption={Simulazione NVE}, label={code:simulation-nve-ase-md}, language=Python]
+    from ase.io import read
+    from ase.md.verlet import VelocityVerlet
+    from ase.md.velocitydistribution import MaxwellBoltzmannDistribution
     from ase import units
 
-    # Importiamo il calcolatore Quippy per leggere il potenziale GAP
-    from quippy.potential import Potential
-\end{lstlisting}
+    #Lettura della configurazione iniziale da file di QE
+    atomi = read(PATH_CONFIG_INIZIALE, index=0)
 
-dove \texttt{Langevin} è il motore di dimanica molecolare che ci permette di mantenere la temperatura costante, \texttt{MaxwellBoltzmannDistribution} ci permette di assegnare una velocità iniziale agli atomi da simulare.
+    #Setting del calcolatore
+    atomi.calc = calc
 
-Il passo successivo prevede di caricare il potenziale di ML e di trasformarlo in un calcolatore:
+    #Setting delle velocità iniziali
+    MaxwellBoltzmannDistribution(atomi, temperature_K=3000)
 
-\begin{lstlisting}[caption={Loading del potenziale}, label={code:potenziale-loading-ase-md}, language=Python]
-    calc = Potential('IP GAP', param_filename=file_potenziale)
-    calc.name = "GAP"
-\end{lstlisting}
+    #Setting della dinamica molecolare
+    dyn = VelocityVerlet(
+          atomi, 
+          timestep=TIMESTEP, 
+          trajectory=PATH_TRAJ_OUTPUT,
+          logfile=PATH_LOG_OUTPUT,
+          loginterval=1
+   )     
 
-Come step iniziale della simulazione carichiamo il primo frame dei dati di training e assegnamo a questo oggetto \textit{atoms} il calcolatore definito allo step precedente
-
-\begin{lstlisting}[caption={Loading del frame iniziale e assegnazione del calcolatore}, label={code:frame-start-calculator-ase-md}, language=Python]
-    atomi = read(file_iniziale, index=0)
-    atomi.set_calculator(calc)
-\end{lstlisting}
-
-Possiamo adesso procedere alla costruzione del motore della dinamica molecolare
-
-\begin{lstlisting}[caption={Costruzione del motore per la dinamica molecolare}, label={code:engine-construction-ase-md}, language=Python]
-    temperatura_K = #setting per la temperatura in kelvin da mantenere durante la dinamica
-    MaxwellBoltzmannDistribution(atomi, temperature_K=temperatura_K) #assegna le velocità iniziali
-    timestep =  * units.fs #l'intervallo temporale tra uno step ed il successivo
-    
-    dyn = Langevin(
-        atomi, 
-        timestep, 
-        temperature_K=temperatura_K, 
-        friction=  / units.fs, # Coefficiente di attrito per il termostato
-        trajectory='.traj' # Il file dove salveremo i risultati
-    )
-\end{lstlisting}
-
-in particolare dove troviamo \texttt{units.fs}, lo scopo è quello di convertire in automatico i valori \textit{human frinedly} nelle unità che utilizza ASE.
-Lo scopo del parametro \texttt{frinction} è quello di definire l'attrito del bagno termico, questo serve per mantenere la temperatura il più possibile costante.
-Il motore utilizzato è \texttt{Langevin}, questo ci permette di mantenere il valore di temperatura costante, come per le simulazioni di Quantum Espresso.
-
-Lo step finale precede di avviare la simulazione e farla correre per un determinato numero di iterazioni
-
-\begin{lstlisting}[caption={Running della simulazione}, label={code:running-ase-md}, language=Python]
+    #Avvio della simulazione
     dyn.run(passi_totali)
 \end{lstlisting}
+
+per le velocità iniziali, si è provato a reperirle dal file di QE, ma questo non le riportava, sono quindi state estratte dalla distribuzione di Maxwell-Boltzman.
+
 
 \section{DScribe} %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica, definita tramite ASE, in un qualcosa di comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più semplice possibile. L'idea è quella di creare un oggetto che identifichi in modo univoco una determinata struttura atomica e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a training anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature, che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}

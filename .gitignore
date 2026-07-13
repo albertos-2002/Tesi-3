@@ -40,3 +40,7 @@ TestData/code/sim-nve/zero-kelvin/md_gap_nve-traindata_0k.traj
 TestData/code/sim-nve/md_gap_nve-traindata.traj
 TestData/code/sim-nve/md_gap_nve-testdata.traj
 TestData/code/sim-nve/1fs-timeframe/md_gap_nve-traindata-1fs.traj
+TestData/code/sim-nve/timeframe-test/10-2x25k/md_gap_nve.traj
+TestData/code/sim-nve/timeframe-test/10-4x25k/md_gap_nve.traj
+TestData/code/sim-nve/timeframe-test/10-4x50k/md_gap_nve.traj
+TestData/code/sim-nve/timeframe-test/10-5x50k/md_gap_nve.traj

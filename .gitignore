@@ -53,3 +53,13 @@ TestData/code/sim-nve/timeframe-test/10-6x25k/md_gap_nve.traj
 /TestData/code/sim-nve/force-test/10-3x50k/immagini_MD_NVE_3D
 /TestData/code/sim-nve/force-test/10-3x5k/immagini_MD_NVE_2D
 /TestData/code/sim-nve/force-test/10-3x5k/immagini_MD_NVE_3D
+TestData/code/sim-nve/force-test/10-1x30/md_gap_nve.traj
+TestData/code/sim-nve/force-test/10-1x5k/dati_energie.csv
+TestData/code/sim-nve/force-test/10-1x5k/dati_forze.csv
+TestData/code/sim-nve/force-test/10-1x5k/md_gap_nve.traj
+TestData/code/sim-nve/force-test/10-3x50k/dati_energie.csv
+TestData/code/sim-nve/force-test/10-3x50k/dati_forze.csv
+TestData/code/sim-nve/force-test/10-3x50k/md_gap_nve.traj
+TestData/code/sim-nve/force-test/10-3x5k/dati_energie.csv
+TestData/code/sim-nve/force-test/10-3x5k/dati_forze.csv
+TestData/code/sim-nve/force-test/10-3x5k/md_gap_nve.traj

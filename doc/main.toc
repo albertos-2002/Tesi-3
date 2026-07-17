@@ -31,6 +31,11 @@
 \contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{16}{subsection.3.2.3}%
 \contentsline {subsubsection}{Training set}{17}{section*.23}%
 \contentsline {subsubsection}{Test set}{17}{section*.25}%
-\contentsline {subsection}{\numberline {3.2.4}Simulazione NVE}{17}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Simulazione NVE}{17}{section.3.3}%
 \contentsline {subsubsection}{Training set}{18}{section*.27}%
 \contentsline {subsubsection}{Test set}{18}{section*.29}%
+\contentsline {section}{\numberline {3.4}Analisi delle problematiche}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Temperatura}{19}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Timestep}{19}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Forze}{20}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Potenziale di repulsione ZBL}{21}{section.3.5}%

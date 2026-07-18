@@ -10,32 +10,32 @@
 \contentsline {subsubsection}{Schema riassuntivo}{5}{section*.11}%
 \contentsline {section}{\numberline {1.3}Potenziali GAP}{5}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Addestramento}{6}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Simulazione}{6}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}ASE}{9}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quentum Espresso}{9}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Simulazione con un potenziale ML}{9}{subsection.2.1.2}%
-\contentsline {subsubsection}{Simulazione NVE}{10}{section*.13}%
-\contentsline {section}{\numberline {2.2}DScribe}{10}{section.2.2}%
-\contentsline {subsubsection}{Note sulla struttura matematica}{11}{section*.14}%
-\contentsline {section}{\numberline {2.3}Quippy}{11}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Test: dataset A}{13}{chapter.3}%
-\contentsline {section}{\numberline {3.1}SOAP con DScribe}{13}{section.3.1}%
-\contentsline {subsubsection}{Nota sui parametri}{14}{section*.16}%
-\contentsline {section}{\numberline {3.2}Prima sessione di testing}{14}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{15}{subsection.3.2.1}%
-\contentsline {subsubsection}{Nota sui parametri}{15}{section*.18}%
-\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{15}{subsection.3.2.2}%
-\contentsline {subsubsection}{Training set}{15}{section*.19}%
-\contentsline {subsubsection}{Test set}{16}{section*.21}%
-\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{16}{subsection.3.2.3}%
-\contentsline {subsubsection}{Training set}{17}{section*.23}%
-\contentsline {subsubsection}{Test set}{17}{section*.25}%
-\contentsline {section}{\numberline {3.3}Simulazione NVE}{17}{section.3.3}%
-\contentsline {subsubsection}{Training set}{18}{section*.27}%
-\contentsline {subsubsection}{Test set}{18}{section*.29}%
-\contentsline {section}{\numberline {3.4}Analisi delle problematiche}{18}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Temperatura}{19}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Timestep}{19}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Forze}{20}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Potenziale di repulsione ZBL}{21}{section.3.5}%
+\contentsline {section}{\numberline {1.5}Simulazione}{7}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}ASE}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quentum Espresso}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Simulazione con un potenziale ML}{11}{subsection.2.1.2}%
+\contentsline {subsubsection}{Simulazione NVE}{12}{section*.16}%
+\contentsline {section}{\numberline {2.2}DScribe}{12}{section.2.2}%
+\contentsline {subsubsection}{Note sulla struttura matematica}{13}{section*.17}%
+\contentsline {section}{\numberline {2.3}Quippy}{13}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Test: dataset A}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}SOAP con DScribe}{15}{section.3.1}%
+\contentsline {subsubsection}{Nota sui parametri}{16}{section*.19}%
+\contentsline {section}{\numberline {3.2}Prima sessione di testing}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{17}{subsection.3.2.1}%
+\contentsline {subsubsection}{Nota sui parametri}{17}{section*.21}%
+\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{17}{subsection.3.2.2}%
+\contentsline {subsubsection}{Training set}{17}{section*.22}%
+\contentsline {subsubsection}{Test set}{18}{section*.24}%
+\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{18}{subsection.3.2.3}%
+\contentsline {subsubsection}{Training set}{19}{section*.26}%
+\contentsline {subsubsection}{Test set}{19}{section*.28}%
+\contentsline {section}{\numberline {3.3}Simulazione NVE}{19}{section.3.3}%
+\contentsline {subsubsection}{Training set}{20}{section*.30}%
+\contentsline {subsubsection}{Test set}{20}{section*.32}%
+\contentsline {section}{\numberline {3.4}Analisi delle problematiche}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Temperatura}{21}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Timestep}{21}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Forze}{22}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Potenziale di repulsione ZBL}{23}{section.3.5}%

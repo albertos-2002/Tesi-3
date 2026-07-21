@@ -1,0 +1,6 @@
+<IP_params version="1.0">
+  <zbl_params
+    zbl_rmin="0.9"
+    zbl_cut="1.5">
+  </zbl_params>
+</IP_params>

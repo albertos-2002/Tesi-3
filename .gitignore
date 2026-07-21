@@ -83,3 +83,7 @@ TestData/code/sim-nve-zbl-test/zbl-test.tar.xz
 TestData/code/sim-nve/timeframe-test/10-5x50k/andamento_nve.png~
 /TestData/code/sim-nve-gapzbl/immagini_MD_NVE_2D
 /TestData/code/sim-nve-gapzbl/immagini_MD_NVE_3D
+TestData/code/sim-nve-gapzbl/verifica/forze_predette_gap-testdata.txt
+TestData/code/sim-nve-gapzbl/verifica/forze_predette_gap-traindata.txt
+TestData/code/train_data.extxyz.idx
+TestData/code/sim-nve-gapzbl/dati_forze.csv

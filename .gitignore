@@ -81,3 +81,5 @@ TestData/code/sim-nve-zbl-test/switch-1x200/dati_energie.csv
 TestData/code/sim-nve-zbl-test/switch-1x200/md_gap_nve.traj
 TestData/code/sim-nve-zbl-test/zbl-test.tar.xz
 TestData/code/sim-nve/timeframe-test/10-5x50k/andamento_nve.png~
+/TestData/code/sim-nve-gapzbl/immagini_MD_NVE_2D
+/TestData/code/sim-nve-gapzbl/immagini_MD_NVE_3D

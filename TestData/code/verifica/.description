@@ -1,0 +1,7 @@
+test del potenziale in result-test2 sulle configurazioni di training e di test
+
+prima si calcolano le energi con il codice verifica_.py
+si fanno i grafici delle energie con graph-.py
+vengono salvate le energie su un .txt
+si calcolano e disegnano le forze con forze-.py
+vengono salvate le forze su un file .txt

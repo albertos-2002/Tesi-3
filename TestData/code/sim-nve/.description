@@ -1,0 +1,11 @@
+in questa cartella ci sono i codici e i risultati per le simulazioni di tipo NVE
+
+la tempratura viene imposta su 3000K
+tempo di 4.8 fs
+velocità iniziali tramite distribuzione di maxwellboltzman
+il calcolatore utilizzato è il GAP di results-test2
+
+si sono fatte due simulazioni
+una che prende come frame iniziale quello dei testdata e una quello dei traindata
+
+sono prodotti file di log e di traj

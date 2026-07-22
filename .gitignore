@@ -147,6 +147,12 @@ TestData/code/sim-nve-zbl-forze/md_gap_zbl_nve.traj
 TestData/code/sim-nve+zbl-distance-test/1.4-1.6x200/dati_energie.csv
 TestData/code/sim-nve+zbl-distance-test/1.0-1.6x60/md_gap_nve.traj
 TestData/code/sim-nve+zbl-distance-test/0.4-1.6x200/md_gap_nve.traj
+
+
+
+
+
+
 *.upf
 *.hdf5
 *.mix1

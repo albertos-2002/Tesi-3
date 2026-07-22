@@ -1,0 +1,220 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+import gc # Garbage Collector per svuotare forzatamente la RAM
+from ase.io import read
+from ase.md.verlet import VelocityVerlet
+from ase.md.velocitydistribution import MaxwellBoltzmannDistribution
+from ase import units
+from quippy.potential import Potential
+
+# =========================================================================
+# 1. PARAMETRI E PERCORSI (MODIFICA QUI)
+# =========================================================================
+PATH_POTENZIALE = "../results-test2/out_potenziale_gap-500-n2-l2.xml"
+PATH_CONFIG_INIZIALE = "../test_data.extxyz"
+
+# Cartelle per i frame spaziali
+DIR_SALVATAGGIO_2D = "immagini_MD_NVE_2D"
+DIR_SALVATAGGIO_3D = "immagini_MD_NVE_3D"
+
+# File di Output Dati (Streaming su disco)
+PATH_CSV_ENERGIE = "dati_energie.csv"
+PATH_CSV_FORZE_DISTANZE = "dati_forze_distanze.csv" # CSV aggiornato con distanze minime e forze
+
+# Grafici finali
+PATH_GRAFICO_ENERGIE = "andamento_energia_nve.png"
+PATH_GRAFICO_FORZA_DISTANZA = "forza_vs_distanza_minima.png"
+
+# Parametri della Dinamica
+TIMESTEP = 1 * units.fs 
+PASSI_TOTALI = 500 
+
+# CRITICO PER LA RAM: Ogni quanti step disegnare l'immagine 2D/3D degli atomi?
+FREQUENZA_IMMAGINI = 10 
+
+print("=" * 60)
+print(" AVVIO SIMULAZIONE DINAMICA NVE (ANALISI FORZA-DISTANZA)")
+print("=" * 60)
+
+os.makedirs(DIR_SALVATAGGIO_2D, exist_ok=True)
+os.makedirs(DIR_SALVATAGGIO_3D, exist_ok=True)
+
+# =========================================================================
+# 2. CARICAMENTO E PREPARAZIONE
+# =========================================================================
+calc = Potential(param_filename=PATH_POTENZIALE)
+calc.name_ = "GAP"
+
+atomi_md = read(PATH_CONFIG_INIZIALE, index=0)
+atomi_md.calc = calc
+
+try:
+    if atomi_md.get_velocities() is None or not np.any(atomi_md.get_velocities()):
+        raise ValueError
+except (ValueError, RuntimeError):
+    MaxwellBoltzmannDistribution(atomi_md, temperature_K=3000)
+
+dyn = VelocityVerlet(
+    atomi_md, 
+    timestep=TIMESTEP, 
+    trajectory="md_gap_nve.traj",
+    logfile="md_gap_nve.log",
+    loginterval=100
+)
+
+# =========================================================================
+# 3. IMPOSTAZIONE FILE CSV (Svuotiamo vecchi file e scriviamo gli header)
+# =========================================================================
+with open(PATH_CSV_ENERGIE, 'w') as f_en:
+    f_en.write("Tempo_fs,Temp_K,E_pot_eV,E_kin_eV,E_tot_eV\n")
+
+# Header CSV esteso: include la specie atomica, la distanza dal vicino più prossimo e la forza
+with open(PATH_CSV_FORZE_DISTANZE, 'w') as f_fd:
+    f_fd.write("Tempo_fs,Atomo_ID,Specie,Distanza_Minima_A,Modulo_Forza_eV_A\n")
+
+# =========================================================================
+# 4. IL MOTORE DI MONITORAGGIO (Vettorizzato per massima efficienza)
+# =========================================================================
+def monitoraggio_sistema():
+    passo = dyn.get_number_of_steps()
+    tempo_fs = passo * (TIMESTEP / units.fs)
+    
+    # --- 1. Scrittura Diretta Energie ---
+    epot = atomi_md.get_potential_energy()
+    ekin = atomi_md.get_kinetic_energy()
+    etot = epot + ekin
+    temp = atomi_md.get_temperature()
+    
+    with open(PATH_CSV_ENERGIE, 'a') as f_en:
+        f_en.write(f"{tempo_fs:.3f},{temp:.2f},{epot:.5f},{ekin:.5f},{etot:.5f}\n")
+    
+    # --- 2. Calcolo Distanza Minima e Modulo Forze per ciascuno dei 126 atomi ---
+    # Matrice distanze 126x126 con Minimum Image Convention (PBC)
+    dist_matrix = atomi_md.get_all_distances(mic=True)
+    
+    # Impostiamo la diagonale a infinito per non considerare la distanza di un atomo con se stesso (0.0)
+    np.fill_diagonal(dist_matrix, np.inf)
+    
+    # Per ogni atomo, troviamo la distanza dal suo vicino più prossimo
+    min_dists = np.min(dist_matrix, axis=1) # Vettore di 126 elementi
+    
+    # Calcolo dei moduli delle forze netta F = sqrt(Fx^2 + Fy^2 + Fz^2)
+    forze = atomi_md.get_forces()
+    f_mags = np.linalg.norm(forze, axis=1)  # Vettore di 126 elementi
+    
+    simboli = atomi_md.get_chemical_symbols()
+    
+    # Scrittura diretta dei 126 punti di questo frame
+    with open(PATH_CSV_FORZE_DISTANZE, 'a') as f_fd:
+        for idx in range(len(atomi_md)):
+            f_fd.write(f"{tempo_fs:.3f},{idx},{simboli[idx]},{min_dists[idx]:.6f},{f_mags[idx]:.6f}\n")
+    
+    # --- 3. Generazione Immagini (SOLO SE NECESSARIO) ---
+    if passo % FREQUENZA_IMMAGINI == 0:
+        posizioni = atomi_md.get_positions()
+        simboli_arr = np.array(simboli)
+        
+        pos_Ta = posizioni[simboli_arr == 'Ta']
+        pos_O = posizioni[simboli_arr == 'O']
+        nome_file = f"{passo:06d}_configurazione_spaziale.png"
+        
+        # 2D
+        fig2d, ax2d = plt.subplots(figsize=(6, 6))
+        ax2d.scatter(pos_Ta[:, 0], pos_Ta[:, 1], color='blue', s=80, label='Tantalo', edgecolors='black')
+        ax2d.scatter(pos_O[:, 0], pos_O[:, 1], color='red', s=40, label='Ossigeno', edgecolors='black')
+        ax2d.set_title(f"2D - Step {passo}")
+        ax2d.axis('equal')
+        fig2d.savefig(os.path.join(DIR_SALVATAGGIO_2D, nome_file), dpi=100)
+        plt.close(fig2d)
+        
+        # 3D
+        fig3d = plt.figure(figsize=(6, 6))
+        ax3d = fig3d.add_subplot(111, projection='3d')
+        ax3d.scatter(pos_Ta[:, 0], pos_Ta[:, 1], pos_Ta[:, 2], color='blue', s=80, edgecolors='black')
+        ax3d.scatter(pos_O[:, 0], pos_O[:, 1], pos_O[:, 2], color='red', s=40, edgecolors='black')
+        ax3d.set_title(f"3D - Step {passo}")
+        fig3d.savefig(os.path.join(DIR_SALVATAGGIO_3D, nome_file), dpi=100)
+        plt.close(fig3d)
+        
+        plt.close('all')
+        gc.collect()
+        
+        print(f"Step {passo:06d}/{PASSI_TOTALI} completato. Dati e Immagini salvati.")
+
+dyn.attach(monitoraggio_sistema, interval=1)
+
+# =========================================================================
+# 5. ESECUZIONE SIMULAZIONE
+# =========================================================================
+print("\n--- INIZIO DINAMICA MOLECOLARE ---")
+dyn.run(PASSI_TOTALI)
+print("--- DINAMICA COMPLETATA ---\n")
+
+# =========================================================================
+# 6. POST-PROCESSING: GRAFICI FINALI
+# =========================================================================
+print("Caricamento dati dal disco per i grafici finali...")
+
+# 1. Grafico Energie
+t_en, temp, ep, ek, et = np.loadtxt(PATH_CSV_ENERGIE, delimiter=',', skiprows=1, unpack=True)
+
+fig_en, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
+
+ax1.plot(t_en, temp, color='orangered', lw=1)
+ax1.set_title('Temperatura')
+ax1.set_xlabel('Tempo (fs)')
+ax1.set_ylabel('Temperatura (K)')
+ax1.grid(True, linestyle=':', alpha=0.6)
+
+ax2.plot(t_en, ep, color='royalblue', lw=1, label='E. Potenziale')
+ax2.plot(t_en, ek, color='forestgreen', lw=1, label='E. Cinetica')
+ax2.plot(t_en, et, color='black', lw=1.5, label='E. Totale')
+ax2.set_title('Confronto Energie')
+ax2.set_xlabel('Tempo (fs)')
+ax2.set_ylabel('Energia (eV)')
+ax2.grid(True, linestyle=':', alpha=0.6)
+ax2.legend()
+
+ax3.plot(t_en, ep, color='royalblue', lw=1)
+ax3.set_title('Dettaglio E. Potenziale')
+ax3.set_xlabel('Tempo (fs)')
+ax3.grid(True, linestyle=':', alpha=0.6)
+
+plt.tight_layout()
+plt.savefig(PATH_GRAFICO_ENERGIE, dpi=300)
+plt.close(fig_en)
+
+# 2. Grafico Forza vs Distanza Minima
+print("Generazione grafico Forza in funzione della Distanza dal vicino più prossimo...")
+
+# Caricamento dati forze-distanze
+#dati_fd = np.genfromtxt(PATH_CSV_FORZE_DISTANZE, delimiter=',', skiprows=1, dtype=None, encoding='utf-8')
+dati_fd = np.genfromtxt(PATH_CSV_FORZE_DISTANZE, delimiter=',', skip_header=1, dtype=None, encoding='utf-8')
+
+# Estrazione colonne
+specie = dati_fd['f2']
+distanze_min = dati_fd['f3']
+moduli_forza = dati_fd['f4']
+
+fig_fd, ax_fd = plt.subplots(figsize=(9, 6))
+
+# Maschere per separare Tantalo e Ossigeno nel plot
+mask_Ta = (specie == 'Ta')
+mask_O = (specie == 'O')
+
+# Tracciamento dei punti con trasparenza per evitare sovrapposizioni opache
+ax_fd.scatter(distanze_min[mask_Ta], moduli_forza[mask_Ta], color='royalblue', alpha=0.4, s=15, label='Tantalo (Ta)', edgecolors='none')
+ax_fd.scatter(distanze_min[mask_O], moduli_forza[mask_O], color='crimson', alpha=0.4, s=15, label='Ossigeno (O)', edgecolors='none')
+
+ax_fd.set_title("Modulo della Forza vs Distanza dal Vicino più Prossimo", fontsize=13, pad=12)
+ax_fd.set_xlabel("Distanza dal Vicino più Prossimo (Å)", fontsize=11)
+ax_fd.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
+ax_fd.grid(True, linestyle='--', alpha=0.6)
+ax_fd.legend(loc='upper right', fontsize=11)
+
+plt.tight_layout()
+plt.savefig(PATH_GRAFICO_GRAFICO_FORZA_DISTANZA if 'PATH_GRAFICO_GRAFICO_FORZA_DISTANZA' in locals() else PATH_GRAFICO_FORZA_DISTANZA, dpi=300)
+plt.close(fig_fd)
+
+print(f"Tutto completato! Grafico salvato in '{PATH_GRAFICO_FORZA_DISTANZA}'.")

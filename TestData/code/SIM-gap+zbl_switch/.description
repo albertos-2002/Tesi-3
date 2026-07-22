@@ -1,0 +1,26 @@
+in questa cartella si è svolto un test di simulazione NVE
+il potenziale usato è il GAP in results-test2
+
+la correzione di tipo ZBL è stata aggiunta alla fine "manualmente"
+
+1fs
+3000K
+
+zbl r_int 0.8	r_ext 1.4
+
+il numero di iterazioni tolati è stato variato
+
+grafici prodotti -----------------------------
+energie e temperature
+forze lungo x y z 
+configurazioni spaziali 2d e 3d (ogni tot iterazioni variate caso per caso)
+
+file prodotti .cvs ----------------------------
+energie
+forze
+.log
+.traj
+
+
+no-switch --> taglio brisco dell'azione dello zbl
+switch --> si è usato un polinomio di alto grado per accendere e spegnere lo zbl "dolcemente"

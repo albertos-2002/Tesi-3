@@ -225,3 +225,7 @@ TestData/code/SIM-gapzbl/verifica/energie_predette_gap-testdata.txt
 TestData/code/SIM-gapzbl/verifica/forze_predette_gap-testdata.txt
 TestData/code/SIM-gapzbl/verifica/forze_predette_gap-traindata.txt
 *.xz
+/TestData/code/SIM-gap+zbl_forze+sgn/immagini_MD_NVE_2D
+/TestData/code/SIM-gap+zbl_forze+sgn/immagini_MD_NVE_3D
+/TestData/code/SIM-gap+zbl_forze+timestep/immagini_MD_NVE_2D
+/TestData/code/SIM-gap+zbl_forze+timestep/immagini_MD_NVE_3D

@@ -176,3 +176,15 @@ TestData/code/TRAINING-gap-2/out_potenziale_gap-500-n2-l2.xml.sparseX.GAP_2026_7
 TestData/code/TRAINING-gap-2/out_potenziale_gap-500-n2-l2.xml.sparseX.GAP_2026_7_6_120_12_21_48_2582
 TestData/code/TRAINING-gap-zbl/out_potenziale_gap_500_n2_l2_zbl.xml.sparseX.GAP_2026_7_21_120_8_49_35_7411
 TestData/code/TRAINING-gap-zbl/out_potenziale_gap_500_n2_l2_zbl.xml.sparseX.GAP_2026_7_21_120_8_49_35_7412
+/TestData/code/SIM-gap-configuration+wrap/immagini_MD_NVE_2D
+/TestData/code/SIM-gap-configuration+wrap/immagini_MD_NVE_3D
+/TestData/code/SIM-gap-configuration/immagini_MD_NVE_2D
+/TestData/code/SIM-gap-configuration/immagini_MD_NVE_3D
+/TestData/code/SIM-gap/force-test/10-1x30/2d
+/TestData/code/SIM-gap/force-test/10-1x30/3d
+/TestData/code/SIM-gap/force-test/10-1x5k/immagini_MD_NVE_2D
+/TestData/code/SIM-gap/force-test/10-1x5k/immagini_MD_NVE_3D
+/TestData/code/SIM-gap/force-test/10-3x50k/immagini_MD_NVE_2D
+/TestData/code/SIM-gap/force-test/10-3x50k/immagini_MD_NVE_3D
+/TestData/code/SIM-gap/force-test/10-3x5k/immagini_MD_NVE_2D
+/TestData/code/SIM-gap/force-test/10-3x5k/immagini_MD_NVE_3D

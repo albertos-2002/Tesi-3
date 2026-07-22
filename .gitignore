@@ -106,3 +106,8 @@ TestData/code/SIM-gapzbl/verifica/forze_predette_gap-traindata.txt
 /TestData/code/SIM-gap+zbl_forze+sgn/immagini_MD_NVE_3D
 /TestData/code/SIM-gap+zbl_forze+timestep/immagini_MD_NVE_2D
 /TestData/code/SIM-gap+zbl_forze+timestep/immagini_MD_NVE_3D
+/TestData/code/SIM-gap+zbl_forze+timestep/10-1x5k/immagini_MD_NVE_2D
+/TestData/code/SIM-gap+zbl_forze+timestep/10-1x5k/immagini_MD_NVE_3D
+TestData/code/SIM-gap+zbl_forze+timestep/10-2x500/immagini_MD_NVE_2D/000200_configurazione_spaziale.png
+/TestData/code/SIM-gap+zbl_forze+timestep/10-2x500/immagini_MD_NVE_2D
+/TestData/code/SIM-gap+zbl_forze+timestep/10-2x500/immagini_MD_NVE_3D

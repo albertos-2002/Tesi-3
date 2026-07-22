@@ -1,0 +1,15 @@
+si sono svolti diversi test
+
+fs=10-1  iteration=5k
+fs=10-1  iteration=30
+fs=10-3  iteration=5k
+fs=10-3  iteration=50k
+
+si sono salvati i dati su file .cvs
+
+grafici prodotti
+energie e temperatura
+forze per le direzioni x,y,z
+
+ogni tot iterazioni (dipende dal contesto)
+si sono stamapate le configurazioni spaziale del materiale in esame sia 2d che 3d

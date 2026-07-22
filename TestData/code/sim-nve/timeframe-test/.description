@@ -1,0 +1,8 @@
+per verificare l'effetto del timestep si sono svolti diversi test con anche diverso numero di iterazioni
+
+fs=10-2   iteration=25k
+fs=10-4   iteration=25k
+fs=10-4   iteration=50k
+fs=10-5   iteration=50k
+fs=10-5   iteration=50k (empty?)
+fs=10-6   iteration=25k

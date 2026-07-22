@@ -39,12 +39,12 @@ PATH_GRAFICO_FORZA_DISTANZA = "forza_vs_distanza_minima.png"
 PATH_GRAFICO_3D = "forza_vs_distanza_vs_tempo_3D.png"
 
 # Parametri della Dinamica
-TIMESTEP = 0.1 * units.fs 
-PASSI_TOTALI = 5000 
+TIMESTEP = 0.01 * units.fs 
+PASSI_TOTALI = 50000 
 
 # Controllo generazione immagini spaziali degli atomi
 GENERA_IMMAGINI_SPAZIALI = True 
-FREQUENZA_IMMAGINI = 10 
+FREQUENZA_IMMAGINI = 1000 
 
 print("=" * 60)
 print(" AVVIO SIMULAZIONE DINAMICA NVE (GAP + ZBL ESPLICITO DEL PROF.)")

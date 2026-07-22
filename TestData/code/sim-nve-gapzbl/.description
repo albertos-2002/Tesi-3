@@ -1,0 +1,16 @@
+simulazioni di NVE con potenziale addestrato con ZBL come baseline
+
+VERIFICA ---------------------------------
+si sono fatte le verifiche sulle energie e forze nel caso dei dati di training e di test
+(come nel caso del GAP senza zbl)
+------------------------------------------
+
+si è fatta una simulazione nve con 
+
+1fs
+3k iterazioni
+3000K
+
+si sono stampati file di dati .cvs
+grafici di energia e temperatura
+configurazioni spaziali 2d e 3d

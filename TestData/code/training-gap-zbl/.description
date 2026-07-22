@@ -1,0 +1,5 @@
+qui si trova un potenziale di tipo GAP addestrato con una baseline di tipo ZBL
+
+il file che descrive i parametri dello ZBL è zbl_core.xml
+il file che contiene il comando di addestramento è command.md
+

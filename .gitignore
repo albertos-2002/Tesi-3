@@ -157,3 +157,9 @@ TestData/code/sim-nve+zbl-distance-test/0.4-1.6x200/md_gap_nve.traj
 *.hdf5
 *.mix1
 *.wfc1
+TestData/code/TRAINING-isolated-potential-calculation/tmp/O_atom_isolated.save/data-file-schema.xml
+TestData/code/TRAINING-isolated-potential-calculation/tmp/O_atom_isolated.save/paw.txt
+TestData/code/TRAINING-isolated-potential-calculation/tmp/O_atom_isolated.xml
+TestData/code/TRAINING-isolated-potential-calculation/tmp/Ta_atom_isolated.save/data-file-schema.xml
+TestData/code/TRAINING-isolated-potential-calculation/tmp/Ta_atom_isolated.save/paw.txt
+TestData/code/TRAINING-isolated-potential-calculation/tmp/Ta_atom_isolated.xml

@@ -17,7 +17,7 @@ from ase.units import Bohr, Hartree
 # =========================================================================
 # 1. PARAMETRI E PERCORSI
 # =========================================================================
-PATH_POTENZIALE = "../results-test2/out_potenziale_gap-500-n2-l2.xml"
+PATH_POTENZIALE = "../TRAINING-gap-2/out_potenziale_gap-500-n2-l2.xml"
 PATH_CONFIG_INIZIALE = "../test_data.extxyz"
 
 # Raggi di cutoff per lo spegnimento dello ZBL (Parametri del Professore)
@@ -188,7 +188,7 @@ dyn = VelocityVerlet(
     timestep=TIMESTEP, 
     trajectory="md_gap_zbl_nve.traj", 
     logfile="md_gap_zbl_nve.log",
-    loginterval=100
+    loginterval=1
 )
 
 # =========================================================================

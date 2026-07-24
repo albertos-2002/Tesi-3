@@ -183,7 +183,7 @@ dyn = VelocityVerlet(
     timestep=TIMESTEP, 
     trajectory="md_gap_nve.traj", 
     logfile="md_gap_nve.log",
-    loginterval=100
+    loginterval=1
 )
 
 # =========================================================================

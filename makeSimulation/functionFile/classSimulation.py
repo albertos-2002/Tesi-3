@@ -33,6 +33,10 @@ class class_makeSimulation:
         else:
             self.calc_totale = self.calc_gap
 
+        #Grafico polinomio di switch
+        if setConfig.IS_ZBL_ON:
+            self.calc_zbl.plot_switch()
+
         #estrazione della configurazione di partenza
         self.atomi_md = read(setConfig.PATH_CONFIG_INIZIALE, index=0)
         #assegna il calcolare determinato sopra

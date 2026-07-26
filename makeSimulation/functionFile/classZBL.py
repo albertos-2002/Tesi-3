@@ -4,6 +4,8 @@ import numpy as np
 from ase.calculators.calculator import Calculator, all_changes
 from ase.neighborlist import neighbor_list
 from ase.units import Bohr, Hartree
+import matplotlib.pyplot as plt
+import os
 
 class class_zbl(Calculator):
 
@@ -126,3 +128,48 @@ class class_zbl(Calculator):
             "free_energy": energy, 
             "forces": forces
         }
+        
+        
+    def plot_switch(self, resolution=500, padding=0.5):
+        """
+        Traccia il grafico della funzione di switch e della sua derivata,
+        aggiungendo un padding per mostrare chiaramente i plateau (0 e 1).
+        """
+
+        # Calcolo dei limiti con padding di sicurezza
+        r_min = max(0.0, self.raggio_inner - padding)
+        r_max = self.raggio_outer + padding
+        
+        # Generazione delle distanze nell'intervallo
+        distances = np.linspace(r_min, r_max, resolution)
+        
+        # Calcolo dei valori tramite il metodo switch esistente
+        switch_vals, dswitch_vals = self.switch(distances)
+        
+        # Configurazione del grafico
+        plt.figure(figsize=(8, 5))
+        plt.plot(distances, switch_vals, label='Funzione di Switch S(r)', color='royalblue', linewidth=1.5)
+        plt.plot(distances, dswitch_vals, label="Derivata S'(r)", color='darkorange', linestyle='--', linewidth=1.5)
+        
+        # Linee verticali di riferimento per i raggi di taglio
+        plt.axvline(self.raggio_inner, color='crimson', linestyle=':', label=f'r_inner ({self.raggio_inner})')
+        plt.axvline(self.raggio_outer, color='forestgreen', linestyle=':', label=f'r_outer ({self.raggio_outer})')
+        
+        # Impostazione dei limiti ed estetica
+        plt.xlim(r_min, r_max)
+#        plt.ylim(-0.15, 1.15)
+        plt.xlabel("Distanza $r$ (Å)", fontsize=11)
+        plt.ylabel("Valore", fontsize=11)
+        plt.title("Funzione di Switch e Derivata (ZBL)", fontsize=13)
+        plt.legend(loc='best', frameon=True)
+        plt.grid(True, linestyle='--', alpha=0.8)
+        plt.tight_layout()
+        
+        # Salvataggio del grafico nella cartella dei risultati
+        path_img = os.path.join(setConfig.PATH_OUT_GRAPH, "switch_zbl.png")
+        plt.savefig(path_img, dpi=300)
+        plt.close()  # Chiude la figura per liberare memoria RAM
+        
+        if setConfig.DEBUG: print(f"Grafico di switch salvato con successo in: {path_img}")
+
+#----------------------------------------------------------------------------------------------------------------------------------------

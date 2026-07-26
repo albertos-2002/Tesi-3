@@ -5,6 +5,7 @@ from functionFile import classZBL
 import os
 import csv
 import numpy as np
+import pandas as pd
 
 from ase.io import iread
 from ase import units
@@ -55,15 +56,21 @@ class class_calcDataFile:
             #calcolo e scrittura delle distanze
             if self.calcDistance:
                 self.distanceCalculator(atomi, frame_idx)
+                
      
             #calcolo e scrittura delle velocità
             if self.calcVelocity:
                 self.velocityCalculator(atomi, frame_idx)
 
+        if setConfig.DEBUG: print("Concluso il ciclo for su tutti i frame")
+
         #chiusura di tutti i file apeti
         for f in self.file_aperti.values():
             f.close()
 
+        if self.calcForce and self.calcDistance and setConfig.IS_ZBL_ON:
+            self.projectionCalculator()
+            
                 
     def setFile(self): #-------------------------------------------------------------------------------------------------------------
 
@@ -79,7 +86,7 @@ class class_calcDataFile:
         if self.calcDistance:
             f = open(os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv"), "w", newline="")
             w = csv.writer(f)
-            w.writerow(["Frame_ID", "Atomo_ID", "Specie", "Dist_Min_A", "Dist_Media_A", "Dist_Max_A", "ID_primo_vicino"])
+            w.writerow(["Frame_ID", "Atomo_ID", "Specie", "Dist_Min_A", "Dist_Media_A", "Dist_Max_A", "ID_primo_vicino", "ux_rad", "uy_rad", "uz_rad"])
             self.file_aperti['dist'] = f
             self.writers['dist'] = w
 
@@ -107,7 +114,7 @@ class class_calcDataFile:
         if setConfig.IS_ZBL_ON:
             f = open(os.path.join(setConfig.PATH_OUT_FILE, "forze_gap+zbl.csv"), "w", newline="")
             w = csv.writer(f)
-            w.writerow(["Frame_ID", "Atomo_ID", "Specie", "Modulo_GAP_eV_A", "Modulo_ZBL_eV_A"])
+            w.writerow(["Frame_ID", "Atomo_ID", "Specie", "Modulo_GAP_eV_A", "Modulo_ZBL_eV_A", "F_gap_x", "F_gap_y", "F_gap_z", "F_zbl_x", "F_zbl_y", "F_zbl_z"])
             self.file_aperti['force-part'] = f
             self.writers['force-part'] = w
 
@@ -123,6 +130,7 @@ class class_calcDataFile:
             self.writers['velocita'] = w
         
             if setConfig.DEBUG: print("File velocita created and collected")
+                        
 
     def writeTempEnerg(self, atomObj, index, time): #---------------------------------------------------------------------------------------
         epot = atomObj.get_potential_energy()
@@ -141,7 +149,7 @@ class class_calcDataFile:
         if setConfig.DEBUG: print("Row - temperature and energy written")
             
 
-    def distanceCalculator(self, atomObj, frame_idx): #--------------------------------------------------------------------------------------            
+    def distanceCalculator(self, atomObj, frame_idx): #-------------------------------------------------------------------------------------------------------------------------------------------            
         
         n_atomi = len(atomObj)
         simboli = atomObj.get_chemical_symbols()  # Restituisce una lista tipo ['Ta', 'Ta', ..., 'O', 'O']
@@ -162,6 +170,23 @@ class class_calcDataFile:
         
         # 4. Scrittura sul file CSV di tutti i 126 atomi per il frame corrente
         for atom_id in range(n_atomi):
+
+            #--- Calcolo del versore radiale ---
+            vicino_id = nearest_idx[atom_id]
+            r_min = min_dists[atom_id]
+
+            #Estraiamo il vettore 3D specifico verso il primo vicino (vector=True)
+            vec_ij = atomObj.get_distance(atom_id, vicino_id, mic=True, vector=True)
+
+            #Normalizziamo per ottenere il versore (x, y, z)
+            if r_min > 1e-12:
+                unit_vec = vec_ij / r_min
+            else:
+                unit_vec = np.array([0.0, 0.0, 0.0])
+                            
+            ux_rad, uy_rad, uz_rad = unit_vec[0], unit_vec[1], unit_vec[2]
+
+        
             self.writers['dist'].writerow([
                 frame_idx,                          # Indice del frame
                 atom_id,                            # ID dell'atomo (0 .. 125)
@@ -169,13 +194,16 @@ class class_calcDataFile:
                 f"{min_dists[atom_id]:.4f}",        # Distanza primo vicino
                 f"{mean_dists[atom_id]:.4f}",       # Distanza media da tutti gli altri
                 f"{max_dists[atom_id]:.4f}",        # Distanza massima da tutti gli altri
-                nearest_idx[atom_id]                # ID dell'atomo primo vicino
+                nearest_idx[atom_id],               # ID dell'atomo primo vicino
+                f"{ux_rad:.6f}",                    # ux_rad
+                f"{uy_rad:.6f}",                    # uy_rad
+                f"{uz_rad:.6f}"                     # uz_rad
             ])
 
         if setConfig.DEBUG: print("Row - distances written")
 
 
-    def forceCalculator(self, atomObj, frame_idx): #-------------------------------------------------------------------------------------------------------
+    def forceCalculator(self, atomObj, frame_idx): #----------------------------------------------------------------------------------------------------------------------------------------------
 
         forze = atomObj.get_forces()             # Matrice (N, 3) con le componenti Fx, Fy, Fz
         simboli = atomObj.get_chemical_symbols() # Lista dei simboli chimici ['Ta', 'O', ...]
@@ -200,7 +228,7 @@ class class_calcDataFile:
         if setConfig.DEBUG: print("File forze totali stampato")
 
 
-    def energCalculatorParts(self, atomObj, frame_idx): #---------------------------------------------------------------------------------------------------
+    def energCalculatorParts(self, atomObj, frame_idx): #------------------------------------------------------------------------------------------------------------------------------------------
 
         #calcoliamo e salviamo la sola energia GAP
         atomObj.calc = self.simClass.calc_gap
@@ -218,7 +246,7 @@ class class_calcDataFile:
 
         if setConfig.DEBUG: print("Energie stampate correttamente")
 
-    def forceCalculatorParts(self, atomObj, frame_idx): #----------------------------------------------------------------------------------------------------
+    def forceCalculatorParts(self, atomObj, frame_idx): #-------------------------------------------------------------------------------------------------------------------------------------
 
         #calcoliamo e salviamo le forze GAP
         atomObj.calc = self.simClass.calc_gap   #Forze con GAP (matrice N x 3)
@@ -233,19 +261,30 @@ class class_calcDataFile:
         simboli = atomObj.get_chemical_symbols()
 
         for atom_id in range(len(atomObj)):
+
+            #Estraiamo le componenti (x, y, z) dall'array dell'atomo
+            fg_x, fg_y, fg_z = forze_gap[atom_id][0], forze_gap[atom_id][1], forze_gap[atom_id][2]
+            fz_x, fz_y, fz_z = forze_zbl[atom_id][0], forze_zbl[atom_id][1], forze_zbl[atom_id][2]
+        
             self.writers['force-part'].writerow([
                 frame_idx,
                 atom_id,
                 simboli[atom_id],
                 f"{mod_gap[atom_id]:.6f}",
-                f"{mod_zbl[atom_id]:.6f}"            
+                f"{mod_zbl[atom_id]:.6f}",   
+                f"{fg_x:.6f}",
+                f"{fg_y:.6f}",
+                f"{fg_z:.6f}",   
+                f"{fz_x:.6f}",
+                f"{fz_y:.6f}",
+                f"{fz_z:.6f}"                                                
             ])
 
             if setConfig.DEBUG: print("Row forze part stampata")
 
         if setConfig.DEBUG: print("File forze parts stampato")
 
-    def velocityCalculator(self, atomObj, frame_idx): #----------------------------------------------------------------------------------------------------
+    def velocityCalculator(self, atomObj, frame_idx): #-----------------------------------------------------------------------------------------------------------------------------------
 
         #Matrice (N, 3) con le componenti vx, vy, vz
         #Uità di misura in angstrom / fs
@@ -275,3 +314,49 @@ class class_calcDataFile:
             ])
 
         if setConfig.DEBUG: print("File velocità totali stampato")
+
+
+    def projectionCalculator(self): #------------------------------------------------------------------------------------------------------------------
+
+        colonne_da_caricare = ["F_gap_x", "F_gap_y", "F_gap_z", "F_zbl_x", "F_zbl_y", "F_zbl_z"]
+        file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_gap+zbl.csv")
+        df_f = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG: print(f"Righe lette da forze_gap+zbl.csv: {len(df_f)}")
+
+        colonne_da_caricare = ["Specie", "ux_rad", "uy_rad", "uz_rad", "Frame_ID", "Atomo_ID"]
+        file_path = os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv")
+        df_d = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG: print(f"Righe lette da distanze.csv: {len(df_d)}")
+
+        # Calcolo della Proiezione Radiale ZBL (Prodotto Scalare puro F_zbl · u)
+        # Risultato: < 0 per Repulsiva | > 0 per Attrattiva
+        frad_zbl = ( df_f["F_zbl_x"] * df_d["ux_rad"]
+                   + df_f["F_zbl_y"] * df_d["uy_rad"]
+                   + df_f["F_zbl_z"] * df_d["uz_rad"]
+                   )
+        # Calcolo della Proiezione Radiale GAP (Prodotto Scalare puro F_gap · u)
+        frad_gap = ( df_f["F_gap_x"] * df_d["ux_rad"]
+                   + df_f["F_gap_y"] * df_d["uy_rad"]
+                   + df_f["F_gap_z"] * df_d["uz_rad"]
+                   )
+        # Calcolo della Forza Radiale TOTALE (GAP + ZBL)
+        frad_tot = frad_zbl + frad_gap
+
+        # Creazione del NUOVO DataFrame
+        df_risultati = pd.DataFrame({
+            "Frame_ID": df_d["Frame_ID"].astype(int),
+            "Atomo_ID": df_d["Atomo_ID"].astype(int),
+            "Specie": df_d["Specie"],
+            "GAP_Prj": frad_gap,
+            "ZBL_Prj": frad_zbl,
+            "TOT_Prj": frad_tot
+            })
+
+        # Salvataggio del nuovo DataFrame su un nuovo file CSV (senza l'indice di Pandas)
+        pathf = os.path.join(setConfig.PATH_OUT_FILE,"forze_proiettate_radiali.csv")
+        df_risultati.to_csv(pathf, index=False)
+        print("Nuovo DataFrame creato e salvato con successo!")
+
+        if setConfig.DEBUG: print(f"Righe finali unite e salvate: {len(df_risultati)}")
+
+#----------------------------------------------------------------------------------------------------------------------------------------

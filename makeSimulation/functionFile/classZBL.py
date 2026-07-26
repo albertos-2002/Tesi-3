@@ -102,7 +102,7 @@ class class_zbl(Calculator):
         dphi_dx = -np.sum((self.coefficients * self.exponents)[None, :] * exponentials, axis=1)
         
         # Prefattore coulombiano (convertito nelle unità di misura di ASE)
-        prefactor = Hartree * Bohr * Zi * Zj
+        prefactor = Hartree * Bohr * Zi * Zj * setConfig.SCALE_ZBL
         # Energia ZBL non smorzata per ciascuna coppia
         zbl_energy = prefactor * phi / r
         # Derivata analitica dell'energia ZBL pura rispetto a r

@@ -35,17 +35,21 @@ class class_makeGraph:
         if setConfig.GENERA_VELOCITA_TEMPO or setConfig.GENERA_VELOCITA_DISTANZA:
             self.makeVelocity()
 
-        if setConfig.GENERA_CONFRONTO_FORZE_MODULO_TEMPO or setConfig.GENERA_CONFRONTO_FORZE_MODULO_DISTANZE:
-            self.makeConfrontoForze()
+        if setConfig.GENERA_CONFRONTO_FORZE_MODULO_TEMPO or setConfig.GENERA_CONFRONTO_FORZE_MODULO_DISTANZE: 
+            if setConfig.IS_ZBL_ON:
+                self.makeConfrontoForze()
+                self.makeForceProjection()
 
         
 
     def makeEnergiaTemperatura(self): #--------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeEnergiaTemperatura")
         #carichiamo solo alcune colonne di dati
         colonne_da_caricare = ["Tempo_fs","Temperatura_K","E_pot_eV","E_kin_eV","E_tot_eV"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "temperatura-energia.csv")
         df = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da temperatura-energia.csv: {len(df)}")
         path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_energia_nve.png")
 
         fig_en, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
@@ -63,7 +67,7 @@ class class_makeGraph:
         ax2.set_xlabel('Tempo (fs)')
         ax2.set_ylabel('Energia (eV)')
         ax2.grid(True, linestyle=':', alpha=0.6)
-        ax2.legend()
+        ax2.legend(markerscale=5)
 
         ax3.scatter(df["Tempo_fs"], df["E_pot_eV"], color='royalblue', s=5, alpha=0.7)
         ax3.set_title('Dettaglio E. Potenziale')
@@ -78,6 +82,7 @@ class class_makeGraph:
 
     def makeSpaceConfiguration(self): #------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeSpaceConfiguration")
         #Gestione dei path di salvataggio
         path2d = os.path.join(setConfig.PATH_OUT_GRAPH , setConfig.DIR_SALVATAGGIO_2D)
         path3d = os.path.join(setConfig.PATH_OUT_GRAPH , setConfig.DIR_SALVATAGGIO_3D)
@@ -121,10 +126,12 @@ class class_makeGraph:
 
     def makeForzeTotali(self): #----------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeForzeTotali")
         #carichiamo solo alcune colonne di dati
         colonne_da_caricare = ["Frame_ID", "Modulo_Forza_eV_A","Forza_X_eV_A","Forza_Y_eV_A","Forza_Z_eV_A"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_tot.csv")
         df = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da forze_tot.csv: {len(df)}")
         path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_nve.png")
         path_figm = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_nve-blocchi.png")
 
@@ -140,7 +147,7 @@ class class_makeGraph:
         ax1.set_xlabel('Frame ID')
         ax1.set_ylabel('Forza (eV/Å)')
         ax1.grid(True, linestyle=':', alpha=0.7)
-        ax1.legend()
+        ax1.legend(markerscale=5)
 
         fig1.savefig(path_fig, dpi=300)
         plt.close(fig1)
@@ -184,14 +191,17 @@ class class_makeGraph:
 
     def makeForceDistance(self): #------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeForceDistance")
         #Modulo della forza totale in funzione del valore della distanza minima
         colonne_da_caricare = ["Specie", "Modulo_Forza_eV_A", "Frame_ID"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_tot.csv")
         df_f = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da forze_tot.csv: {len(df_f)}")
 
         colonne_da_caricare = ["Specie", "Dist_Min_A", "Frame_ID"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv")
         df_d = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da distanze.csv: {len(df_d)}")
         
         path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza_nve.png")
         path_fig3d = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza3d_nve.png")
@@ -201,14 +211,19 @@ class class_makeGraph:
         ax_fd.scatter(df_d[df_d["Specie"]=="Ta"]["Dist_Min_A"], df_f[df_f["Specie"]=="Ta"]["Modulo_Forza_eV_A"], color='royalblue', alpha=0.3, s=5, label='Tantalo (Ta)', edgecolors='none')
         ax_fd.scatter(df_d[df_d["Specie"]=="O"]["Dist_Min_A"], df_f[df_f["Specie"]=="O"]["Modulo_Forza_eV_A"], color='crimson', alpha=0.3, s=5, label='Ossigeno (O)', edgecolors='none')
 
-        ax_fd.axvline(x=setConfig.RAGGIO_INNER, color='black', linestyle='--', alpha=0.7, label=f'r_inner ({setConfig.RAGGIO_INNER} Å)')
-        ax_fd.axvline(x=setConfig.RAGGIO_OUTER, color='gray', linestyle=':', alpha=0.7, label=f'r_outer ({setConfig.RAGGIO_OUTER} Å)')
+        if setConfig.IS_ZBL_ON:
+            ax_fd.axvline(x=setConfig.RAGGIO_INNER, color='black', linestyle='--', alpha=0.7, label=f'r_inner ({setConfig.RAGGIO_INNER} Å)')
+            ax_fd.axvline(x=setConfig.RAGGIO_OUTER, color='gray', linestyle=':', alpha=1, label=f'r_outer ({setConfig.RAGGIO_OUTER} Å)')
 
-        ax_fd.set_title("Modulo della Forza vs Distanza dal Vicino più Prossimo (GAP + ZBL)", fontsize=13, pad=12)
+        if setConfig.IS_ZBL_ON:
+            ax_fd.set_title("Modulo della Forza vs Distanza dal Vicino più Prossimo (GAP + ZBL)", fontsize=13, pad=12)
+        else:
+            ax_fd.set_title("Modulo della Forza vs Distanza dal Vicino più Prossimo (GAP)", fontsize=13, pad=12)
+        
         ax_fd.set_xlabel("Distanza dal Vicino più Prossimo (Å)", fontsize=11)
         ax_fd.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
         ax_fd.grid(True, linestyle='--', alpha=0.6)
-        ax_fd.legend(loc='upper right', fontsize=10)
+        ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_fig, dpi=300)
         plt.close(fig_fd)
@@ -231,16 +246,18 @@ class class_makeGraph:
         ax_3d.set_ylabel("Distanza dal Vicino (Å)", fontsize=10, labelpad=10)
         ax_3d.set_zlabel("Modulo della Forza (eV/Å)", fontsize=10, labelpad=10)
         ax_3d.view_init(elev=25, azim=135)
-        ax_3d.legend(loc='upper left', fontsize=10)
+        ax_3d.legend(loc='upper left', fontsize=10, markerscale=3)
         plt.tight_layout()
         plt.savefig(path_fig3d, dpi=300)
         plt.close(fig_3d)
 
     def makeHistoDistanze(self): #-------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeHistoDistanze")
         colonne_da_caricare = ["Dist_Min_A"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv")
         df = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da distanze.csv: {len(df)}")
         path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "histo_distanze.png")
 
         fig_hist, ax_hist = plt.subplots(figsize=(8, 5))
@@ -258,7 +275,7 @@ class class_makeGraph:
         ax_hist.set_xlabel("Distanza Minima ($\AA$)")
         ax_hist.set_ylabel("Conteggio")
         ax_hist.set_title("Distribuzione delle Distanze Minime dal Vicino più Prossimo")
-        ax_hist.legend()
+        ax_hist.legend(markerscale=5)
         ax_hist.grid(True, linestyle='--', alpha=0.6)
 
         fig_hist.savefig(path_fig, dpi=300)
@@ -266,14 +283,17 @@ class class_makeGraph:
         
     def makeVelocity(self): #----------------------------------------------------------------------------------------------------------------------
     
+        if setConfig.DEBUG:print(f"makeVelocity")
         #Modulo della velocità in funzione del valore della distanza minima
         colonne_da_caricare = ["Specie", "Modulo_Velocita", "Frame_ID"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "velocita.csv")
         df_v = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da velocita.csv: {len(df_v)}")
 
         colonne_da_caricare = ["Specie", "Dist_Min_A"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv")
         df_d = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da distanze.csv: {len(df_d)}")
 
         path_figd = os.path.join(setConfig.PATH_OUT_GRAPH, "velocita_vs_distanza_minima.png")
         path_figt = os.path.join(setConfig.PATH_OUT_GRAPH, "velocita_vs_tempo.png")
@@ -293,7 +313,7 @@ class class_makeGraph:
         ax_vt.set_ylabel("Modulo della Velocità (Å/fs)", fontsize=11)
         
         ax_vt.grid(True, linestyle='--', alpha=0.6)
-        ax_vt.legend(loc='upper right', fontsize=10)
+        ax_vt.legend(loc='upper right', fontsize=10, markerscale=3)
         plt.tight_layout()
         plt.savefig(path_figt, dpi=300)
         plt.close(fig_vt)
@@ -307,14 +327,15 @@ class class_makeGraph:
                       df_v[df_v["Specie"]=="O"]["Modulo_Velocita"], 
                       color='crimson', alpha=0.4, s=15, label='Ossigeno (O)', edgecolors='none')
 
-        ax_vd.axvline(x=setConfig.RAGGIO_INNER, color='black', linestyle='--', alpha=0.7, label=f'r_inner ({setConfig.RAGGIO_INNER} Å)')
-        ax_vd.axvline(x=setConfig.RAGGIO_OUTER, color='gray', linestyle=':', alpha=0.7, label=f'r_outer ({setConfig.RAGGIO_OUTER} Å)')
+        if setConfig.IS_ZBL_ON:
+            ax_vd.axvline(x=setConfig.RAGGIO_INNER, color='black', linestyle='--', alpha=0.7, label=f'r_inner ({setConfig.RAGGIO_INNER} Å)')
+            ax_vd.axvline(x=setConfig.RAGGIO_OUTER, color='gray', linestyle=':', alpha=1, label=f'r_outer ({setConfig.RAGGIO_OUTER} Å)')
 
         ax_vd.set_title("Modulo della Velocità vs Distanza dal Vicino più Prossimo", fontsize=13, pad=12)
         ax_vd.set_xlabel("Distanza dal Vicino più Prossimo (Å)", fontsize=11)
         ax_vd.set_ylabel("Modulo della Velocità (Å/fs)", fontsize=11)
         ax_vd.grid(True, linestyle='--', alpha=0.6)
-        ax_vd.legend(loc='upper right', fontsize=10)
+        ax_vd.legend(loc='upper right', fontsize=10, markerscale=3)
 
         plt.tight_layout()
         plt.savefig(path_figd, dpi=300)
@@ -322,18 +343,22 @@ class class_makeGraph:
 
     def makeConfrontoForze(self): #---------------------------------------------------------------------------------------------------------------------
 
+        if setConfig.DEBUG:print(f"makeConfrontoForze")
         #Confronto dei moduli del GAP e dello ZBL
         colonne_da_caricare = ["Specie", "Modulo_GAP_eV_A", "Modulo_ZBL_eV_A"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_gap+zbl.csv")
         df_f = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da forze_gap+zbl.csv: {len(df_f)}")
 
         colonne_da_caricare = ["Specie", "Dist_Min_A", "Frame_ID"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "distanze.csv")
         df_d = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da distanze.csv: {len(df_d)}")
 
         colonne_da_caricare = ["Specie", "Modulo_Forza_eV_A"]
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_tot.csv")
         df_r = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da forze_tot.csv: {len(df_r)}")
 
         path_figd = os.path.join(setConfig.PATH_OUT_GRAPH, "confronto_forze_vs_distanza_minima.png")
         path_figt = os.path.join(setConfig.PATH_OUT_GRAPH, "confronto_forze_vs_tempo.png")        
@@ -352,7 +377,7 @@ class class_makeGraph:
         ax_ft.set_xlabel("Frame Id", fontsize=11)
         ax_ft.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
         ax_ft.grid(True, linestyle='--', alpha=0.6)
-        ax_ft.legend(loc='upper right', fontsize=10)
+        ax_ft.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_figt, dpi=300)
         plt.close(fig_ft)
@@ -374,8 +399,42 @@ class class_makeGraph:
         ax_fd.set_xlabel("Distanza dal Vicino più Prossimo (Å)", fontsize=11)
         ax_fd.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
         ax_fd.grid(True, linestyle='--', alpha=0.6)
-        ax_fd.legend(loc='upper right', fontsize=10)
+        ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_figd, dpi=300)
         plt.close(fig_fd)
            
+
+    def makeForceProjection(self): #------------------------------------------------------------------------------------------------------------------------------------------
+
+        if setConfig.DEBUG:print(f"makeForceProjection")
+        #Proiezione radiale di GAP e ZBL
+        colonne_da_caricare = ["Specie", "GAP_Prj", "ZBL_Prj", "TOT_Prj", "Frame_ID"]
+        file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_proiettate_radiali.csv")
+        df = pd.read_csv(file_path, usecols=colonne_da_caricare)
+        if setConfig.DEBUG:print(f"Righe lette da forze_proiettate_radiali.csv: {len(df)}")
+
+        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "Proiezione_radiale_forze.png")
+
+        fig_ft, ax_ft = plt.subplots(figsize=(9, 6))
+
+        ax_ft.scatter(df["Frame_ID"], df["GAP_Prj"], color='royalblue', alpha=0.4, s=5, label='Proiezione forza GAP', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="Ta"]["Frame_ID"], df[df["Specie"]=="Ta"]["GAP_Prj"], color='royalblue', alpha=0.3, s=5, label='Proiezione forza GAP (Ta)', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="O"]["Frame_ID"],  df[df["Specie"]=="O"]["GAP_Prj"], color='crimson', alpha=0.3, s=5, label='Proiezione forza GAP (O)', edgecolors='none')
+        ax_ft.scatter(df["Frame_ID"], df["ZBL_Prj"], color='purple', alpha=0.4, s=5, label='Proiezione forza ZBL', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="Ta"]["Frame_ID"], df[df["Specie"]=="Ta"]["ZBL_Prj"], color='purple', alpha=0.3, s=5, label='Proiezione forza ZBL (Ta)', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="O"]["Frame_ID"],  df[df["Specie"]=="O"]["ZBL_Prj"], color='orange', alpha=0.3, s=5, label='Proiezione forza ZBL (O)', edgecolors='none')
+        ax_ft.scatter(df["Frame_ID"], df["TOT_Prj"], color='olive', alpha=0.4, s=5, label='Proiezione forza risultante', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="Ta"]["Frame_ID"], df[df["Specie"]=="Ta"]["TOT_Prj"], color='olive', alpha=0.3, s=5, label='Proiezione forza risultante (Ta)', edgecolors='none')
+        #ax_ft.scatter(df[df["Specie"]=="O"]["Frame_ID"],  df[df["Specie"]=="O"]["TOT_Prj"], color='green', alpha=0.3, s=5, label='Proiezione forza risultante (O)', edgecolors='none')
+
+        ax_ft.set_title("Proiezione della Forza sul raggio ij", fontsize=13, pad=12)
+        ax_ft.set_xlabel("Frame Id", fontsize=11)
+        ax_ft.set_ylabel("Proiezione della Forza Netta (eV/Å) \n >0 Attrattiva | <0 Repulsiva", fontsize=11, multialignment='center')
+        ax_ft.grid(True, linestyle='--', alpha=0.6)
+        ax_ft.legend(loc="best", fontsize=10, markerscale=5)
+        plt.tight_layout()
+        plt.savefig(path_fig, dpi=300)
+        plt.close(fig_ft)
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

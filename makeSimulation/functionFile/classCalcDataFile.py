@@ -33,9 +33,11 @@ class class_calcDataFile:
     def calcData(self): #--------------------------------------------------------------------------------------------------------------------------------------
 
         self.setFile()
+        print("Files creati correttamente")
 
         #estrazione di un singolo frame alla volta
         #la scrittura è affidata a singole funzioni
+        print("Inizio estrazione dati dai frame")
         for frame_idx, atomi in enumerate(iread(os.path.join(setConfig.PATH_OUT_FILE, "md_gap+zbl_nve.traj"))):
 
             time = frame_idx * setConfig.TIMESTEP
@@ -62,11 +64,15 @@ class class_calcDataFile:
             if self.calcVelocity:
                 self.velocityCalculator(atomi, frame_idx)
 
-        if setConfig.DEBUG: print("Concluso il ciclo for su tutti i frame")
+            if setConfig.TERMINAL_LOG and frame_idx % 10 == 0:
+                print("Frame analizzati: ", frame_idx, "/", setConfig.PASSI_TOTALI)
+
+        print("Concluso il ciclo for su tutti i frame")
 
         #chiusura di tutti i file apeti
         for f in self.file_aperti.values():
             f.close()
+        print("Files closed")
 
         if self.calcForce and self.calcDistance and setConfig.IS_ZBL_ON:
             self.projectionCalculator()

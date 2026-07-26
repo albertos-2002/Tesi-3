@@ -1,1 +1,4 @@
-si è deciso di comprimere le varie funzioni in classi in modo da dover leggere i file una sola volta e usarli nelle varie funzioni
+il codice usato per le varie simulazioni è stato diviso in classi
+ogni classe si occupa di una macrocateogria
+si è **tentato** di rendere il codice RAM friendly a discapito del tempo di esecuzione
+per il funzionamento completo di veda il chart

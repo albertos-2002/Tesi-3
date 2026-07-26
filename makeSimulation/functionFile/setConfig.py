@@ -1,3 +1,5 @@
+from pathlib import Path
+
 def carica_parametri_globali(filepath):
     """
     Legge un file di configurazione e imposta i parametri come variabili globali.
@@ -54,6 +56,40 @@ def carica_parametri_globali(filepath):
     except Exception as e:
         print(f"Si è verificato un errore inaspettato: {e}")
 
+    #Controllo e creazione delle cartelle necessarie
+    #Crea la cartella (e tutte le sottocartelle necessarie) se non esiste
+    Path(PATH_OUT_FILE).mkdir(parents=True, exist_ok=True)
+    print("Creata la cartella per i file di out")
+    Path(PATH_OUT_GRAPH).mkdir(parents=True, exist_ok=True)
+    print("Creata la cartella per i graph di out")    
+
+# =========================================================================
+#Dump automatico dei parametri registrati nella cartella di output
+# =========================================================================
+    try:
+        path_dump = Path(PATH_OUT_FILE) / "param.log"
+        with open(path_dump, 'w', encoding='utf-8') as file_dump:
+            file_dump.write("# ==========================================\n")
+            file_dump.write("# Dump dei parametri di configurazione caricati\n")
+            file_dump.write("# ==========================================\n\n")
+            
+            for chiave, valore in globals().items():
+                # Filtra per salvare solo le variabili in MAIUSCOLO
+                if chiave.isupper() and not chiave.startswith('__'):
+                    if isinstance(valore, bool):
+                        val_str = "True" if valore else "False"
+                    elif valore is None:
+                        val_str = ""
+                    else:
+                        val_str = str(valore)
+                        
+                    file_dump.write(f"{chiave}: {val_str}\n")
+                    
+        print(f"Dump dei parametri salvato in: {path_dump}")
+    except Exception as e:
+        print(f"Errore durante il dump dei parametri: {e}")
+
+
 # ==========================================
 # Esempio di utilizzo
 # ==========================================
@@ -65,3 +101,7 @@ def carica_parametri_globali(filepath):
 # print(IS_ZBL_ON) 
 # print(TEMPERATURE * 2)
 # print(PATH_POTENZIALE)
+
+
+
+

@@ -1,0 +1,12 @@
+risultati del training di un potenziale GAP con gap_fit
+si è usata la seguente versione del comando
+
+gap_fit at_file=../train_data.extxyz \
+default_sigma={0.0002 0.1 0.0 0.0} \
+gap={soap l_max=2 n_max=2 atom_sigma=0.5 zeta=4 cutoff=5.0 covariance_type=dot_product n_sparse=500 sparse_method=fps delta=1} \
+e0={Ta:0:O:0} \
+energy_parameter_name=energy \
+force_parameter_name=forces \
+gp_file=out_potenziale_gap.xml > potenziale_quippy.log
+
+da cui il nome usato in output

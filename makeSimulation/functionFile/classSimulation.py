@@ -81,8 +81,8 @@ class class_makeSimulation:
        self.dyn = VelocityVerlet(
             self.atomi_md, 
             timestep=self.timestep, 
-            trajectory=os.path.join(setConfig.PATH_OUT_FILE, "md_gap+zbl_nve.traj"), 
-            logfile=os.path.join(setConfig.PATH_OUT_FILE, "md_gap+zbl_nve.log"),
+            trajectory=os.path.join(setConfig.PATH_OUT_FILE, "data_frames.traj"), 
+            logfile=os.path.join(setConfig.PATH_OUT_FILE, "data_frames.log"),
             loginterval=1
         )
 

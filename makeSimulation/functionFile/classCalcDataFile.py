@@ -38,7 +38,7 @@ class class_calcDataFile:
         #estrazione di un singolo frame alla volta
         #la scrittura è affidata a singole funzioni
         print("Inizio estrazione dati dai frame")
-        for frame_idx, atomi in enumerate(iread(os.path.join(setConfig.PATH_OUT_FILE, "md_gap+zbl_nve.traj"))):
+        for frame_idx, atomi in enumerate(iread(os.path.join(setConfig.PATH_OUT_FILE, "data_frames.traj"))):
 
             time = frame_idx * setConfig.TIMESTEP
 

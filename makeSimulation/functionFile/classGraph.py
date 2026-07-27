@@ -50,7 +50,7 @@ class class_makeGraph:
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "temperatura-energia.csv")
         df = pd.read_csv(file_path, usecols=colonne_da_caricare)
         if setConfig.DEBUG:print(f"Righe lette da temperatura-energia.csv: {len(df)}")
-        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_energia_nve.png")
+        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_energia.png")
 
         fig_en, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
 
@@ -89,7 +89,7 @@ class class_makeGraph:
         os.makedirs(path2d, exist_ok=True)
         os.makedirs(path3d, exist_ok=True)
 
-        for frame_idx, atomi in enumerate(iread(os.path.join(setConfig.PATH_OUT_FILE, "md_gap+zbl_nve.traj"))):
+        for frame_idx, atomi in enumerate(iread(os.path.join(setConfig.PATH_OUT_FILE, "data_frames.traj"))):
 
             if frame_idx % setConfig.FREQUENZA_IMMAGINI == 0:
 
@@ -132,8 +132,8 @@ class class_makeGraph:
         file_path = os.path.join(setConfig.PATH_OUT_FILE, "forze_tot.csv")
         df = pd.read_csv(file_path, usecols=colonne_da_caricare)
         if setConfig.DEBUG:print(f"Righe lette da forze_tot.csv: {len(df)}")
-        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_nve.png")
-        path_figm = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_nve-blocchi.png")
+        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali.png")
+        path_figm = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_blocchi.png")
 
         #prima costruiamo un grafico in cui sono printate tutte le forze
         fig1, ax1  = plt.subplots(figsize=(10, 5))    
@@ -203,8 +203,8 @@ class class_makeGraph:
         df_d = pd.read_csv(file_path, usecols=colonne_da_caricare)
         if setConfig.DEBUG:print(f"Righe lette da distanze.csv: {len(df_d)}")
         
-        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza_nve.png")
-        path_fig3d = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza3d_nve.png")
+        path_fig = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza.png")
+        path_fig3d = os.path.join(setConfig.PATH_OUT_GRAPH, "andamento_forze_totali_distanza3d.png")
         
         fig_fd, ax_fd = plt.subplots(figsize=(9, 6))
 

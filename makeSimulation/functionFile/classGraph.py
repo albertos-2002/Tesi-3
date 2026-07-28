@@ -76,7 +76,11 @@ class class_makeGraph:
         
         plt.tight_layout()
         plt.savefig(path_fig, dpi=300)
-        plt.close(fig_en)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_en)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
         if setConfig.DEBUG: print("Grafico temperatura-energia stampato")
 
@@ -150,7 +154,11 @@ class class_makeGraph:
         ax1.legend(markerscale=5)
 
         fig1.savefig(path_fig, dpi=300)
-        plt.close(fig1)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig1)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
 
         fig1m, axsm = plt.subplots(2, 2, figsize=(15, 10))
@@ -185,7 +193,11 @@ class class_makeGraph:
 
         plt.tight_layout()
         fig1m.savefig(path_figm, dpi=300)
-        plt.close(fig1m)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig1m)
+        else:
+            plt.show(block=False) 
+            plt.pause(0.1)
 
         gc.collect()
 
@@ -226,7 +238,11 @@ class class_makeGraph:
         ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_fig, dpi=300)
-        plt.close(fig_fd)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_fd)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
         #Modulo della forza totale in funzione della distanza e del frame
         fig_3d = plt.figure(figsize=(10, 8))
@@ -249,7 +265,11 @@ class class_makeGraph:
         ax_3d.legend(loc='upper left', fontsize=10, markerscale=3)
         plt.tight_layout()
         plt.savefig(path_fig3d, dpi=300)
-        plt.close(fig_3d)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_3d)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
     def makeHistoDistanze(self): #-------------------------------------------------------------------------------------------------------------------
 
@@ -279,7 +299,11 @@ class class_makeGraph:
         ax_hist.grid(True, linestyle='--', alpha=0.6)
 
         fig_hist.savefig(path_fig, dpi=300)
-        plt.close(fig_hist)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_hist)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
         
     def makeVelocity(self): #----------------------------------------------------------------------------------------------------------------------
     
@@ -316,7 +340,11 @@ class class_makeGraph:
         ax_vt.legend(loc='upper right', fontsize=10, markerscale=3)
         plt.tight_layout()
         plt.savefig(path_figt, dpi=300)
-        plt.close(fig_vt)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_vt)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
 
         fig_vd, ax_vd = plt.subplots(figsize=(9, 6))
@@ -339,7 +367,11 @@ class class_makeGraph:
 
         plt.tight_layout()
         plt.savefig(path_figd, dpi=300)
-        plt.close(fig_vd)     
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_vd)  
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
     def makeConfrontoForze(self): #---------------------------------------------------------------------------------------------------------------------
 
@@ -380,7 +412,11 @@ class class_makeGraph:
         ax_ft.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_figt, dpi=300)
-        plt.close(fig_ft)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_ft)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
 
         fig_fd, ax_fd = plt.subplots(figsize=(9, 6))
@@ -402,8 +438,11 @@ class class_makeGraph:
         ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_figd, dpi=300)
-        plt.close(fig_fd)
-           
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_fd)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
     def makeForceProjection(self): #------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -435,6 +474,10 @@ class class_makeGraph:
         ax_ft.legend(loc="best", fontsize=10, markerscale=5)
         plt.tight_layout()
         plt.savefig(path_fig, dpi=300)
-        plt.close(fig_ft)
+        if not setConfig.KEEP_OPEN:
+            plt.close(fig_ft)
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ from functionFile import classPerturbation
 from functionFile import classCalcDataFile
 from functionFile import classGraph
 from functionFile import classMontecarlo
+import gc
 
 def main():
 
@@ -14,25 +15,40 @@ def main():
     #i parametri decidono che tipo di simulazione deve essere svolta
     if setConfig.NVE_SIMULATION:
         sim = classSimulation.class_makeSimulation()
-        sim.runSimulation()        
+        sim.runSimulation()
+        print("Eliminazione classe in corso..........")
+        del sim
+        gc.collect()
     
     if setConfig.RANDOMWALK_FIXED:
         sim = classPerturbation.class_makePerturbation()
         sim.runPerturbation()
+        print("Eliminazione classe in corso..........")
+        del sim
+        gc.collect()
     
     if setConfig.RANDOMWALK:
         sim = classPerturbation.class_makePerturbation()
         sim.runPerturbationPath()
+        print("Eliminazione classe in corso..........")
+        del sim
+        gc.collect()
     
     if setConfig.MONTECARLO_METROPOLIS:
         sim = classMontecarlo.class_makeMontecarlo()
         sim.runMetropolisMC()
+        print("Eliminazione classe in corso..........")
+        del sim
+        gc.collect()
 
 
     print("Caricamento dati...")
     if not setConfig.SKIP_CALC:
         cdf = classCalcDataFile.class_calcDataFile()
         cdf.calcData()
+        print("Eliminazione classe in corso..........")
+        del cdf
+        gc.collect()
 
     print("Generazione dei grafici finali...")
     graph = classGraph.class_makeGraph()

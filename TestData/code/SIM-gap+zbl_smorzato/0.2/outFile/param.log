@@ -1,0 +1,32 @@
+# ==========================================
+# Dump dei parametri di configurazione caricati
+# ==========================================
+
+DEBUG: False
+TERMINAL_LOG: True
+KEEP_OPEN: False
+PATH_POTENZIALE: ./baseFile/out_potenziale_gap-500-n2-l2.xml
+PATH_CONFIG_INIZIALE: ./baseFile/TestData_testdata_frame1.extxyz
+PATH_OUT_FILE: ../TestData/code/SIM-gap+zbl_smorzato/outFile
+PATH_OUT_GRAPH: ../TestData/code/SIM-gap+zbl_smorzato/outGraph
+TEMPERATURE: 3000
+TIMESTEP: 1.0
+PASSI_TOTALI: 200
+IS_ZBL_ON: True
+RAGGIO_INNER: 0.6
+RAGGIO_OUTER: 1.3
+SCALE_ZBL: 0.2
+GENERA_IMMAGINI_SPAZIALI: True
+FREQUENZA_IMMAGINI: 20
+HISTO_DISTANZE: True
+DIR_SALVATAGGIO_2D: immagini_MD_NVE_2D
+DIR_SALVATAGGIO_3D: immagini_MD_NVE_3D
+GENERA_ENERGIA_TEMPERATURA: True
+GENERA_FORZA_COMPONENTI_TEMPO: True
+GENERA_FORZA_MODULO_TEMPO: True
+GENERA_FORZA_MODULO_DISTANZA: True
+GENERA_FORZA_MODULO_DISTANZA_3D: True
+GENERA_VELOCITA_TEMPO: True
+GENERA_VELOCITA_DISTANZA: True
+GENERA_CONFRONTO_FORZE_MODULO_TEMPO: True
+GENERA_CONFRONTO_FORZE_MODULO_DISTANZE: True

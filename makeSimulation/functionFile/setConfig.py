@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 def carica_parametri_globali(filepath):
     """
@@ -62,6 +63,15 @@ def carica_parametri_globali(filepath):
     print("Creata la cartella per i file di out")
     Path(PATH_OUT_GRAPH).mkdir(parents=True, exist_ok=True)
     print("Creata la cartella per i graph di out")    
+
+    #Controlliamo che sia attiva una sola flag di simulazione
+    if ( NVE_SIMULATION
+        + RANDOMWALK_FIXED
+        + RANDOMWALK
+        + MONTECARLO_METROPOLIS
+        ) > 1: 
+        print("Sono attive almeno due frag di simulazione, funzione al momento non supportata")
+        sys.exit()
 
 # =========================================================================
 #Dump automatico dei parametri registrati nella cartella di output

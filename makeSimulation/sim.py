@@ -54,6 +54,9 @@ def main():
     graph = classGraph.class_makeGraph()
     graph.makeGraph()
 
+    if setConfig.KEEP_OPEN:
+        input("Press any key to continue.........")
+
     print("Tutto completato! Simulazione eseguita ed i grafici sono stati generati con successo.")
     
 if __name__ == "__main__":

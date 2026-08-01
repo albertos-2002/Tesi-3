@@ -8,9 +8,12 @@
 \contentsline {subsubsection}{Calcolo del power spectrum}{4}{section*.8}%
 \contentsline {subsubsection}{Risultato finale}{4}{section*.9}%
 \contentsline {subsubsection}{Schema riassuntivo}{5}{section*.11}%
-\contentsline {section}{\numberline {1.3}Potenziali GAP}{5}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Addestramento}{6}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Simulazione}{7}{section.1.5}%
+\contentsline {section}{\numberline {1.3}Potenziali GAP}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Addestramento}{9}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Simulazione}{9}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Simulazione NVE}{9}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Simulazione NVE con ZBL}{9}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Simulazione Montecarlo}{10}{subsection.1.5.3}%
 \contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{11}{chapter.2}%
 \contentsline {section}{\numberline {2.1}ASE}{11}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quentum Espresso}{11}{subsection.2.1.1}%
@@ -32,10 +35,9 @@
 \contentsline {subsubsection}{Training set}{19}{section*.26}%
 \contentsline {subsubsection}{Test set}{19}{section*.28}%
 \contentsline {section}{\numberline {3.3}Simulazione NVE}{19}{section.3.3}%
-\contentsline {subsubsection}{Training set}{20}{section*.30}%
-\contentsline {subsubsection}{Test set}{20}{section*.32}%
 \contentsline {section}{\numberline {3.4}Analisi delle problematiche}{20}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Temperatura}{21}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Timestep}{21}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Forze}{22}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Potenziale di repulsione ZBL}{23}{section.3.5}%
+\contentsline {subsection}{\numberline {3.4.3}Distanze e forze}{22}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Simulazione con ZBL}{23}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Simulazione con metodo Montecarlo}{24}{section.3.6}%

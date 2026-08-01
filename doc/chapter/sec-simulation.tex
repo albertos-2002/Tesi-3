@@ -1,3 +1,52 @@
 
 \section{Simulazione}
-Per simulare una dinamica molecolare usiamo un processo iterativo, partiamo da una configurazione che facciamo evolvere nel tempo in base alle forze calcolate tramite l'energia ricavata a partire dai potenziali GAP, questo risultato viene inserito nuovamente all'inizio del ciclo. Si ottiene in questo modo una traiettoria di dinamica molecolare per il sistema in esame.
+
+La parte di simulazione è stata divisa in tre diverse tipologie, ognuna di queste tentava di risolvere i problemi sorti durante la fase di analisi.
+
+Di seguito vengono descritte, senza entrare troppo nei dettagli, le diverse procedure adottate.
+
+\subsection{Simulazione NVE}
+
+Per prima cosa abbiamo provato a svolgere una semplice simulazione di tipo NVE, questa prende il nome dalle quantità che si pone di conservare, ovvero il numero di particelle, il volume e l'energia totale.
+
+Per questa si è usato come potenziale il GAP addestrato e per realizzarla la libreria ASE (si veda \autoref{subsec:simulazione-nve-ase}).
+
+\subsection{Simulazione NVE con ZBL}
+
+Questa simulazione prevede di utilizzare la stessa struttura vista alle sezione precedente, a cui viene addizionato un potenziale ZBL. Questo può essere inserito sia in fase di training del potenziale che come correzione successiva, in questo caso abbiamo deciso di adottare la seconda opzione. 
+
+Lo ZBL (Ziegler-Biersack-Littmark) è un potenziale repulsivo che utilizza una repulsione coulombiana schermata, più precisamente esso ha la seguente formula:
+
+\begin{equation}
+    V(r_{ij}) = \frac{1}{4\pi\epsilon_0}\frac{Z_iZ_j}{r_{ij}} \phi\left(\frac{r_{ij}}{a_{ij}}\right)
+\end{equation}
+
+dove si riconosce la prima parte, il potenziale di Coulomb, la funzione $\phi$ e detta \textit{funzione di schermatura universale}, questa permette di tenere in considerazione la schermatura prodotta dalla nuvola elettronica. La forma di questa funzione è stata ricavata tramite un fit su un grande nuomeri di coppie e assume la forma seguente, data dalla somma di quattro esponenziali:
+
+\begin{equation}
+    \phi\left(\frac{r_{ij}}{a_{ij}}\right) = \phi(x) = 0.1818e^{-3.2x} + 0.5099e^{-0.9423x} + 0.2802e^{-0.4029x} + 0.02817e^{-0.2016x}
+\end{equation}
+
+dove con $a_{ij}$, detto \textit{lunghezza di schermatura universale} la schermatura viene adattata alla dimensione degli atomi coinvolti. In particolare
+
+\begin{equation}
+    a_{ij} = \frac{0.8854 a_0}{Z_i^{0.23} + Z_j^{0.23}}
+\end{equation}
+
+L'implementazione nel nostro caso ha un termine aggiuntivo, una funzione di smoothing: 
+
+\begin{equation}
+    S(u) = -6u^5 + 15u^4 - 10u^3 +1
+\end{equation}
+
+\begin{equation}
+    u = \frac{r-r_{inner}}{r_{outer}-r_{inner}}
+\end{equation}
+
+questo permette di eliminare le discontinuita quando vengono calcolate le forze, infatti agli estremi la derivata di questa funzione si anulla.
+
+I parametri $r_{inner}$ e $r_{outer}$ rappresentano rispettivamente la distanza a cui il potenziale assume il valore massimo, ovvero la funzione si smoothing assume valore 1, e la distanza a cui il potenziale repulsivo si annulla. Possiamo immaginare che questi valori rappresentino delle sfere di influenza.
+
+\subsection{Simulazione Montecarlo}
+
+-

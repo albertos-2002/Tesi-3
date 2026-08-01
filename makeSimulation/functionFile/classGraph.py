@@ -81,6 +81,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_en)
 
         if setConfig.DEBUG: print("Grafico temperatura-energia stampato")
 
@@ -159,6 +161,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig1)
 
 
         fig1m, axsm = plt.subplots(2, 2, figsize=(15, 10))
@@ -198,6 +202,8 @@ class class_makeGraph:
         else:
             plt.show(block=False) 
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig1m)
 
         gc.collect()
 
@@ -243,6 +249,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_fd)
 
         #Modulo della forza totale in funzione della distanza e del frame
         fig_3d = plt.figure(figsize=(10, 8))
@@ -270,6 +278,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_3d)
 
     def makeHistoDistanze(self): #-------------------------------------------------------------------------------------------------------------------
 
@@ -304,6 +314,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_hist)
         
     def makeVelocity(self): #----------------------------------------------------------------------------------------------------------------------
     
@@ -345,6 +357,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_vt)
 
 
         fig_vd, ax_vd = plt.subplots(figsize=(9, 6))
@@ -372,6 +386,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_vd)
 
     def makeConfrontoForze(self): #---------------------------------------------------------------------------------------------------------------------
 
@@ -417,6 +433,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_ft)
 
 
         fig_fd, ax_fd = plt.subplots(figsize=(9, 6))
@@ -443,6 +461,8 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
+            input("Press any key to continue.........")
+            plt.close(fig_fd)
 
     def makeForceProjection(self): #------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -479,5 +499,6 @@ class class_makeGraph:
         else:
             plt.show(block=False)
             plt.pause(0.1)
-
+            input("Press any key to continue.........")
+            plt.close(fig_ft)
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

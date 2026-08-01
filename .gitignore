@@ -166,3 +166,15 @@ TestData/code/MONTECARLO-gap+zbl/0.01/outGraph/immagini_MD_NVE_3D/001500_configu
 /TestData/code/MONTECARLO-gap/0.1/outGraph/immagini_MD_NVE_3D
 /TestData/code/MONTECARLO-gap/0.01-80k/outGraph/immagini_MD_NVE_2D
 /TestData/code/MONTECARLO-gap/0.01-80k/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/traindata/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/traindata/outGraph/immagini_MD_NVE_2D
+/makeSimulation-results/train-gap-base/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/train-gap-base/outGraph/immagini_MD_NVE_2D
+/makeSimulation-results/timestep/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/timestep/outGraph/immagini_MD_NVE_2D
+/makeSimulation-results/temperature-0k/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/temperature-0k/outGraph/immagini_MD_NVE_2D
+/makeSimulation-results/nve-gap-zbl-0.5_1.5/outGraph/immagini_MD_NVE_3D
+/makeSimulation-results/nve-gap-zbl-0.5_1.5/outGraph/immagini_MD_NVE_2D
+/makeSimulation-results/gap-base/immagini_MD_NVE_3D
+/makeSimulation-results/gap-base/immagini_MD_NVE_2D

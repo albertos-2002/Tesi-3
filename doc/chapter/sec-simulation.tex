@@ -47,6 +47,54 @@ questo permette di eliminare le discontinuita quando vengono calcolate le forze,
 
 I parametri $r_{inner}$ e $r_{outer}$ rappresentano rispettivamente la distanza a cui il potenziale assume il valore massimo, ovvero la funzione si smoothing assume valore 1, e la distanza a cui il potenziale repulsivo si annulla. Possiamo immaginare che questi valori rappresentino delle sfere di influenza.
 
-\subsection{Simulazione Montecarlo}
+\subsection{Simulazione Montecarlo con algoritmo di Metropolis}
+\label{subsec:simulazione-metropolis-teoria}
 
--
+Questo tipo di simulazione prevede un cambio di paradigma rispetto a quello che abbiamo visto precedentemente.
+Per prima cosa partiamo considerando il nostro sistema composto da $126$ atomi, tra \ce{Ta} e \ce{O}, a questo possiamo associare uno \textit{spazio delle configurazioni}, ovvero uno spazio nel quale ogni punto rappresenta in modo univoco una configurazione del nostro sistema. 
+
+Questa simulazione abbandona la dinamica molecolare e ci fa invece esplorare questo spazio, che contiene anche tutte le possibili configurazioni ottenute tramite dimanica molecolare un volta fissate le condizioni al contorno.
+
+Ogni configurazione spaziale ha una energia potenziale associata, utilizzando questa energia e la temperatura di riferimento a cui vogliamo studiare il sistema, possiamo calcolare la probabilità che il sistema si trovi in questa particolare configurazione, questo si ottiene tramite la \textit{distribuzione di Boltzman}:
+
+\begin{equation}
+    P(A) \propto \mathrm{exp}\left(-\frac{E_{pot}(A)}{k_bT}\right)
+\end{equation}
+
+nel seguito ci riferiremo all'energia potenziale solo con il termine di energia e con il simbolo $E$, in quanto questa è l'unica che consideriamo.
+
+Dati questi elementi vogliamo determinare un metodo che ci permetta di decire quali stati sono accettabili per il sistema, per prima cosa determiniamo la differenza di energia tra due stati "consecutuvi"
+
+\begin{equation}
+    \Delta E = E_{new} - E_{old}
+\end{equation}
+
+dove con stati "consecutivi" intendiamo due stati, la cui differenza nello spazio delle configurazioni è data da una perturbazione che abbiamo introdotto noi.
+
+Possiamo distingue tra due scenari:
+
+\begin{itemize}
+    \item $\Delta E \leq 0$ lo stato \texttt{new} ha energia minore del precedente
+    \item $\Delta E > 0$ lo stato \texttt{new} ha energia maggiore del precedente
+\end{itemize}
+
+da cui calcoliamo la probabilità di accetare la transizione a questo nuovo stato come:
+
+\begin{equation}
+    P_{acc} = \mathrm{exp}\left(-\frac{\Delta E}{k_bT} \right)
+\end{equation}
+
+In ultimo per determinare se lo stato viene accettato oppure rifiutato generiamo un numero casuale compreso tra zero e uno, nel caso in cui il numero si minore di $P_{acc}$ allora lo stato viene accettato e la configurazione \texttt{new} diventa il nuovo punto di partenza, altrimenti manteniamo la configurazione \texttt{old}.
+
+Possiamo rappresentare questo processo con il seguente schema
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{./img/markov-chain-schema.png}
+    \captionof{schema}{Struttura schematica dell'algoritmo di Metropolis}
+    \label{sch:markov-chain-schema}
+\end{figure}
+
+dove, senza dare ulteriori dettagli, è possibile riconosce la struttura di una Markov chain.
+
+Con $P(T)$ intendiamo la probabilità di accettazione, che in questo contesto abbiamo definito come probabilità di transizione, lo slider giallo rappresenta invece il valore a cui è caduto il numero casuale estratto, nello schema visualizzato la transizione è quindi accettata e si passa dalla configurazione A alla configurazione B. Questo stesso identico schema si ripete per ogni singolo stato proposto.

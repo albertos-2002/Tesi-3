@@ -154,3 +154,65 @@ In particolare andremo ad utilizzare la funzione \texttt{gap\_fit}
 \end{lstlisting}
 
 dopo aver generato il file del potenziale, esso può essere utilizzato come \texttt{calculator} per la dimanica molecolare tramite ASE.
+
+
+\section{Potenziale ZBL} %----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Il potenziale ZBL è stato implementato tramite una classe, in questo modo è stato possibile ereditare da ASE la struttura di un \texttt{calculator}. Di seguito diamo solo una breve parte del codice utilizzato.
+
+\begin{lstlisting}[caption={Snippet per la classe che implementa il potenziale ZBL}, label={code:zbl-class-implementation}, language=python]
+
+class class_zbl(Calculator):
+
+    implemented_properties = ["energy", "free_energy", "forces"]
+
+    def __init__(self, **kwargs): #----------
+        super().__init__(**kwargs)
+
+        self.coefficients = np.array([0.1818, 
+                                      0.5099, 
+                                      0.2802, 
+                                      0.02817], dtype=float)
+        self.exponents = np.array([3.2, 
+                                   0.9423, 
+                                   0.4029, 
+                                   0.2016], dtype=float)
+
+        self.raggio_inner = 0.0
+        self.raggio_outer = 0.0
+
+        self.checkandsetParameters()
+    
+
+    #setting dei parametri
+    def checkandsetParameters(self): #------------
+
+
+    #implementa la funzione di switch per il potenziale e la derivata della funzione di switch
+    def switch(self, distances): #----------
+        .
+        .
+        .
+        return switch, dswitch_dr
+
+    #implementa il vero e proprio calcolatore
+    def calculate(self, atoms=None, properties=("energy",), system_changes=all_changes):
+        super().calculate(atoms, properties, system_changes)
+        .
+        .
+        .
+        # Salvataggio nel dizionario interno di ASE
+        self.results = {
+            "energy": energy, 
+            "free_energy": energy, 
+            "forces": forces
+        }
+        
+        
+    def plot_switch(self, resolution=500, padding=0.5):
+        """
+        Traccia il grafico della funzione di switch e 
+        della sua derivata.
+        """
+        
+\end{lstlisting}

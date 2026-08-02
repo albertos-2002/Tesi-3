@@ -242,8 +242,13 @@ class class_makeGraph:
         ax_fd.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
         ax_fd.grid(True, linestyle='--', alpha=0.6)
         ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
+        
+#        ax_fd.set_ylim(-700, 0.4 * 10**5)
+#        ax_fd.ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
+        
         plt.tight_layout()
         plt.savefig(path_fig, dpi=300)
+        
         if not setConfig.KEEP_OPEN:
             plt.close(fig_fd)
         else:
@@ -454,8 +459,13 @@ class class_makeGraph:
         ax_fd.set_ylabel("Modulo della Forza Netta (eV/Å)", fontsize=11)
         ax_fd.grid(True, linestyle='--', alpha=0.6)
         ax_fd.legend(loc='upper right', fontsize=10, markerscale=5)
+        
+#        ax_fd.set_ylim(-0.3 * 10**6, 0.3 * 10**6)
+#        ax_fd.ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
+        
         plt.tight_layout()
         plt.savefig(path_figd, dpi=300)
+        
         if not setConfig.KEEP_OPEN:
             plt.close(fig_fd)
         else:

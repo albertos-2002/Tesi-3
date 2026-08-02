@@ -22,23 +22,22 @@
 \contentsline {section}{\numberline {2.2}DScribe}{12}{section.2.2}%
 \contentsline {subsubsection}{Note sulla struttura matematica}{13}{section*.17}%
 \contentsline {section}{\numberline {2.3}Quippy}{13}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Test: dataset A}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}SOAP con DScribe}{15}{section.3.1}%
-\contentsline {subsubsection}{Nota sui parametri}{16}{section*.19}%
-\contentsline {section}{\numberline {3.2}Prima sessione di testing}{16}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{17}{subsection.3.2.1}%
-\contentsline {subsubsection}{Nota sui parametri}{17}{section*.21}%
-\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{17}{subsection.3.2.2}%
-\contentsline {subsubsection}{Training set}{17}{section*.22}%
-\contentsline {subsubsection}{Test set}{18}{section*.24}%
-\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{18}{subsection.3.2.3}%
-\contentsline {subsubsection}{Training set}{19}{section*.26}%
-\contentsline {subsubsection}{Test set}{19}{section*.28}%
-\contentsline {chapter}{\numberline {4}Simulazione}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Simulazione NVE}{21}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Analisi delle problematiche}{22}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Temperatura}{22}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Timestep}{23}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Distanze e forze}{23}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Simulazione con ZBL}{25}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Simulazione con metodo Montecarlo}{26}{section.4.4}%
+\contentsline {section}{\numberline {2.4}Potenziale ZBL}{14}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Test: dataset A}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}SOAP con DScribe}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Prima sessione di testing}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{19}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{19}{subsection.3.2.2}%
+\contentsline {subsubsection}{Training set}{19}{section*.20}%
+\contentsline {subsubsection}{Test set}{20}{section*.22}%
+\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{20}{subsection.3.2.3}%
+\contentsline {subsubsection}{Training set}{21}{section*.24}%
+\contentsline {subsubsection}{Test set}{21}{section*.26}%
+\contentsline {chapter}{\numberline {4}Simulazione}{23}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simulazione NVE}{23}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Analisi delle problematiche}{24}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Temperatura}{24}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Timestep}{25}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Distanze e forze}{25}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Simulazione con ZBL}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Simulazione con metodo Montecarlo}{28}{section.4.4}%

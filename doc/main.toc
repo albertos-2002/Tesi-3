@@ -13,31 +13,33 @@
 \contentsline {section}{\numberline {1.5}Simulazione}{9}{section.1.5}%
 \contentsline {subsection}{\numberline {1.5.1}Simulazione NVE}{9}{subsection.1.5.1}%
 \contentsline {subsection}{\numberline {1.5.2}Simulazione NVE con ZBL}{9}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}Simulazione Montecarlo}{10}{subsection.1.5.3}%
-\contentsline {chapter}{\numberline {2}Discussione teorica sulle librerie python utilizzate}{11}{chapter.2}%
-\contentsline {section}{\numberline {2.1}ASE}{11}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quentum Espresso}{11}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Simulazione con un potenziale ML}{11}{subsection.2.1.2}%
-\contentsline {subsubsection}{Simulazione NVE}{12}{section*.16}%
-\contentsline {section}{\numberline {2.2}DScribe}{12}{section.2.2}%
-\contentsline {subsubsection}{Note sulla struttura matematica}{13}{section*.17}%
-\contentsline {section}{\numberline {2.3}Quippy}{13}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Potenziale ZBL}{14}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Test: dataset A}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}SOAP con DScribe}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Prima sessione di testing}{18}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{19}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{19}{subsection.3.2.2}%
-\contentsline {subsubsection}{Training set}{19}{section*.20}%
-\contentsline {subsubsection}{Test set}{20}{section*.22}%
-\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{20}{subsection.3.2.3}%
-\contentsline {subsubsection}{Training set}{21}{section*.24}%
-\contentsline {subsubsection}{Test set}{21}{section*.26}%
-\contentsline {chapter}{\numberline {4}Simulazione}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Simulazione NVE}{23}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Analisi delle problematiche}{24}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Temperatura}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Timestep}{25}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Distanze e forze}{25}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Simulazione con ZBL}{27}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Simulazione con metodo Montecarlo}{28}{section.4.4}%
+\contentsline {subsection}{\numberline {1.5.3}Simulazione Montecarlo con algoritmo di Metropolis}{10}{subsection.1.5.3}%
+\contentsline {chapter}{\numberline {2}Discussione sulle librerie python utilizzate}{13}{chapter.2}%
+\contentsline {section}{\numberline {2.1}ASE}{13}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quentum Espresso}{13}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Simulazione con un potenziale ML}{13}{subsection.2.1.2}%
+\contentsline {subsubsection}{Simulazione NVE}{14}{section*.17}%
+\contentsline {section}{\numberline {2.2}DScribe}{14}{section.2.2}%
+\contentsline {subsubsection}{Note sulla struttura matematica}{15}{section*.18}%
+\contentsline {section}{\numberline {2.3}Quippy}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Potenziale ZBL}{16}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Algoritmo di Metropolis}{17}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Test: dataset A}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}SOAP con DScribe}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Prima sessione di testing}{20}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Addestramento potenziale con Quippy}{21}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Verifica delle energie}{21}{subsection.3.2.2}%
+\contentsline {subsubsection}{Training set}{21}{section*.21}%
+\contentsline {subsubsection}{Test set}{22}{section*.23}%
+\contentsline {subsection}{\numberline {3.2.3}Verifica delle forze}{22}{subsection.3.2.3}%
+\contentsline {subsubsection}{Training set}{23}{section*.25}%
+\contentsline {subsubsection}{Test set}{23}{section*.27}%
+\contentsline {chapter}{\numberline {4}Simulazione}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simulazione NVE}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Analisi delle problematiche}{26}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Temperatura}{26}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Timestep}{27}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Distanze e forze}{28}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Simulazione con ZBL}{29}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Simulazione con metodo Montecarlo e algoritmo di Metropolis}{30}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Conclusioni}{31}{section.4.5}%

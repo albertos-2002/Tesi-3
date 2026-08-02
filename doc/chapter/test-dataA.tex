@@ -33,11 +33,21 @@ Dove abbiamo utilizzato \autoref{code:soap-dscribe} nel seguente modo
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
-\subsubsection{Nota sui parametri}
+
+\begin{tcolorbox}[
+    center,
+    fontupper=\small,
+    colback=white,
+    boxrule=0.8pt,
+    colframe=gray!60,
+    width=0.90\linewidth,
+    arc=3mm
+]
+\textbf{Nota sui parametri}
+
 Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
 Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
-\\
-
+\end{tcolorbox}
 
 
 Consideriamo l'atomo 42 e calcoliamo un \textit{kernel} tra i frame successivi, questo significa che seguiamo un singolo atomo lungo tutta la dinamica molecolare.
@@ -92,11 +102,21 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
 
 \end{lstlisting}
 
+\begin{tcolorbox}[
+    center,
+    fontupper=\small,
+    colback=white,
+    boxrule=0.8pt,
+    colframe=gray!60,
+    width=0.90\linewidth,
+    arc=3mm
+]
+\textbf{Nota sui parametri}
 
-
-\subsubsection{Nota sui parametri}
 Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
 Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accurateza dei risultati rispetto a quelli prodotti da Quantum Espresso.
+\end{tcolorbox}
+
 
 Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che quantum espresso utilizzava per decretare la convergenza della simulazione.
 Le energie per gli atomi isolati \texttt{e0} sono state determinate tramite una simulazione di QE.

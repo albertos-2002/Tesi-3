@@ -23,7 +23,9 @@ I risultati di energia e temperatura che otteniamo sono i seguenti
 possiamo notare \ref{fig:andamento_nve-testdata} che i valori di energia e temperatura divergono a valori fisicamente insensati.
 L'energia potenziale oscilla entro valori limite, notiamo comunque che l'intervallo di oscillazione è relativamente ampio.
 
-Risulta utile anche guardare ai valori di forza associati a queste dinamica, riportati nel seguente grafico
+\clearpage
+
+Risulta utile anche guardare ai valori di forza associati a queste dinamica, riportati nel seguente grafico:
 
 \begin{figure}[h]
     \centering
@@ -46,7 +48,7 @@ In questa sezioni ci poniamo di modificare a turno vari parametri, o combinazion
 
 Come primo test abbiamo provato a modificare la temperatura dalla quale venivano estratti i valori di velocità. 
 Si è impostato questo valore a $0$K, gli altri parametri sono rimasti invariati. 
-Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura
+Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura:
 
 \begin{figure}[h]
     \centering
@@ -54,6 +56,8 @@ Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura
     \caption{Grafico dell'andamento temporale per i valori di energia e temperatura}
     \label{fig:andamento_nve-traindata_0k}
 \end{figure}
+
+\clearpage
 
 che per i valori delle forze
 
@@ -82,7 +86,7 @@ I valori di energia e temperatura sono rappresentati nel seguente grafico \ref{f
     \label{fig:andamento_nve_energie_timestep}
 \end{figure}
 
-mentre per quanto riguarda le forze otteniamo il grafico \ref{fig:andamento_nve_forze_timestep}
+mentre per quanto riguarda le forze otteniamo il grafico \ref{fig:andamento_nve_forze_timestep}.
 
 
 \begin{figure}[h]
@@ -93,7 +97,7 @@ mentre per quanto riguarda le forze otteniamo il grafico \ref{fig:andamento_nve_
 \end{figure}
 
 
-considerando questo risultato \ref{fig:andamento_nve_energie_timestep} la prima cosa che si vede è una diminuzione del range in cui i valori di temperatura e di energia variano.
+Considerando questo risultato \ref{fig:andamento_nve_energie_timestep} la prima cosa che si vede è una diminuzione del range in cui i valori di temperatura e di energia variano.
 Ad ogni modo possiamo notare che entrambe mantengono la medesima forma vista in precedenza, possiamo quindi presumere che stiano comunque divergendo, ma ad un rate estremamente basso.
 Anche i valori delle forze sono contenuti.
 Considerando la tipologia di integratore numerico utilizzato in questa simulazione, questo risultato era prevedibile.
@@ -163,7 +167,7 @@ I risultati della sezione precedente sono il principale motivo per il quale andi
 
 Anche in questo caso sono stati svolti diversi test, cambiando di volta in volta diversi parametri, non riteniamo necessario riportare tutti questi risultati, inseriamo solo uno di questi, dove l'unica modifica rispetto ai casi precedeti è un timestep di $1$fs.
 
-I parametri per i raggi che abbiamo utilizzato sono dati dal seguente ragionamento, per il $r_{outer} = 1.5$\AA abbiamo deciso di impostare un valore prossimo ai minimi ragistrati nelle configurazioni di training, in questo modo volevamo evitare che lo ZBL si sovrapponesse alle previsioni del GAP. Per quanto riguarda il valore di $r_{inner} = 0.5$\AA abbiamo inserito un valore al quale gli atomi sarebbero sovrapposti e quindi, anche se potrebbe essere alzato, un limite inferiore che dovrebbe essere invalicabile, come si vedrà questo non avviene.
+I parametri per i raggi che abbiamo utilizzato sono dati dal seguente ragionamento, per il $r_{outer} = 1.5$\AA \hspace{2pt} abbiamo deciso di impostare un valore prossimo ai minimi ragistrati nelle configurazioni di training, in questo modo volevamo evitare che lo ZBL si sovrapponesse alle previsioni del GAP. Per quanto riguarda il valore di $r_{inner} = 0.5$\AA \hspace{2pt} abbiamo inserito un valore al quale gli atomi sarebbero sovrapposti e quindi, anche se potrebbe essere alzato, un limite inferiore che dovrebbe essere invalicabile, come si vedrà questo non avviene.
 
 Riportiamo per prima cosa i valori di energia e temperatura
 
@@ -175,6 +179,8 @@ Riportiamo per prima cosa i valori di energia e temperatura
 \end{figure}
 
 possiamo vedere come anche in questo caso gli andamenti visti in precedenza si mantengono.
+
+\clearpage
 
 Guardiamo adesso direttamente la relazione tra forze e distanze:
 
@@ -195,7 +201,7 @@ Guardiamo adesso direttamente la relazione tra forze e distanze:
     \end{subfigure}
 
     \caption{Distanze e relazione forze distanze per il potenziale GAP + ZBL, originariamente la scala del pannello (b) raggiungeva $10^7$, è stata modificata in modo da evidenziare la regione di interesse.}
-    \label{fig:confronto_forze_distanze_qe_traindata}
+    \label{fig:confronto_forze_distanze_zbl}
 \end{figure}
 }
 
@@ -210,7 +216,55 @@ in questo caso è anche utile guardare al confronto tra i due contributi di forz
 
 possiamo notare come i valori di distanza tra i primi vicini arrivino comunque sotto la soglia imposta come minima. Proporniamo come spiegazione di questo fenomeno il fatto che la correzione dello ZBL non sia adeguata a compensare i valori prodotti dal potenziale GAP, essendo questi molto distanti dalle configurazioni di training. Inoltre vogliamo far notare come i moduli delle forze a distanze piccoli siano dati quasi totalmente dalla repulsione prodotta dallo ZBL, questo ci permette di confermare il suo comportamento adeguato, in conclusione non è immediatamente chiaro il motivo per il quale questa correzione non porti a risulati più in linea con le previsioni fatte.
 
-\section{Simulazione con metodo Montecarlo}
+\section{Simulazione con metodo Montecarlo e algoritmo di Metropolis}
 
+Discutiamo adesso i risultati ottenuti tramite la simulazione Montecarlo, vogliamo subito dire che non è presenta una versione con il potenziale ZBL, in quanto per costruzione le distanze minime tra i vari atomi non scendono sotto i valori utilizzati nella sezione precedente.
 
+Per questa simulazione abbiamo mosso un atomo per volta, entro un cubo di lato $0.01$\AA, e abbiamo deciso di svolgere $80'000$ iterazioni, che equivalgono a $650$ Montecarlo sweep, possiamo dire in questo modo che in media un atomo ha avuto $650$ possibilità di muoversi.
 
+In questo caso l'unico grafico di energia che ha senso guardare è quello per l'energia potenziale
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{./img/andamento_energia_montecarlo.png}
+    \caption{Grafico dell'andamento in funzione dello step per i valori di energia potenziale}
+    \label{fig:andamento_energia_montecarlo}
+\end{figure}
+
+possiamo vede che in questo caso i valori di energia rimangano stabili anche per molte iterazioni. Possiamo riconosce ancora una tendenza a diminuire, ma in questo caso abbiamo anche sezioni in cui il valore oscilla senza un preciso trend.
+
+Allo stesso modo abbiamo valori di forza che rimangono contenuti, infatti:
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{./img/andamento_forze_totali_blocchi_montecarlo.png}
+    \caption{Grafico dell'andamento in funzione dello step per i valori del modulo delle forze e relative componenti.}
+    \label{fig:andamento_energia_montecarlo}
+\end{figure}
+
+Come anticipato le distanze minime rimangono contenute e non degenerano verso zero, inoltre anche le forze in funzione della distanza minima presentano l'andamento che ci si aspetterebbe, come è possibile vedere in \ref{fig:confronto_forze_distanze_montecarlo}.
+
+{
+\begin{figure}[ht]
+    \centering
+
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./img/histo_distanze_montecarlo.png}
+        \caption{Istogramma dei valori di distanza tra i primi vicini}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{./img/andamento_forze_totali_distanza_montecarlo.png}
+        \caption{Relazione tra i valori di forza e distanza tra i primi vicini}
+    \end{subfigure}
+
+    \caption{Distanze e relazione forze distanze per il potenziale GAP per la simulazione con algoritmo di Metropolis.}
+    \label{fig:confronto_forze_distanze_montecarlo}
+\end{figure}
+}
+
+\section{Conclusioni}
+
+In conclusione possiamo dire che è possibile utilizzare metodi di machine learning per velocizzare le simulazioni di meteriali, è però fondamentale ricordare che essendo metodi di regressione non parametrici il risultato ottenibile, in fatto di range di configurazioni riproducibili, dipende fortemente dalle configurazioni utilizzate nella fase di training, oltre a questo è anche fondamentale il descrittore che viene utilizzato per mappare l'ambiente che circonda un atomo. L'investimento computazionale iniziale usato per la fase di training, sotto le adeguate condizioni, permette di ottenere simulazioni sensibilmente più veloci.

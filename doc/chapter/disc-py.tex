@@ -216,3 +216,80 @@ class class_zbl(Calculator):
         """
         
 \end{lstlisting}
+
+\section{Algoritmo di Metropolis}
+
+Diamo in questa sezione una breve e schematica descrizione del codice utizzato per implementare l'algoritmo di Metropolis come descritto in \autoref{subsec:simulazione-metropolis-teoria}.
+
+\begin{lstlisting}[caption={Snippet per la classe che implementa l'algoritmo di Metropolis}, label={code:zbl-class-implementation}, language=python]
+
+class class_makeMontecarlo:
+
+    #facciamo un setting dei parametri generali che sevono per ogni motore di simulazione
+    def __init__(self): #----------
+
+        #Data la struttura del codice di lettura dei parametri
+        #il potenziale GAP deve essere caricato dentro questa funzione
+        self.calc_gap = Potential(param_filename=setConfig.PATH_POTENZIALE)
+        self.calc_gap.name_ = "GAP"
+
+        #estrazione della configurazione di partenza
+        self.atomi_md = read(setConfig.PATH_CONFIG_INIZIALE, index=0)
+        #assegna il calcolare determinato sopra
+        self.atomi_md.calc = self.calc_totale
+        
+        self.MCsteps = setConfig.PASSI_TOTALI * len(self.atomi_md) 
+        #self.MCsteps: Numero totale di tentativi Monte Carlo
+
+
+    #Esegue una simulazione Monte Carlo di Metropolis nell'insieme NVT.
+    def runMetropolisMC(self):
+
+        # Costante di Boltzmann in eV/K (da ase.units.kB)
+        kbT = kB * setConfig.TEMPERATURE
+
+        for step in range(1, self.MCsteps + 1):
+            pos_proposte = pos_old.copy()
+
+            if setConfig.MOVE_TYPE == 'single':
+                # Scegliamo un singolo atomo casuale
+                idx = np.random.randint(0, len(self.atomi_md))
+                # Spostamento gaussiano o uniforme centrato in 0
+                delta = np.random.uniform(-setConfig.MCSTEP_SIZE, 
+                                          setConfig.MCSTEP_SIZE, 
+                                          size=3)
+                pos_proposte[idx] += delta
+
+            # Applichiamo la configurazione proposta
+            self.atomi_md.set_positions(pos_proposte)
+            e_new = self.atomi_md.get_potential_energy()
+
+            # Calcolo della differenza di energia
+            delta_E = e_new - e_old
+
+            # CRITERIO DI METROPOLIS ------------
+            if delta_E <= 0:
+                accettata = True
+            else:
+                p_acc = np.exp(-delta_E / kbT)
+                accettata = (np.random.rand() < p_acc) #boolean
+
+            # AGGIORNAMENTO DELLO STATO ---------
+            if accettata:
+                e_old = e_new
+                pos_old = pos_proposte.copy()
+                f_old = self.atomi_md.get_forces()
+                stato = "ACCETTATA"
+            else:
+                # Ripristiniamo la geometria precedente
+                self.atomi_md.set_positions(pos_old)
+                stato = "RIFIUTATA"                
+                dump = self.atomi_md.get_potential_energy()
+                dump = self.atomi_md.get_forces()
+                dump = None
+
+\end{lstlisting}
+
+il codice qui presentato non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo causalmente e muove solo esso per proporre una nuova configurazione, è possibile anche muovere simultaneamente tutti gli atomi del sistema.
+
+Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta in \autoref{sch:markov-chain-schema}.

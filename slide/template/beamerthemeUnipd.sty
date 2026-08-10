@@ -1,0 +1,150 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme]
+
+\RequirePackage{tikz}
+\usetikzlibrary{backgrounds}
+\RequirePackage{appendixnumberbeamer}
+
+%% --- Gestione Opzioni ---
+\def\beamer@unipd@pageofpages{of}
+\DeclareOptionBeamer{pageofpages}{\def\beamer@unipd@pageofpages{#1}}
+
+\def\beamer@unipd@logo{\empty}
+\DeclareOptionBeamer{logo}{\def\beamer@unipd@logo{#1}}
+
+\ProcessOptionsBeamer
+\mode<presentation>
+
+%% --- 1. COLOR THEME ---
+\definecolor{nice_dark_bg}{HTML}{1b212c}
+\definecolor{nice_text}{HTML}{f0f0f0}
+\definecolor{nice_title}{HTML}{f9f9f9}
+\definecolor{red_unipd}{RGB}{155, 0, 20}
+\definecolor{darker_red}{HTML}{850011}
+\definecolor{block_color}{RGB}{0, 82, 155}
+
+\setbeamercolor{structure}{fg=red_unipd}
+\setbeamercolor{title}{fg=nice_title}
+\setbeamercolor{subtitle}{fg=nice_title}
+\setbeamercolor{frametitle}{bg=darker_red,fg=nice_title}
+\setbeamercolor{title page}{bg=darker_red,fg=nice_title}
+\setbeamercolor{normal text}{fg=nice_text, bg=nice_dark_bg}
+\setbeamercolor{footer font}{fg=nice_title}
+\setbeamercolor{alerted text}{fg=darker_red}
+\setbeamercolor{itemize item}{fg=nice_text}
+
+\setbeamercolor{block title}{use=structure,fg=nice_title,bg=block_color}
+\setbeamercolor{block body}{fg=black,use=block title,bg=block_color!10}
+\setbeamercolor{block title example}{use=example text,fg=nice_title,bg=green!50!black}
+\setbeamercolor{block body example}{use=block title example,fg=black,bg=green!10}
+\setbeamercolor{block title alerted}{use=alerted text,fg=nice_title,bg=darker_red}
+\setbeamercolor{block body alerted}{fg=black,use=block title alerted,bg=red_unipd!10}
+\setbeamercolor{section in toc}{fg=black, bg=nice_title}
+
+% BUG FIX: Nel tema originale la bibliografia era nera, illeggibile sul tema scuro. Corretto in chiaro.
+\setbeamercolor{bibliography entry author}{fg=nice_text}
+\setbeamercolor{bibliography entry title}{fg=nice_text}
+\setbeamercolor{bibliography entry location}{fg=nice_text}
+\setbeamercolor{bibliography entry note}{fg=nice_text}
+
+%% --- 2. FONT THEME ---
+\setbeamerfont{big title}{size=\Huge}
+\setbeamerfont{title}{size=\LARGE}
+\setbeamerfont{subtitle}{size=\large, series=\mdseries}
+\setbeamerfont{frametitle}{size=\LARGE}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\normalsize}
+\setbeamerfont{footer font}{size=\tiny}
+\setbeamerfont{bibliography item}{size=\scriptsize}
+\setbeamerfont{bibliography entry author}{size=\scriptsize}
+\setbeamerfont{bibliography entry title}{size=\scriptsize}
+\setbeamerfont{bibliography entry location}{size=\scriptsize}
+\setbeamerfont{bibliography entry note}{size=\scriptsize}
+
+%% --- 3. INNER THEME ---
+\defbeamertemplate*{title page}{pres theme}[1]{%
+    \begin{tikzpicture}[overlay, remember picture]%
+        \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);%
+    \end{tikzpicture}%
+    \centering%
+    \ifx\beamer@unipd@logo\@empty
+        \includegraphics[width=.45\paperwidth]{unipd_logo.png}%
+    \else%
+        \begin{columns}
+        \column{.5\paperwidth}%
+            \centering%
+            \includegraphics[height=.2\paperheight]{unipd_logo.png}%
+        \column{.5\paperwidth}%
+            \centering%
+            \includegraphics[height=.2\paperheight]{\beamer@unipd@logo}%
+        \end{columns}%
+    \fi%
+    \vskip 4ex%
+    {\usebeamerfont{title}\usebeamercolor{title} \inserttitle \par}
+    \ifx \insertsubtitle\@empty\else%
+        \vskip2ex%
+        {\centering\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi%
+    \ifx\insertauthor\@empty\else%
+        \vskip 2.5ex%
+        {\centering\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+    \fi%
+   \ifx\insertdate\@empty\else%
+       \vskip 1ex%
+       {\centering\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+   \fi%
+   \vfill%
+}
+
+\setbeamertemplate{itemize items}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}[sections numbered]
+
+% Ambiente per slide completamente rosse
+\newenvironment{emptyframe}{%
+    \setbeamertemplate{footline}{}%
+    \setbeamercolor{background canvas}{bg=darker_red}%
+    \begin{frame}[environment=emptyframe]%
+    \usebeamercolor[fg]{title}\usebeamerfont{big title}\centering%
+}{\end{frame}}
+    
+%% --- 4. OUTER THEME ---
+\defbeamertemplate*{frametitle}{pres theme}{%
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=5.5ex]{frametitle}
+        \hspace*{1ex}
+        \begin{minipage}[c][2ex][c]{0.65\paperwidth}
+            \raggedright
+            \usebeamerfont{frametitle}
+            \insertframetitle % BUG FIX: Prima era \insertsection.
+        \end{minipage}
+        \hfill
+        \begin{minipage}[c][4.6ex][r]{0.3\paperwidth}
+            \includegraphics[height=4.5ex]{unipd_logo.png}            
+        \end{minipage}
+        \vspace{-0.75ex}
+    \end{beamercolorbox}
+}
+
+\defbeamertemplate*{footline}{pres theme}{%
+    \ifnum\value{framenumber}>1
+        \leavevmode%
+        \hbox{%
+            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+                \usebeamerfont{footer font}\insertshortauthor
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+                \usebeamerfont{footer font}\insertshorttitle
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+                \usebeamerfont{footer font}\insertframenumber{} \beamer@unipd@pageofpages{} \inserttotalframenumber
+            \end{beamercolorbox}%
+        }%
+        \vskip0cm%
+    \fi
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\mode<all>
+\endinput

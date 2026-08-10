@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme v3]
+\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme]
 
 \RequirePackage{tikz}
 \usetikzlibrary{backgrounds}
@@ -12,7 +12,7 @@
 \def\beamer@unipd@logo{\empty}
 \DeclareOptionBeamer{logo}{\def\beamer@unipd@logo{#1}}
 
-% Opzioni per lo spostamento millimetrico del logo
+% Opzioni di regolazione SOLO per il logo nelle slide interne (se serve muoverlo)
 \def\beamer@unipd@logoxshift{0pt}
 \DeclareOptionBeamer{logoxshift}{\def\beamer@unipd@logoxshift{#1}}
 
@@ -67,27 +67,26 @@
 \setbeamerfont{bibliography entry location}{size=\scriptsize}
 \setbeamerfont{bibliography entry note}{size=\scriptsize}
 
-%% --- 3. INNER THEME (Prima pagina centrata) ---
+%% --- 3. INNER THEME (Prima pagina: logo e testi centrati al 100%) ---
 \defbeamertemplate*{title page}{pres theme}[1]{%
-    \begin{tikzpicture}[overlay, remember picture]%
-        \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);%
+    \begin{tikzpicture}[overlay, remember picture]
+        % Sfondo rosso
+        \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);
+        
+        % Logo posizionato al centro orizzontale esatto della pagina
+        \node[anchor=north] at ([yshift=-0.8cm] current page.north) {%
+            \ifx\beamer@unipd@logo\@empty
+                \includegraphics[height=.22\paperheight, keepaspectratio]{unipd_logo.png}%
+            \else
+                \includegraphics[height=.18\paperheight, keepaspectratio]{unipd_logo.png}%
+                \hspace{0.5cm}%
+                \includegraphics[height=.18\paperheight, keepaspectratio]{\beamer@unipd@logo}%
+            \fi
+        };
     \end{tikzpicture}%
+    % Spazio verticale per stare sotto al logo
+    \vspace*{0.22\paperheight}%
     \vfill
-    \begin{center}
-    \ifx\beamer@unipd@logo\@empty
-        \includegraphics[height=.25\paperheight, keepaspectratio]{unipd_logo.png}%
-    \else
-        \begin{columns}[c]
-            \column{.45\paperwidth}
-                \centering
-                \includegraphics[height=.2\paperheight, keepaspectratio]{unipd_logo.png}%
-            \column{.45\paperwidth}
-                \centering
-                \includegraphics[height=.2\paperheight, keepaspectratio]{\beamer@unipd@logo}%
-        \end{columns}%
-    \fi
-    \end{center}%
-    \vskip 3ex%
     {\centering\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
     \ifx \insertsubtitle\@empty\else%
         \vskip 1.5ex%
@@ -115,7 +114,7 @@
     \usebeamercolor[fg]{title}\usebeamerfont{big title}\centering%
 }{\end{frame}}
     
-%% --- 4. OUTER THEME (Intestazione stabile + Logo Overlay) ---
+%% --- 4. OUTER THEME (Intestazione pulita + Logo a destra) ---
 \defbeamertemplate*{frametitle}{pres theme}{%
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=6.5ex,dp=0pt]{frametitle}%
@@ -126,7 +125,6 @@
             \vfil
         }%
     \end{beamercolorbox}%
-    % Il logo viene disegnato sopra come livello separato
     \begin{tikzpicture}[overlay, remember picture]
         \node[anchor=east] at ([xshift=-2.5ex + (\beamer@unipd@logoxshift), yshift=-3.25ex + (\beamer@unipd@logoyshift)] current page.north east) {%
             \includegraphics[height=4.5ex, keepaspectratio]{unipd_logo.png}%

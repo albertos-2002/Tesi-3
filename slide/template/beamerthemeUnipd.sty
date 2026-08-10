@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme]
+\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme v3]
 
 \RequirePackage{tikz}
 \usetikzlibrary{backgrounds}
@@ -11,6 +11,13 @@
 
 \def\beamer@unipd@logo{\empty}
 \DeclareOptionBeamer{logo}{\def\beamer@unipd@logo{#1}}
+
+% Opzioni per lo spostamento millimetrico del logo
+\def\beamer@unipd@logoxshift{0pt}
+\DeclareOptionBeamer{logoxshift}{\def\beamer@unipd@logoxshift{#1}}
+
+\def\beamer@unipd@logoyshift{0pt}
+\DeclareOptionBeamer{logoyshift}{\def\beamer@unipd@logoyshift{#1}}
 
 \ProcessOptionsBeamer
 \mode<presentation>
@@ -41,7 +48,6 @@
 \setbeamercolor{block body alerted}{fg=black,use=block title alerted,bg=red_unipd!10}
 \setbeamercolor{section in toc}{fg=black, bg=nice_title}
 
-% BUG FIX: Nel tema originale la bibliografia era nera, illeggibile sul tema scuro. Corretto in chiaro.
 \setbeamercolor{bibliography entry author}{fg=nice_text}
 \setbeamercolor{bibliography entry title}{fg=nice_text}
 \setbeamercolor{bibliography entry location}{fg=nice_text}
@@ -61,46 +67,47 @@
 \setbeamerfont{bibliography entry location}{size=\scriptsize}
 \setbeamerfont{bibliography entry note}{size=\scriptsize}
 
-%% --- 3. INNER THEME ---
+%% --- 3. INNER THEME (Prima pagina centrata) ---
 \defbeamertemplate*{title page}{pres theme}[1]{%
     \begin{tikzpicture}[overlay, remember picture]%
         \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);%
     \end{tikzpicture}%
-    \centering%
+    \vfill
+    \begin{center}
     \ifx\beamer@unipd@logo\@empty
-        \includegraphics[width=.45\paperwidth]{unipd_logo.png}%
-    \else%
-        \begin{columns}
-        \column{.5\paperwidth}%
-            \centering%
-            \includegraphics[height=.2\paperheight]{unipd_logo.png}%
-        \column{.5\paperwidth}%
-            \centering%
-            \includegraphics[height=.2\paperheight]{\beamer@unipd@logo}%
+        \includegraphics[height=.25\paperheight, keepaspectratio]{unipd_logo.png}%
+    \else
+        \begin{columns}[c]
+            \column{.45\paperwidth}
+                \centering
+                \includegraphics[height=.2\paperheight, keepaspectratio]{unipd_logo.png}%
+            \column{.45\paperwidth}
+                \centering
+                \includegraphics[height=.2\paperheight, keepaspectratio]{\beamer@unipd@logo}%
         \end{columns}%
-    \fi%
-    \vskip 4ex%
-    {\usebeamerfont{title}\usebeamercolor{title} \inserttitle \par}
+    \fi
+    \end{center}%
+    \vskip 3ex%
+    {\centering\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
     \ifx \insertsubtitle\@empty\else%
-        \vskip2ex%
+        \vskip 1.5ex%
         {\centering\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
     \fi%
+    \vskip 3ex%
     \ifx\insertauthor\@empty\else%
-        \vskip 2.5ex%
         {\centering\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
     \fi%
-   \ifx\insertdate\@empty\else%
-       \vskip 1ex%
-       {\centering\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
-   \fi%
-   \vfill%
+    \ifx\insertdate\@empty\else%
+        \vskip 1ex%
+        {\centering\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+    \fi%
+    \vfill
 }
 
 \setbeamertemplate{itemize items}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{section in toc}[sections numbered]
 
-% Ambiente per slide completamente rosse
 \newenvironment{emptyframe}{%
     \setbeamertemplate{footline}{}%
     \setbeamercolor{background canvas}{bg=darker_red}%
@@ -108,22 +115,23 @@
     \usebeamercolor[fg]{title}\usebeamerfont{big title}\centering%
 }{\end{frame}}
     
-%% --- 4. OUTER THEME ---
+%% --- 4. OUTER THEME (Intestazione stabile + Logo Overlay) ---
 \defbeamertemplate*{frametitle}{pres theme}{%
     \nointerlineskip
-    \begin{beamercolorbox}[wd=\paperwidth,ht=5.5ex]{frametitle}
-        \hspace*{1ex}
-        \begin{minipage}[c][2ex][c]{0.65\paperwidth}
-            \raggedright
-            \usebeamerfont{frametitle}
-            \insertframetitle % BUG FIX: Prima era \insertsection.
-        \end{minipage}
-        \hfill
-        \begin{minipage}[c][4.6ex][r]{0.3\paperwidth}
-            \includegraphics[height=4.5ex]{unipd_logo.png}            
-        \end{minipage}
-        \vspace{-0.75ex}
-    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=6.5ex,dp=0pt]{frametitle}%
+        \vbox to 6.5ex{%
+            \vfil
+            \hspace*{2.5ex}%
+            \usebeamerfont{frametitle}\insertframetitle
+            \vfil
+        }%
+    \end{beamercolorbox}%
+    % Il logo viene disegnato sopra come livello separato
+    \begin{tikzpicture}[overlay, remember picture]
+        \node[anchor=east] at ([xshift=-2.5ex + (\beamer@unipd@logoxshift), yshift=-3.25ex + (\beamer@unipd@logoyshift)] current page.north east) {%
+            \includegraphics[height=4.5ex, keepaspectratio]{unipd_logo.png}%
+        };
+    \end{tikzpicture}%
 }
 
 \defbeamertemplate*{footline}{pres theme}{%

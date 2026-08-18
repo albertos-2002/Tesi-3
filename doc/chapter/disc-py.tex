@@ -5,7 +5,7 @@ Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinam
 Inoltre questa libreria ci permette di svolgere semplici simulazioni di dinamica molecolare.
 \\
 
-\subsection{Lettura dei file di Quentum Espresso}
+\subsection{Lettura dei file di Quantum Espresso}
 
 In particolare per QE abbiamo utilizzato i seguenti:
 
@@ -15,24 +15,24 @@ In particolare per QE abbiamo utilizzato i seguenti:
 
 dove \texttt{index=":"} viene utilizzato per leggere tutti i frame presenti nel file di input e \texttt{format="espresso-out"} serve per impostare la tipologia di file da leggere.
 \footnote{
-La specifica sezione della documentazione è reperibile al seguente \url{https://ase-lib.org/ase/io/io.html}
+La specifica sezione della documentazione è reperibile al seguente: \url{https://ase-lib.org/ase/io/io.html}
 }
 
 La funzione \texttt{read} ci restituisce un oggetto di tipo \texttt{atoms}
 \footnote{
-La specifica sezione della documentazione è reperibile al seguente \url{https://ase-lib.org/ase/atoms.html}
+La specifica sezione della documentazione è reperibile al seguente: \url{https://ase-lib.org/ase/atoms.html}
 }, che costituisce l'oggetto python che contiene le informazioni, le quali, definiscono il materiale da simulare, estratte dai file di output di QE.
 
 
 \subsection{Simulazione con un potenziale ML}
 
-I potenziali generati tramite ML vengo utilizzati come dei \textit{calulator} \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/calculators/calculators.html}} per la dinamica molecolare.
-Questo oggetto può essere decritto come una calcolatrice che data una configurazione restituisce i valori delle energie e delle forze.
+I potenziali generati tramite ML vengo utilizzati come dei \textit{calculator} \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/calculators/calculators.html}} per la dinamica molecolare.
+Questo oggetto può essere descritto come una calcolatrice che data una configurazione restituisce i valori delle energie e delle forze.
 
 Lo step successivo è utilizzare un motore di dinamica molecolare \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/md.html}}
 per muovere gli atomi ed ottenere il frame successivo.
 
-Diamo adesso una descrizione del codice utilizzato per svolgere questo processo, notiamo che il potenziale addestrato tramite QUIP, deve essere caricato tramite la libreria quippy, essendo necessario per la discussione sulla dinamica molecolare, lo riportiamo in questa sezione.
+Diamo adesso una descrizione del codice utilizzato per svolgere questo processo, notiamo che il potenziale addestrato tramite QUIP (si veda \autoref{sec:quippy}), deve essere caricato tramite la libreria quippy, essendo necessario per la discussione sulla dinamica molecolare, lo riportiamo in questa sezione.
 
 \begin{lstlisting}[caption={Loading del potenziale addestrato}, label={code:potential-loading-ase-md}, language=Python]
     from quippy.potential import Potential
@@ -41,7 +41,7 @@ Diamo adesso una descrizione del codice utilizzato per svolgere questo processo,
     calc.name_ = "GAP" 
 \end{lstlisting}
 
-sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \textit{atoms} di ASE tramite \verb|atomi.calc = calc|.
+sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \texttt{atoms} di ASE tramite \verb|atomi.calc = calc|.
 
 \subsubsection{Simulazione NVE}
 \label{subsec:simulazione-nve-ase}
@@ -99,7 +99,7 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
-dove \texttt{soap\_obj} è interpretabile come una configurazione per il SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il valore di $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
+dove \texttt{soap\_obj} è una configurazione per SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il parametro $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
 
 In particolare l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
@@ -109,13 +109,16 @@ Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 
 {\centering \verb|[num frames, num atomi, feature vector]|}
 
+Vogliamo far notare che questa libreria è stata utilizzata solo inizialmente per verificare la possibilità di utilizzare SOAP sui dati a nostra disposizione, successivamente l'intero processo è stato svolto da QUIP.
+
 
 \subsubsection{Note sulla struttura matematica} 
 
-DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (gaussian type orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
+DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (Gaussian Type Orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
 
 
 \section{Quippy} %-----------------------------------------------------------------------------------------------------
+\label{sec:quippy}
 
 Questa è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.
 
@@ -144,7 +147,7 @@ In particolare andremo ad utilizzare la funzione \texttt{gap\_fit}
                              # confronto degli ambienti
         n_sparse=            #numero punti per lo sparse method
         sparse_method=       #tipolgia di sparse method
-        delta=               #?
+        delta=               #
         } 
     e0=                           #energia di atomo libero
     energy_parameter_name=energy  #config name per file input
@@ -153,7 +156,7 @@ In particolare andremo ad utilizzare la funzione \texttt{gap\_fit}
 
 \end{lstlisting}
 
-dopo aver generato il file del potenziale, esso può essere utilizzato come \texttt{calculator} per la dimanica molecolare tramite ASE.
+dopo aver generato il file del potenziale, esso può essere utilizzato come \texttt{calculator} per la dinamica molecolare tramite ASE.
 
 
 \section{Potenziale ZBL} %----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,10 +186,8 @@ class class_zbl(Calculator):
 
         self.checkandsetParameters()
     
-
     #setting dei parametri
     def checkandsetParameters(self): #------------
-
 
     #implementa la funzione di switch per il potenziale e la derivata della funzione di switch
     def switch(self, distances): #----------
@@ -208,13 +209,6 @@ class class_zbl(Calculator):
             "forces": forces
         }
         
-        
-    def plot_switch(self, resolution=500, padding=0.5):
-        """
-        Traccia il grafico della funzione di switch e 
-        della sua derivata.
-        """
-        
 \end{lstlisting}
 
 \section{Algoritmo di Metropolis}
@@ -225,7 +219,7 @@ Diamo in questa sezione una breve e schematica descrizione del codice utizzato p
 
 class class_makeMontecarlo:
 
-    #facciamo un setting dei parametri generali che sevono per ogni motore di simulazione
+    #facciamo un setting dei parametri generali che servono per ogni motore di simulazione
     def __init__(self): #----------
 
         #Data la struttura del codice di lettura dei parametri
@@ -272,7 +266,7 @@ class class_makeMontecarlo:
                 accettata = True
             else:
                 p_acc = np.exp(-delta_E / kbT)
-                accettata = (np.random.rand() < p_acc) #boolean
+                accettata = (np.random.rand() < p_acc)
 
             # AGGIORNAMENTO DELLO STATO ---------
             if accettata:
@@ -290,6 +284,6 @@ class class_makeMontecarlo:
 
 \end{lstlisting}
 
-il codice qui presentato non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo causalmente e muove solo esso per proporre una nuova configurazione, è possibile anche muovere simultaneamente tutti gli atomi del sistema.
+il codice qui presentato non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione, è possibile anche muovere simultaneamente tutti gli atomi del sistema.
 
 Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta in \autoref{sch:markov-chain-schema}.

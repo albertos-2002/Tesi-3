@@ -156,6 +156,24 @@
     \fi
 }
 
+
+
+%% --- 5. SLIDE ROSSA CENTRATA (emptyframe) ---
+\newenvironment{emptyframe}{%
+    \setbeamercolor{background canvas}{bg=darker_red}%
+    \setbeamercolor{normal text}{fg=nice_title}%
+    \usebeamercolor[fg]{normal text}%
+    \begin{frame}[plain, noframenumbering, environment=emptyframe]%
+    \vspace*{\fill}%
+    \centering%
+    \usebeamerfont{big title}%
+}{%
+    \vspace*{\fill}%
+    \end{frame}%
+}
+
+
+
 \setbeamertemplate{navigation symbols}{}
 
 \mode<all>

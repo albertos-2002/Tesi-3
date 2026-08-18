@@ -23,7 +23,7 @@ Questo ci permette di modellizzare sia relazioni non note che relazioni compless
 
 Il processo ci permette di utilizzare la coppia di dati $(x, f(x))$ per generare una previsione del valore di $f$ in un punto che non appartiene al set di dati.
 
-Per fare questa previsione utilizziamo un kernel (indicato spesso con $K$), ovvero una funzione che ci permette di definire la somiglianza tra due punti di input, ad esempio $(x_1, x_2)$, questo ci permette di imporre che che punti tra loro vicini diano risultati non dissimili.
+Per fare questa previsione utilizziamo un kernel (indicato spesso con $K$), ovvero una funzione che ci permette di definire la somiglianza tra due punti di input, ad esempio $(x_1, x_2)$, questo ci permette di imporre che punti tra loro vicini diano risultati non dissimili.
 Inoltre possiamo utilizzare i paraemtri del kernel per definire le interazioni tra i punti, infatti in base alla distribuzione dei dati potrebbe essere necessario far parlare tra loro punti lontati, come nel caso di periodicità, oppure limitare l'interazione solo ai prossimi vicini.
 
 
@@ -33,17 +33,17 @@ La funzione che cerchiamo è il valore di aspettazione di questa distribuzione e
 
 Usiamo una spiegazione geometrica, nel caso più semplice possibile, per descrivere l'idea del processo, assumiamo di avere i dati $(x, f(x))$, possiamo assumere che $x$ segua una distibuzione gaussina la cui media sia proprio il valore $f(x)$.
 
-Possiamo vedere una rappresentazione della distribuzione gaussiana nella seguente \ref{fig:curva-gaussiana} rappresentazione:
+Possiamo vedere una rappresentazione della distribuzione gaussiana nella seguente \ref{fig:curva-gaussiana}:
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[scale=0.5]{./img/curva-gaussiana.png}
+    \includegraphics[scale=0.35]{./img/curva-gaussiana.png}
     \caption{Rappresentazione di una curva gaussiana}
     \label{fig:curva-gaussiana}
 \end{figure}
 
 
-Assumiano adesso di voler prevedere il valore in un punto diverso che chiamiamo $x^*$. 
+Assumiamo adesso di voler prevedere il valore in un punto diverso che chiamiamo $x^*$. 
 Consideriamo anche di aver precedentemente definito una funzione di kernel $K$, ricordiamo che questa dipende solo dai valori in input e non dai valori assunti dalla funzione.
 Inoltre il valor medio di $f(x^*) = f^*$, lo conosciamo in quanto si assume un valore a priori, non entriamo nei particolari, diciamo soltanto che si può assumere un valore sensato.
 Abbiamo così costruito una distribuzione gaussiana bivariata.
@@ -53,12 +53,12 @@ La rappresentazione di questo concetto è data dalla seguente immagine \ref{fig:
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[scale=0.5]{./img/bi-gaussiana_e.png}
+    \includegraphics[scale=0.35]{./img/bi-gaussiana_e.png}
     \caption{Rappresentazione di una curva gaussiana bivariata, è evidenziato il taglio rispetto ad uno specifico valore di $x$}
     \label{fig:bi-gaussiana_e}
 \end{figure}
 
 
-Si generalizza, anche se con un pizzico di difficoltà, questo processo ad un nuomero arbitrario di valori di input.
+Si generalizza, anche se con un pizzico di difficoltà, questo processo ad un numero arbitrario di valori di input.
 
 Vogliamo notare come qui non abbiamo trattato la stima delle incertezze sulle previsioni e di come incorporare l'incertezza di misura (come noise) sui dati osservati.

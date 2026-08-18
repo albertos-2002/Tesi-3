@@ -1,0 +1,45 @@
+\label{app:dimpowspec}
+
+Non è immediato capire come siamo arrivati alla  formula \eqref{eq:formula-dimensione-semplificata}, conseguentemente diamo di seguito una spiegazione. Per prima cosa consideriamo il caso in cui $Z_1 = Z_2$, il più semplice e che usiamo come punto di partenza per la successiva generalizzazione.
+
+Ci serve mantenere come riferimento \eqref{eq:power-spectrum}. In questa reference se si ha un solo $Z$ allora il numero finale di $p_{Z_1Z_2}(n,n',l)$ è dato solo da $n$, $n'$ e $l$. Per quanto riguarda $l$ ci sono esattamente $l_{max} + 1$ valori disponibili (in quanto si parte da zero), per capire come comportarsi con gli $n$, utilizziamo un piccolo aiuto grafico:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|cccc}
+                 & $n_1$    & $n_2$    & $\cdots$ & $n_m$\\ \hline
+        $n'_1$   &   11     &   12     & $\cdots$ & 1m\\ 
+        $n'_2$   &   21     &   22     & $\cdots$ & 2m\\ 
+        $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$\\ 
+        $n'_m$   &   m1     &   m2     & $\cdots$ & mm\\ 
+    \end{tabular}
+    \captionof{schema}{Struttura schematica per la combinazione dei valori di $n$ e $n'$ nel power spectrum}
+    \label{sch:tabella-coefficienti-n-combinazione-power-spectrum}
+\end{table}
+
+dato che nel power spectrum gli $n$ compaiono in coefficienti che definiscono l'informazione strutturale, con $Z$ diversi, fanno riferimento a mappe di densità diverse. Inoltre ricordiamo che $n$ indica una sorta di distanza radiale. Questo significa che per il medesimo $Z$, la combinazione di $(n, n')$ produce lo stesso risultato di $(n', n)$ in quanto la mappa di densità è la medesima. Per diminuire la dimensione del vettore finale consideriamo solo gli elementi unici, ad esempio la parte triangolare superiore, ma allora il numero di elementi è la somma di $n_m$ elementi sulla prima riga, $n_m - 1$ sulla seconda e così via fino ad arrivare ad un singolo elemento. Questo coincide con la somma dei primi $n_m$ numeri naturali, risolta da Gauss come:
+
+\begin{equation}
+    \mathrm{somma}(a) = \frac{a(a + 1)}{2}
+    \label{eq:somma-gauss-naturali}
+\end{equation}
+
+Consideriamo adesso la presenza di un numero di specie maggiore di 1, allora dobbiamo considerare il fatto che lo scambio degli $n$ produce risultati diversi, in quanto fa riferimento a mappe di densità diverse. Le combinazioni di $Z$ (che sono simmetriche per lo scambio in quanto lo è il prodotto) si possono immaginare con uno schema identico a quello \ref{sch:tabella-coefficienti-n-combinazione-power-spectrum} dove, al posto di $n$ mettiamo i vari $Z$, da questo ricaviamo la seguente distinzione:
+
+\begin{itemize}
+    \item[-] $(Z_i,Z_i)$ gli elementi sulla diagonale, sono esattamente pari al numero di specie chimiche distinte presenti, ognuno di essi ha una combinazione di $n$ pari al numero definito in precedenza \eqref{eq:somma-gauss-naturali}
+    
+    \item[-] $(Z_i,Z_j)$ con $i \neq j$, questi per la simmetria già menzionata, sono esattamente gli elementi sul triangolo superiore meno quelli sulla diagonale. Possiamo facilmente vedere che questa somma di ottiene con la formula di Gauss \eqref{eq:somma-gauss-naturali}, dove adesso $a = S - 1$, con $S$ numero di specie presenti. Data la perdita di simmetria ognuna di queste coppie ha $n^2$ elementi distinti da tenere in considerazione
+\end{itemize}
+
+Se procediamo a mettere tutto assieme otteniamo la seguente espressione:
+
+\begin{equation}
+    \mathrm{dimensione} = (l_{max} + 1) \left( \frac{S\cdot n_{m}(n_m + 1)}{2} + \frac{S(S-1)n_m^2}{2} \right)
+\end{equation}
+
+che se procediamo a semplificare otteniamo l'espressione indicata in \eqref{eq:formula-dimensione-semplificata}.
+
+In conclusione, possiamo rappresentare l'insieme di questi coefficienti come un vettore, la cui dimensione è fissata e non dipende dall'input (quanti vicini / come è strutturato l'ambiente per un dato atomo) ma solo dai parametri che abbiamo utilizzato per descriverlo.
+
+

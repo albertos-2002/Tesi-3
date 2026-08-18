@@ -1,18 +1,30 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeUnipd}[2026/08/10 Modernized Unipd Beamer Theme]
+\ProvidesPackage{beamerthemeUnipd}[2026/08/18 Modernized Unipd Beamer Theme]
 
 \RequirePackage{tikz}
 \usetikzlibrary{backgrounds}
 \RequirePackage{appendixnumberbeamer}
 
-%% --- Gestione Opzioni ---
+%% --- Gestione Immagini Standard ---
+\newcommand{\safeincludeimage}[2][]{%
+    \IfFileExists{#2}{%
+        \includegraphics[#1]{#2}%
+    }{%
+        \IfFileExists{images/#2}{%
+            \includegraphics[#1]{images/#2}%
+        }{%
+            \framebox{\textcolor{red}{\small Logo non trovato: #2}}%
+        }%
+    }%
+}
+
+%% --- Gestione Opzioni (Inizializzazione Corretta) ---
 \def\beamer@unipd@pageofpages{of}
 \DeclareOptionBeamer{pageofpages}{\def\beamer@unipd@pageofpages{#1}}
 
-\def\beamer@unipd@logo{\empty}
+\let\beamer@unipd@logo\@empty
 \DeclareOptionBeamer{logo}{\def\beamer@unipd@logo{#1}}
 
-% Opzioni di regolazione SOLO per il logo nelle slide interne (se serve muoverlo)
 \def\beamer@unipd@logoxshift{0pt}
 \DeclareOptionBeamer{logoxshift}{\def\beamer@unipd@logoxshift{#1}}
 
@@ -25,33 +37,43 @@
 %% --- 1. COLOR THEME ---
 \definecolor{nice_dark_bg}{HTML}{1b212c}
 \definecolor{nice_text}{HTML}{f0f0f0}
-\definecolor{nice_title}{HTML}{f9f9f9}
+\definecolor{nice_title}{HTML}{ffffff}
 \definecolor{red_unipd}{RGB}{155, 0, 20}
 \definecolor{darker_red}{HTML}{850011}
 \definecolor{block_color}{RGB}{0, 82, 155}
+
+% Colori Canvas e Testo
+\setbeamercolor{background canvas}{bg=nice_dark_bg}
+\setbeamercolor{normal text}{fg=nice_text, bg=nice_dark_bg}
+
+% Applicazione immediata del colore testo
+\usebeamercolor[fg]{normal text}
 
 \setbeamercolor{structure}{fg=red_unipd}
 \setbeamercolor{title}{fg=nice_title}
 \setbeamercolor{subtitle}{fg=nice_title}
 \setbeamercolor{frametitle}{bg=darker_red,fg=nice_title}
 \setbeamercolor{title page}{bg=darker_red,fg=nice_title}
-\setbeamercolor{normal text}{fg=nice_text, bg=nice_dark_bg}
 \setbeamercolor{footer font}{fg=nice_title}
-\setbeamercolor{alerted text}{fg=darker_red}
+
+% Elenchi e Indice
+\setbeamercolor{itemize/enumerate body}{fg=nice_text}
+\setbeamercolor{itemize/enumerate subbody}{fg=nice_text}
 \setbeamercolor{itemize item}{fg=nice_text}
+\setbeamercolor{itemize subitem}{fg=nice_text}
+\setbeamercolor{item}{fg=nice_text}
+\setbeamercolor{subitem}{fg=nice_text}
 
+\setbeamercolor{section in toc}{fg=nice_text}
+\setbeamercolor{section in toc section number}{fg=red_unipd}
+
+% Blocchi
 \setbeamercolor{block title}{use=structure,fg=nice_title,bg=block_color}
-\setbeamercolor{block body}{fg=black,use=block title,bg=block_color!10}
+\setbeamercolor{block body}{fg=nice_text,bg=nice_dark_bg!80!white}
 \setbeamercolor{block title example}{use=example text,fg=nice_title,bg=green!50!black}
-\setbeamercolor{block body example}{use=block title example,fg=black,bg=green!10}
+\setbeamercolor{block body example}{fg=nice_text,bg=nice_dark_bg!80!white}
 \setbeamercolor{block title alerted}{use=alerted text,fg=nice_title,bg=darker_red}
-\setbeamercolor{block body alerted}{fg=black,use=block title alerted,bg=red_unipd!10}
-\setbeamercolor{section in toc}{fg=black, bg=nice_title}
-
-\setbeamercolor{bibliography entry author}{fg=nice_text}
-\setbeamercolor{bibliography entry title}{fg=nice_text}
-\setbeamercolor{bibliography entry location}{fg=nice_text}
-\setbeamercolor{bibliography entry note}{fg=nice_text}
+\setbeamercolor{block body alerted}{fg=nice_text,bg=nice_dark_bg!80!white}
 
 %% --- 2. FONT THEME ---
 \setbeamerfont{big title}{size=\Huge}
@@ -61,30 +83,21 @@
 \setbeamerfont{author}{size=\normalsize}
 \setbeamerfont{date}{size=\normalsize}
 \setbeamerfont{footer font}{size=\tiny}
-\setbeamerfont{bibliography item}{size=\scriptsize}
-\setbeamerfont{bibliography entry author}{size=\scriptsize}
-\setbeamerfont{bibliography entry title}{size=\scriptsize}
-\setbeamerfont{bibliography entry location}{size=\scriptsize}
-\setbeamerfont{bibliography entry note}{size=\scriptsize}
 
-%% --- 3. INNER THEME (Prima pagina: logo e testi centrati al 100%) ---
+%% --- 3. INNER THEME ---
 \defbeamertemplate*{title page}{pres theme}[1]{%
     \begin{tikzpicture}[overlay, remember picture]
-        % Sfondo rosso
         \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);
-        
-        % Logo posizionato al centro orizzontale esatto della pagina
         \node[anchor=north] at ([yshift=-0.8cm] current page.north) {%
             \ifx\beamer@unipd@logo\@empty
-                \includegraphics[height=.22\paperheight, keepaspectratio]{unipd_logo.png}%
+                \safeincludeimage[height=.22\paperheight, keepaspectratio]{unipd_logo.png}%
             \else
-                \includegraphics[height=.18\paperheight, keepaspectratio]{unipd_logo.png}%
+                \safeincludeimage[height=.18\paperheight, keepaspectratio]{unipd_logo.png}%
                 \hspace{0.5cm}%
-                \includegraphics[height=.18\paperheight, keepaspectratio]{\beamer@unipd@logo}%
+                \safeincludeimage[height=.18\paperheight, keepaspectratio]{\beamer@unipd@logo}%
             \fi
         };
     \end{tikzpicture}%
-    % Spazio verticale per stare sotto al logo
     \vspace*{0.22\paperheight}%
     \vfill
     {\centering\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
@@ -107,14 +120,7 @@
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{section in toc}[sections numbered]
 
-\newenvironment{emptyframe}{%
-    \setbeamertemplate{footline}{}%
-    \setbeamercolor{background canvas}{bg=darker_red}%
-    \begin{frame}[environment=emptyframe]%
-    \usebeamercolor[fg]{title}\usebeamerfont{big title}\centering%
-}{\end{frame}}
-    
-%% --- 4. OUTER THEME (Intestazione pulita + Logo a destra) ---
+%% --- 4. OUTER THEME ---
 \defbeamertemplate*{frametitle}{pres theme}{%
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=6.5ex,dp=0pt]{frametitle}%
@@ -127,7 +133,7 @@
     \end{beamercolorbox}%
     \begin{tikzpicture}[overlay, remember picture]
         \node[anchor=east] at ([xshift=-2.5ex + (\beamer@unipd@logoxshift), yshift=-3.25ex + (\beamer@unipd@logoyshift)] current page.north east) {%
-            \includegraphics[height=4.5ex, keepaspectratio]{unipd_logo.png}%
+            \safeincludeimage[height=4.5ex, keepaspectratio]{unipd_logo.png}%
         };
     \end{tikzpicture}%
 }

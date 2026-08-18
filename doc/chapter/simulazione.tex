@@ -5,13 +5,13 @@ In questo capitolo ci occupiamo di utilizzare il potenziale ottenuto precedentem
 
 Abbiamo provato ad effettuare una simulazione di tipo NVE, costruita al seguente modo. Dai file di QE per il set di test abbiamo estratto la configurazione spaziale iniziale degli atomi.
 Questa struttura è stata utilizzata come punto di partenza per il calcolo di energie e forze, la sua evoluzione darà poi configurazioni diverse rispetto a quelle prodotte da QE.
-Seguendo la struttura descritta precedentemente abbiamo impostato la simulazione con i seguenti parametri, timestep pari a $4.8$fs, come quello usato in Quantum Espresso, e un totale di $2'000$ step.
+Seguendo la struttura descritta precedentemente abbiamo impostato la simulazione con i seguenti parametri, timestep pari a $4.8$fs, come quello usato in QE, e un totale di $2'000$ step.
 Come detto, data la diversa configurazione i risultati non possono essere confrontati direttamente con quelli prodotti da QE. 
-Per verificare la stabilità dei risultati facciamo un grafico della temepratura e dell'energia in funzione dello step temporale.
+Per verificare la stabilità dei risultati facciamo un grafico della temperatura e dell'energia in funzione dello step temporale.
 Abbiamo provato a reperire i valori delle velocità iniziali dal file di output di QE, ma non essendo presenti, le abbiamo estratte da una distribuzione di Maxwell-Boltzman per una temperatura di $3'000$K.
 \\
 
-I risultati di energia e temperatura che otteniamo sono i seguenti
+I risultati di energia e temperatura che otteniamo sono i seguenti (\ref{fig:andamento_nve-testdata}):
 
 \begin{figure}[h]
     \centering
@@ -25,7 +25,7 @@ L'energia potenziale oscilla entro valori limite, notiamo comunque che l'interva
 
 \clearpage
 
-Risulta utile anche guardare ai valori di forza associati a queste dinamica, riportati nel seguente grafico:
+Risulta utile anche guardare ai valori di forza associati a questa dinamica, riportati nel seguente grafico:
 
 \begin{figure}[h]
     \centering
@@ -40,15 +40,15 @@ anche in questo caso possiamo notare che otteniamo valori estremamente elevati.
 
 \section{Analisi delle problematiche} %--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Abbiamo precedentemente menzionato che il potenziale è stato addestrato con parametri di soap non troppo elevati. Poniamo questo come ultimo problema da verificare in quanto i risultati sulle configurazioni di test erano discreti.
-In questa sezioni ci poniamo di modificare a turno vari parametri, o combinazioni di tali, in modo da poter identificare quale sia il problema.
+Abbiamo precedentemente menzionato che il potenziale è stato addestrato con parametri di SOAP non troppo elevati. Poniamo questo come ultimo problema da verificare in quanto i risultati sulle configurazioni di test erano discreti.
+In questa sezione ci poniamo di modificare a turno vari parametri, o combinazioni di tali, in modo da poter identificare quale sia il problema.
 
 
 \subsection{Temperatura}
 
 Come primo test abbiamo provato a modificare la temperatura dalla quale venivano estratti i valori di velocità. 
 Si è impostato questo valore a $0$K, gli altri parametri sono rimasti invariati. 
-Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura:
+Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura (\ref{fig:andamento_nve-traindata_0k}):
 
 \begin{figure}[h]
     \centering
@@ -59,7 +59,7 @@ Anche in questo caso diamo sia i riaultati per i valori di energia e temperatura
 
 \clearpage
 
-che per i valori delle forze
+che per i valori delle forze (\ref{fig:andamento_nve_forze-traindata_0k}):
 
 \begin{figure}[h]
     \centering
@@ -75,9 +75,9 @@ Si nota \ref{fig:andamento_nve-traindata_0k} e \ref{fig:andamento_nve_forze-trai
 \subsection{Timestep} %----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Per questa analisi sono stati provati diversi valori di timestep, riportiamo solo uno di questi.
-Come timestep si è impostato un valori di $10^{-5}$fs, e un totale di $50'000$ iterazioni, in modo da valutate la stabilità sul lungo periodo. Si è mantenuta una temperatura di $3'000$K.
+Come timestep si è impostato un valore di $10^{-5}$fs, e un totale di $50'000$ iterazioni, in modo da valutate la stabilità sul lungo periodo. Si è mantenuta una temperatura di $3'000$K.
 
-I valori di energia e temperatura sono rappresentati nel seguente grafico \ref{fig:andamento_nve_energie_timestep}
+I valori di energia e temperatura sono rappresentati nel seguente grafico ()\ref{fig:andamento_nve_energie_timestep}):
 
 \begin{figure}[h]
     \centering
@@ -92,7 +92,7 @@ mentre per quanto riguarda le forze otteniamo il grafico \ref{fig:andamento_nve_
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.35]{./img/andamento_forze_totali_blocchi_nve_timestep.png}
-    \caption{Grafico dell'andamento temporale per i valori di energia e temperatura}
+    \caption{Grafico dell'andamento temporale per i valori di forza, sia in modulo che divise per componenti.}
     \label{fig:andamento_nve_forze_timestep}
 \end{figure}
 
@@ -105,11 +105,11 @@ Considerando la tipologia di integratore numerico utilizzato in questa simulazio
 
 \subsection{Distanze e forze}
 
-Risulta utile andare a guardare la distribuzione dei valori delle distanze tra i primi vicini, per ogni frame si prente come atomo il $j$-esimo e se ne calcola la distanza con i restanti 125, se ne prende poi il minimo, questo per ogni atomo presente nel frame. Successivamente guardiamo la relazione tra i valori di distanza e i valori di forza.
+Risulta utile andare a guardare la distribuzione dei valori delle distanze tra i primi vicini, per ogni frame si prende come atomo il $j$-esimo e se ne calcola la distanza con i restanti 125, se ne prende poi il minimo, questo per ogni atomo presente nel frame. Successivamente guardiamo la relazione tra i valori di distanza e i valori di forza.
 
 Nei grafici a due pannelli successivi vogliamo evidenziare queste relazioni.
 
-Per il caso del semplice potenziale GAP, come notiamo nella figura (\ref{fig:confronto_forze_distanze_gap_testdata})
+Per il caso del semplice potenziale GAP, come notiamo nella figura \ref{fig:confronto_forze_distanze_gap_testdata}
 
 {
 \begin{figure}[ht]
@@ -127,7 +127,7 @@ Per il caso del semplice potenziale GAP, come notiamo nella figura (\ref{fig:con
         \caption{Relazione tra i valori di forza e distanza tra i primi vicini}
     \end{subfigure}
 
-    \caption{Distanze e relazione forze distanze per il caso del solo potenziale GAP}
+    \caption{Distanze e relazione forze-distanze per il caso del solo potenziale GAP}
     \label{fig:confronto_forze_distanze_gap_testdata}
 \end{figure}
 }
@@ -135,7 +135,7 @@ Per il caso del semplice potenziale GAP, come notiamo nella figura (\ref{fig:con
 la maggior parte dei valori di distanza si trova al di sotto del valore di $1.5$\AA. 
 Si vede facilmente dove le forze assumono il loro valore maggiore.
 
-Questo diventa rilevante nel momento in cui andiamo ad analizzare i valori di distanza tra i primi vicini e le relative forze, calcolati nel medesimo modo, presenti nelle configurazioni utilizzate nella fase di training, queste sono riportate in figura (\ref{fig:confronto_forze_distanze_qe_traindata})
+Questo diventa rilevante nel momento in cui andiamo ad analizzare i valori di distanza tra i primi vicini e le relative forze, calcolati nel medesimo modo, presenti nelle configurazioni utilizzate nella fase di training, queste sono riportate in figura \ref{fig:confronto_forze_distanze_qe_traindata}
 
 {
 \begin{figure}[ht]
@@ -153,7 +153,7 @@ Questo diventa rilevante nel momento in cui andiamo ad analizzare i valori di di
         \caption{Relazione tra i valori di forza e distanza tra i primi vicini per il set di dati di training}
     \end{subfigure}
 
-    \caption{Distanze e relazione forze distanze per il set di dati di training prodotto con quantum espresso.}
+    \caption{Distanze e relazione forze-distanze per il set di dati di training prodotto con QE.}
     \label{fig:confronto_forze_distanze_qe_traindata}
 \end{figure}
 }
@@ -169,7 +169,7 @@ Anche in questo caso sono stati svolti diversi test, cambiando di volta in volta
 
 I parametri per i raggi che abbiamo utilizzato sono dati dal seguente ragionamento, per il $r_{outer} = 1.5$\AA \hspace{2pt} abbiamo deciso di impostare un valore prossimo ai minimi ragistrati nelle configurazioni di training, in questo modo volevamo evitare che lo ZBL si sovrapponesse alle previsioni del GAP. Per quanto riguarda il valore di $r_{inner} = 0.5$\AA \hspace{2pt} abbiamo inserito un valore al quale gli atomi sarebbero sovrapposti e quindi, anche se potrebbe essere alzato, un limite inferiore che dovrebbe essere invalicabile, come si vedrà questo non avviene.
 
-Riportiamo per prima cosa i valori di energia e temperatura
+Riportiamo per prima cosa i valori di energia e temperatura (\ref{fig:andamento_energia_zbl}):
 
 \begin{figure}[h!]
     \centering
@@ -200,12 +200,12 @@ Guardiamo adesso direttamente la relazione tra forze e distanze:
         \caption{Relazione tra i valori di forza e distanza tra i primi vicini per il potenziale GAP + ZBL}
     \end{subfigure}
 
-    \caption{Distanze e relazione forze distanze per il potenziale GAP + ZBL, originariamente la scala del pannello (b) raggiungeva $10^7$, è stata modificata in modo da evidenziare la regione di interesse.}
+    \caption{Distanze e relazione forze-distanze per il potenziale GAP + ZBL, originariamente la scala del pannello (b) raggiungeva $10^7$, è stata modificata in modo da evidenziare la regione di interesse.}
     \label{fig:confronto_forze_distanze_zbl}
 \end{figure}
 }
 
-in questo caso è anche utile guardare al confronto tra i due contributi di forza
+In questo caso è anche utile guardare al confronto tra i due contributi di forza
 
 \begin{figure}[h]
     \centering
@@ -214,15 +214,15 @@ in questo caso è anche utile guardare al confronto tra i due contributi di forz
     \label{fig:confronto_forze_vs_distanza_minima_zbl}
 \end{figure}
 
-possiamo notare come i valori di distanza tra i primi vicini arrivino comunque sotto la soglia imposta come minima. Proporniamo come spiegazione di questo fenomeno il fatto che la correzione dello ZBL non sia adeguata a compensare i valori prodotti dal potenziale GAP, essendo questi molto distanti dalle configurazioni di training. Inoltre vogliamo far notare come i moduli delle forze a distanze piccoli siano dati quasi totalmente dalla repulsione prodotta dallo ZBL, questo ci permette di confermare il suo comportamento adeguato, in conclusione non è immediatamente chiaro il motivo per il quale questa correzione non porti a risulati più in linea con le previsioni fatte.
+possiamo notare come i valori di distanza tra i primi vicini arrivino comunque sotto la soglia imposta come minima. Proponiamo come spiegazione di questo fenomeno il fatto che la correzione dello ZBL non sia adeguata a compensare i valori prodotti dal potenziale GAP, essendo questi molto distanti dalle configurazioni di training. Inoltre vogliamo far notare come i moduli delle forze a distanze piccole siano dati quasi totalmente dalla repulsione prodotta dallo ZBL, questo ci permette di confermare il suo comportamento adeguato, in conclusione non è immediatamente chiaro il motivo per il quale questa correzione non porti a risulati più in linea con le previsioni fatte.
 
-\section{Simulazione con metodo Montecarlo e algoritmo di Metropolis}
+\section[Algoritmo di Metropolis]{Simulazione con metodo Monte Carlo e algoritmo di Metropolis}
 
-Discutiamo adesso i risultati ottenuti tramite la simulazione Montecarlo, vogliamo subito dire che non è presenta una versione con il potenziale ZBL, in quanto per costruzione le distanze minime tra i vari atomi non scendono sotto i valori utilizzati nella sezione precedente.
+Discutiamo adesso i risultati ottenuti tramite la simulazione Monte Carlo, vogliamo subito dire che non è presente una versione con il potenziale ZBL, in quanto per costruzione le distanze minime tra i vari atomi non scendono sotto i valori utilizzati nella sezione precedente.
 
-Per questa simulazione abbiamo mosso un atomo per volta, entro un cubo di lato $0.01$\AA, e abbiamo deciso di svolgere $80'000$ iterazioni, che equivalgono a $650$ Montecarlo sweep, possiamo dire in questo modo che in media un atomo ha avuto $650$ possibilità di muoversi.
+Per questa simulazione abbiamo mosso un atomo per volta, entro un cubo di lato $0.01$\AA, e abbiamo deciso di svolgere $80'000$ iterazioni, che equivalgono a $650$ Monte Carlo sweep, possiamo dire in questo modo che in media un atomo ha avuto $650$ possibilità di muoversi.
 
-In questo caso l'unico grafico di energia che ha senso guardare è quello per l'energia potenziale
+In questo caso l'unico grafico di energia che ha senso guardare è quello per l'energia potenziale (\ref{fig:andamento_energia_montecarlo}):
 
 \begin{figure}[h!]
     \centering
@@ -231,7 +231,7 @@ In questo caso l'unico grafico di energia che ha senso guardare è quello per l'
     \label{fig:andamento_energia_montecarlo}
 \end{figure}
 
-possiamo vede che in questo caso i valori di energia rimangano stabili anche per molte iterazioni. Possiamo riconosce ancora una tendenza a diminuire, ma in questo caso abbiamo anche sezioni in cui il valore oscilla senza un preciso trend.
+possiamo vede che in questo caso i valori di energia rimangono stabili anche per molte iterazioni. Possiamo riconosce ancora una tendenza a diminuire, ma in questo caso abbiamo anche sezioni in cui il valore oscilla senza un preciso trend.
 
 Allo stesso modo abbiamo valori di forza che rimangono contenuti, infatti:
 
@@ -254,13 +254,13 @@ Come anticipato le distanze minime rimangono contenute e non degenerano verso ze
         \caption{Istogramma dei valori di distanza tra i primi vicini}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.48\textwidth}
+    \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{./img/andamento_forze_totali_distanza_montecarlo.png}
         \caption{Relazione tra i valori di forza e distanza tra i primi vicini}
     \end{subfigure}
 
-    \caption{Distanze e relazione forze distanze per il potenziale GAP per la simulazione con algoritmo di Metropolis.}
+    \caption{Distanze e relazione forze-distanze per il potenziale GAP per la simulazione con algoritmo di Metropolis.}
     \label{fig:confronto_forze_distanze_montecarlo}
 \end{figure}
 }

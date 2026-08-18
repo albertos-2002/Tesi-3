@@ -1,6 +1,6 @@
 
 
-Questo dataset consiste di una simulazione di MD eseguita con QE per una struttura cristallina costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). 
+Questo dataset consiste di una simulazione di MD eseguita con QE per una struttura amorfa costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). 
 
 
 Esso è composto da una serie di file di QE che costituiscono la dinamica molecolare di una struttura di tantala a circa 3000K.
@@ -17,7 +17,7 @@ Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica
 
 \section{SOAP con DScribe}
 
-Considerando la discussione svolta per spiegare SOAP unita alla spiegazione riguardante DScribe, vogliamo dare un esempio pratico di utilizzo del metodo considerando un contesto sul quale conosciamo già il risultato.
+Considerando la discussione svolta per spiegare SOAP, unita alla spiegazione riguardante DScribe, vogliamo dare un esempio pratico di utilizzo del metodo considerando un contesto sul quale conosciamo già il risultato.
 
 Dove abbiamo utilizzato \autoref{code:soap-dscribe} nel seguente modo
 
@@ -52,29 +52,29 @@ Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere 
 
 Consideriamo l'atomo 42 e calcoliamo un \textit{kernel} tra i frame successivi, questo significa che seguiamo un singolo atomo lungo tutta la dinamica molecolare.
 
-Un kernel è una funzione che ci permette di misurare quanto due descrittori soap (il power spectrum) siano simili, e conseguentemente gli ambienti da cui derivano. Nel nostro caso usiamo il kernel più semplice possibile:
+Un kernel è una funzione che ci permette di misurare quanto due descrittori SOAP (il power spectrum) siano simili, e conseguentemente gli ambienti da cui derivano. Nel nostro caso usiamo il kernel più semplice possibile:
 
 \begin{equation}
     \mathrm{Kernel}(\vec{p_1},\vec{p_2}) = \frac{\vec{p_1}\cdot\vec{p_2}}{|\vec{p_1}|\,|\vec{p_2}|}
     \label{eq:kernel-lineare}
 \end{equation}
 
-Il risultato che ci aspettiamo è che lungo tutti i frame il valore di questa funzione sia circa uno, data la struttura dei dati, infatti ogni frame rappresenta un piccolo scostamento temporale di una dinemica molecolare continua.
+Il risultato che ci aspettiamo è che lungo tutti i frame il valore di questa funzione sia circa uno, data la struttura dei dati, infatti ogni frame rappresenta un piccolo scostamento temporale di una dinamica molecolare continua.
 
 Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il confrnto tra il frame 1 e 2, e così per tutti gli altri indici) e sull'asse delle y mettiamo il valore del kernel ottenimo:
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{./img/kernel.png}
-    \caption{Rappresentazione del kernel per i frame del Datase A}
+    \caption{Rappresentazione del kernel per i frame del dataset A}
     \label{fig:kernel-dataset-a}
 \end{figure}
 
 Il risultato è esattamente quello atteso, l'unico punto che si discosta è il primo, non riteniamo questo punto particolarmente problematico.
 \\
 
-\section{Prima sessione di testing}
-In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimentare il funzionamento del workflow descritto all'inizio del documento.
+\section{Sessione di testing}
+In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimentare il funzionamento del workflow descritto in \autoref{sch:schema-gap}.
 
 \subsection{Addestramento potenziale con Quippy}
 
@@ -118,9 +118,9 @@ Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere 
 \end{tcolorbox}
 
 
-Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che quantum espresso utilizzava per decretare la convergenza della simulazione.
+Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che QE utilizzava per decretare la convergenza della simulazione.
 Le energie per gli atomi isolati \texttt{e0} sono state determinate tramite una simulazione di QE.
-Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche sono stati impostati come tali per la limitatezza della RAM disponibile sul sistema usato per il training, i problemi relativi all'accuratezza dei dati, come si può vedere sotto, in prima analisi possono essere imputabili a queta brusca approssimazione.
+Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche sono stati impostati come tali per la limitatezza della RAM disponibile sul sistema usato per il training, i problemi relativi all'accuratezza dei dati, come si può vedere sotto, in prima analisi possono essere imputabili a questa brusca approssimazione.
 
 
 La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file con ASE.
@@ -130,7 +130,7 @@ Gli altri parametri, come detto sono stati forniti dalla documentazione e andreb
 
 \subsection{Verifica delle energie}
 
-Per verificare se il potenziale così addestrato sia in grado di predirre in modo corretto le energie abbiamo estratto le configurazioni geometriche prodotte da Quantum Espresso e utilizzato il potenziale addestrato per predirre l'energia, successivamente abbiamo confrontato i valori predetti con quelli calcolati da Quantum Espresso.
+Per verificare se il potenziale così addestrato sia in grado di predire in modo corretto le energie abbiamo estratto le configurazioni geometriche prodotte da Quantum Espresso e utilizzato il potenziale addestrato per predirre l'energia, successivamente abbiamo confrontato i valori predetti con quelli calcolati da Quantum Espresso.
 
 \subsubsection{Training set}
 
@@ -143,12 +143,12 @@ Per prima cosa verifichiamo se utilizzando come dati di input quelli usati duran
     \label{fig:parity_plot_gap_vs_qe-traindata}
 \end{figure}
 
-Dal grafico sopra possiamo vedere che il risultato è compatibile con le aspettative, e le energie predettre assomigliano a quelle prodotte da Qauntum Espresso.
+Dal grafico \ref{fig:parity_plot_gap_vs_qe-traindata} possiamo vedere che il risultato è compatibile con le aspettative, e le energie predette assomigliano a quelle calcolate da QE.
 
 
 \subsubsection{Test set}
 
-In questa fase invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato, ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta dalla totalità del dataset A.
+In questa fase invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato, ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta del dataset A.
 
 \begin{figure}[h]
     \centering
@@ -162,16 +162,16 @@ Possiamo vedere che i risultati non si allineano perfettamente con le aspettativ
 
 \subsection{Verifica delle forze}
 
-Oltre a verificare le energie abbiamo deciso di verificare anche le forze. Abbiamo estratto le forze da Quantum Espresso da utilizzare come reference, successivamente abbiamo determinato il valore delle forze usando il potenziale addestrato a partire dalle configurazioni usate da Quantum Espresso.
+Oltre a verificare le energie abbiamo deciso di verificare anche le forze. Abbiamo estratto le forze da Quantum Espresso da utilizzare come reference, successivamente abbiamo determinato il valore delle forze usando il potenziale addestrato a partire dalle configurazioni usate da QE.
 
 \subsubsection{Training set}
 
-Il seguente grafico mostra il confronto tra le forze calcolate da Qauntum Espresso e quelle predette dal potenziale, essendo queste le configurazioni usate nel training ci aspettiamo un buon accordo.
+Il seguente grafico mostra il confronto tra le forze calcolate da QE e quelle predette dal potenziale, essendo queste le configurazioni usate nel training ci aspettiamo un buon accordo.
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{./img/parity_plot_forze-traindata.png}
-    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da Qauntum Espresso e dal potenziale addestrato}
+    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da QE e dal potenziale addestrato.}
     \label{fig:parity_plot_forze-traindata}
 \end{figure}
 
@@ -183,11 +183,11 @@ Procediamo adesso come sopra ad utilizzare l'altra parte del dataset per verific
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{./img/parity_plot_forze-testdata.png}
-    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da Qauntum Espresso e dal potenziale addestrato}
+    \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da QE e dal potenziale addestrato}
     \label{fig:parity_plot_forze-testdata}
 \end{figure}
 
-anche in questo caso i risultati mostra un buon accordo.
+anche in questo caso i risultati mostrano un buon accordo.
 
-Possiamo ipotizzare che questo grado di accordo superiore rispetto alle energie, sia almeno in parte dovuto al fatto che l'errore stima per le energie, e inserito nei parametri di affestramento del potenziale, è di tre ordini di grandezza superiore.
+Possiamo ipotizzare che questo grado di accordo superiore rispetto alle energie, sia almeno in parte dovuto al fatto che l'errore stimato per le energie, e inserito nei parametri di addestramento del potenziale, è di tre ordini di grandezza superiore.
 

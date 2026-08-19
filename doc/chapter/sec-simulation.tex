@@ -13,7 +13,7 @@ Per questa si è usato come potenziale il GAP addestrato e per realizzarla la li
 
 \subsection{Simulazione NVE con ZBL}
 
-Questa simulazione prevede di utilizzare la stessa struttura vista alla sezione precedente, a cui viene addizionato un potenziale ZBL. Questo può essere inserito sia in fase di training del potenziale che come correzione successiva, in questo caso abbiamo deciso di adottare la seconda opzione. 
+Questa simulazione prevede di utilizzare la stessa struttura vista alla sezione precedente, a cui viene addizionato un potenziale ZBL. Questo può essere inserito sia in fase di training del potenziale che come correzione successiva e in questo caso abbiamo deciso di adottare la seconda opzione. 
 
 Lo ZBL (Ziegler-Biersack-Littmark) è un potenziale repulsivo che utilizza una repulsione coulombiana schermata, più precisamente esso ha la seguente formula:
 
@@ -21,7 +21,7 @@ Lo ZBL (Ziegler-Biersack-Littmark) è un potenziale repulsivo che utilizza una r
     V(r_{ij}) = \frac{1}{4\pi\epsilon_0}\frac{Z_iZ_j}{r_{ij}} \phi\left(\frac{r_{ij}}{a_{ij}}\right)
 \end{equation}
 
-dove si riconosce la prima parte, il potenziale di Coulomb, la funzione $\phi$ e detta \textit{funzione di schermatura universale}, questa permette di tenere in considerazione la schermatura prodotta dalla nuvola elettronica. La forma di questa funzione è stata ricavata tramite un fit su un grande numero di coppie e assume la forma seguente, data dalla somma di quattro esponenziali:
+dove si riconosce la prima parte, il potenziale di Coulomb, la funzione $\phi$ è detta \textit{funzione di schermatura universale}, questa permette di tenere in considerazione la schermatura prodotta dalla nuvola elettronica. La forma di questa funzione è stata ricavata tramite un fit su un grande numero di coppie e assume la forma seguente, data dalla somma di quattro esponenziali:
 
 \begin{equation}
     \phi\left(\frac{r_{ij}}{a_{ij}}\right) = \phi(x) = 0.1818e^{-3.2x} + 0.5099e^{-0.9423x} + 0.2802e^{-0.4029x} + 0.02817e^{-0.2016x}
@@ -47,7 +47,7 @@ questo permette di eliminare le discontinuità quando vengono calcolate le forze
 
 I parametri $r_{inner}$ e $r_{outer}$ rappresentano rispettivamente la distanza a cui il potenziale assume il valore massimo, ovvero la funzione di smoothing assume valore 1, e la distanza a cui il potenziale repulsivo si annulla. Possiamo immaginare che questi valori rappresentino delle sfere di influenza.
 
-\subsection{Simulazione Montecarlo con algoritmo di Metropolis}
+\subsection{Simulazione Monte Carlo con algoritmo di Metropolis}
 \label{subsec:simulazione-metropolis-teoria}
 
 Questo tipo di simulazione prevede un cambio di paradigma rispetto a quello che abbiamo visto precedentemente.
@@ -63,7 +63,7 @@ Ogni configurazione spaziale ha una energia potenziale associata, utilizzando qu
 
 nel seguito ci riferiremo all'energia potenziale solo con il termine di energia e con il simbolo $E$, in quanto questa è l'unica che consideriamo.
 
-Dati questi elementi vogliamo determinare un metodo che ci permetta di decidere quali stati sono accettabili per il sistema, per prima cosa determiniamo la differenza di energia tra due stati "consecutivi"
+Dati questi elementi, vogliamo determinare un metodo che ci permetta di decidere quali stati sono accettabili per il sistema e, per prima cosa, determiniamo la differenza di energia tra due stati "consecutivi"
 
 \begin{equation}
     \Delta E = E_{new} - E_{old}
@@ -78,15 +78,15 @@ Possiamo distingue tra due scenari:
     \item $\Delta E > 0$ lo stato \texttt{new} ha energia maggiore del precedente
 \end{itemize}
 
-da cui calcoliamo la probabilità di accetare la transizione a questo nuovo stato come:
+da cui calcoliamo la probabilità di accettare la transizione a questo nuovo stato come:
 
 \begin{equation}
     P_{acc} = \mathrm{exp}\left(-\frac{\Delta E}{k_bT} \right)
 \end{equation}
 
-In ultimo per determinare se lo stato viene accettato oppure rifiutato generiamo un numero casuale compreso tra zero e uno, nel caso in cui il numero si minore di $P_{acc}$ allora lo stato viene accettato e la configurazione \texttt{new} diventa il nuovo punto di partenza, altrimenti manteniamo la configurazione \texttt{old}.
+In ultimo, per determinare se lo stato viene accettato oppure rifiutato, generiamo un numero casuale compreso tra zero e uno e nel caso in cui il numero sia minore di $P_{acc}$ allora lo stato viene accettato e la configurazione \texttt{new} diventa il nuovo punto di partenza, altrimenti manteniamo la configurazione \texttt{old}.
 
-Possiamo rappresentare questo processo con il seguente schema:
+Rappresentiamo questo processo con lo schema \ref{sch:markov-chain-schema} dove, senza dare ulteriori dettagli, è possibile riconoscere la struttura di una Markov chain.
 
 \begin{figure}[h!]
     \centering
@@ -95,6 +95,4 @@ Possiamo rappresentare questo processo con il seguente schema:
     \label{sch:markov-chain-schema}
 \end{figure}
 
-dove, senza dare ulteriori dettagli, è possibile riconosce la struttura di una Markov chain.
-
-Con $P(T)$ intendiamo la probabilità di accettazione, che in questo contesto abbiamo definito come probabilità di transizione, lo slider giallo rappresenta invece il valore in cui è caduto il numero casuale estratto, nello schema visualizzato la transizione è quindi accettata e si passa dalla configurazione A alla configurazione B. Questo stesso identico schema si ripete per ogni singolo stato proposto.
+Con $P(T)$ intendiamo la probabilità di accettazione, che in questo contesto abbiamo definito come probabilità di transizione, lo slider giallo rappresenta invece il valore in cui è caduto il numero casuale estratto, così nello schema visualizzato la transizione è accettata e si passa dalla configurazione A alla configurazione B. Questo stesso identico schema si ripete per ogni singolo stato proposto.

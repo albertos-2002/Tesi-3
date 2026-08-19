@@ -1,11 +1,11 @@
 
 
-Questo dataset consiste di una simulazione di MD eseguita con QE per una struttura amorfa costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). 
+Il dataset A consiste nei risultati di una simulazione di MD eseguita con QE per una struttura amorfa costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). 
 
 
 Esso è composto da una serie di file di QE che costituiscono la dinamica molecolare di una struttura di tantala a circa 3000K.
 
-Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica dai dati di QE analizzati, essendo una simulazione di dinamica molecolare, riportiamo solo uno degli step, a cui diamo il nome di frame. Riportiamo di seguito questa immagine, disegnata tramite matplotlib \ref{fig:cristallo-from-ase-frame-0-dataset-a}.
+Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica dai dati di QE analizzati, essendo i dati una simulazione di dinamica molecolare, riportiamo solo uno degli step a cui diamo il nome di frame. Riportiamo di seguito questa immagine disegnata tramite matplotlib \ref{fig:cristallo-from-ase-frame-0-dataset-a}.
 
 \begin{figure}[h]
     \centering
@@ -70,7 +70,7 @@ Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il
     \label{fig:kernel-dataset-a}
 \end{figure}
 
-Il risultato è esattamente quello atteso, l'unico punto che si discosta è il primo, non riteniamo questo punto particolarmente problematico.
+Osservando \autoref{fig:kernel-dataset-a}, il risultato è esattamente quello atteso, l'unico punto che si discosta è il primo ma non riteniamo questo punto particolarmente problematico.
 \\
 
 \section{Sessione di testing}
@@ -120,21 +120,21 @@ Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere 
 
 Per l'errore relativo alle energie, abbiamo usato lo stesso ordine di grandezza che QE utilizzava per decretare la convergenza della simulazione.
 Le energie per gli atomi isolati \texttt{e0} sono state determinate tramite una simulazione di QE.
-Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche sono stati impostati come tali per la limitatezza della RAM disponibile sul sistema usato per il training, i problemi relativi all'accuratezza dei dati, come si può vedere sotto, in prima analisi possono essere imputabili a questa brusca approssimazione.
+Il grado in \texttt{n} e \texttt{l} per le armoniche sferiche è stato impostato come tale per la limitatezza della RAM disponibile sul sistema usato per il training. I problemi relativi all'accuratezza dei dati, come si può vedere nella seguente discussione, in prima analisi possono essere imputabili a questa brusca approssimazione.
 
 
 La nomenclatura dei parametri è standard e deriva dall'aver prodotto il file con ASE.
 
-Gli altri parametri, come detto sono stati forniti dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
+Gli altri parametri, come detto, sono stati forniti dalla documentazione e andrebbero ottimizzati. Non escludiamo che possano esserci problemi di accuratezza dovuti alla scelta i questi valori.
 
 
 \subsection{Verifica delle energie}
 
-Per verificare se il potenziale così addestrato sia in grado di predire in modo corretto le energie abbiamo estratto le configurazioni geometriche prodotte da Quantum Espresso e utilizzato il potenziale addestrato per predirre l'energia, successivamente abbiamo confrontato i valori predetti con quelli calcolati da Quantum Espresso.
+Per verificare se il potenziale così addestrato sia in grado di predire in modo corretto le energie, abbiamo estratto le configurazioni geometriche prodotte da QE e utilizzato il potenziale addestrato per predirre l'energia, successivamente, abbiamo confrontato i valori predetti con quelli calcolati da QE.
 
 \subsubsection{Training set}
 
-Per prima cosa verifichiamo se utilizzando come dati di input quelli usati durante la fase di addestramento otteniamo il risultato atteso, se così non fosse potremmo velocemente concludere che l'addestramento non è andato a buon fine.
+Per prima cosa verifichiamo se utilizzando come dati di input quelli usati durante la fase di addestramento otteniamo il risultato atteso, se così non fosse, potremmo velocemente concludere che l'addestramento non è andato a buon fine.
 
 \begin{figure}[h]
     \centering
@@ -143,12 +143,12 @@ Per prima cosa verifichiamo se utilizzando come dati di input quelli usati duran
     \label{fig:parity_plot_gap_vs_qe-traindata}
 \end{figure}
 
-Dal grafico \ref{fig:parity_plot_gap_vs_qe-traindata} possiamo vedere che il risultato è compatibile con le aspettative, e le energie predette assomigliano a quelle calcolate da QE.
+Dal grafico \ref{fig:parity_plot_gap_vs_qe-traindata} possiamo osservare che il risultato è compatibile con le aspettative e, le energie predette assomigliano a quelle calcolate da QE.
 
 
 \subsubsection{Test set}
 
-In questa fase invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato, ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta del dataset A.
+In questa fase, invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato. Ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta del dataset A.
 
 \begin{figure}[h]
     \centering
@@ -157,12 +157,12 @@ In questa fase invece vogliamo verificare come si comporta il potenziale nel cas
     \label{fig:parity_plot_gap_vs_qe-testdata}
 \end{figure}
 
-Possiamo vedere che i risultati non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
+Possiamo notare che i risultati non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
 
 
 \subsection{Verifica delle forze}
 
-Oltre a verificare le energie abbiamo deciso di verificare anche le forze. Abbiamo estratto le forze da Quantum Espresso da utilizzare come reference, successivamente abbiamo determinato il valore delle forze usando il potenziale addestrato a partire dalle configurazioni usate da QE.
+Oltre a verificare le energie, abbiamo deciso di verificare anche le forze. Una volta estratte le forze da QE da usare come reference, abbiamo potuto determinare il valore delle forze usando il potenziale addestrato a partire dalle configurazioni usate da QE.
 
 \subsubsection{Training set}
 
@@ -187,7 +187,7 @@ Procediamo adesso come sopra ad utilizzare l'altra parte del dataset per verific
     \label{fig:parity_plot_forze-testdata}
 \end{figure}
 
-anche in questo caso i risultati mostrano un buon accordo.
+Anche in questo caso i risultati mostrano un buon accordo.
 
-Possiamo ipotizzare che questo grado di accordo superiore rispetto alle energie, sia almeno in parte dovuto al fatto che l'errore stimato per le energie, e inserito nei parametri di addestramento del potenziale, è di tre ordini di grandezza superiore.
+Possiamo dunque ipotizzare che questo grado di accordo superiore rispetto alle energie, sia almeno in parte dovuto al fatto che l'errore stimato per le energie e inserito nei parametri di addestramento del potenziale, è di tre ordini di grandezza superiore.
 

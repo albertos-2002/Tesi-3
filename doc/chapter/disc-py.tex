@@ -1,8 +1,8 @@
 
 
 \section{ASE} %----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Questa libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
-Inoltre questa libreria ci permette di svolgere semplici simulazioni di dinamica molecolare.
+La libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
+Inoltre questa libreria rende possibile svolgere semplici simulazioni di dinamica molecolare.
 \\
 
 \subsection{Lettura dei file di Quantum Espresso}
@@ -46,7 +46,7 @@ sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \texttt
 \subsubsection{Simulazione NVE}
 \label{subsec:simulazione-nve-ase}
 
-Questa simulazione impone la conservazione dell'energia totale del sistema, oltre che al volume e al numero di particelle.
+La simulazione NVE impone la conservazione dell'energia totale del sistema, oltre che al volume e al numero di particelle.
 
 Abbiamo impostato la simulazione al modo seguente, la versione riportata è una semplificazione del codice effettivamente utilizzato:
 
@@ -82,7 +82,7 @@ per le velocità iniziali, si è provato a reperirle dal file di QE, ma questo n
 
 
 \section{DScribe} %------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Questa è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica, definita tramite ASE, in un qualcosa di comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più semplice possibile. L'idea è quella di creare un oggetto che identifichi in modo univoco una determinata struttura atomica e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a training anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature, che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}
+DScribe è la libreria \cite{dscribe-doc} che si occupa di trasformare la struttura atomica, definita tramite ASE, in un qualcosa di comprensibile dai modelli di ML. Lo scopo principale di questa procedura è quello di rendere il training di un modello il più semplice possibile. L'idea è quella di creare un oggetto che identifichi in modo univoco una determinata struttura atomica e che sia invariante per modifiche "matematiche" della struttura stessa, come possono esserlo le rotazioni; se così non fosse, il modello dipenderebbe da un sistema di coordinate e andrebbe sottoposto a training anche per le diverse rotazioni. Questo processo porta alla produzione di un descriptor, o vettore di feature, che contiene l'informazione sulle invarianze delle leggi fisiche che descrivono il sistema. La prima cosa che facciamo notare è che separando il descriptor dalla fase di training è possibile riutilizzarlo con un diverso modello, diminuendo così il tempo necessario per l'addestramento. Abbiamo deciso di utilizzare il descriptor SOAP, per la rappresentazione locale della struttura atomica in analisi. \cite{dscribe-intro,dscribe2}
 \\
 
 Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
@@ -101,7 +101,7 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
 
 dove \texttt{soap\_obj} è una configurazione per SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il parametro $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
 
-In particolare l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
+In particolare, l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
 La funzione \texttt{create} si occupa poi di creare il vero e proprio SOAP, in input viene passato \texttt{QE\_data}, ovvero la struttura atomica in analisi definita tramite la libreria ASE.
 
@@ -114,13 +114,13 @@ Vogliamo far notare che questa libreria è stata utilizzata solo inizialmente pe
 
 \subsubsection{Note sulla struttura matematica} 
 
-DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (Gaussian Type Orbitals) in modo da rendere il tutto computazionalmente veloce e accurato.
+DScribe, in particolare, per le armoniche sferiche usa la loro versione puramente reale, in modo da evitare l'utilizzo dell'algebra complessa e come funzioni radiali delle GTO (Gaussian Type Orbitals) tali da rendere il tutto computazionalmente veloce e accurato.
 
 
 \section{Quippy} %-----------------------------------------------------------------------------------------------------
 \label{sec:quippy}
 
-Questa è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.
+Quippy è la libreria che si occupa della gestione del potenziale GAP \cite{quip-doc, quip-gap-doc}.
 
 In particolare andremo ad utilizzare la funzione \texttt{gap\_fit} 
 \footnote{La documentazione è reperibile al seguente: \url{https://libatoms.github.io/GAP/gap_fit.html} }
@@ -161,7 +161,7 @@ dopo aver generato il file del potenziale, esso può essere utilizzato come \tex
 
 \section{Potenziale ZBL} %----------------------------------------------------------------------------------------------------------------------------------------------------
 
-Il potenziale ZBL è stato implementato tramite una classe, in questo modo è stato possibile ereditare da ASE la struttura di un \texttt{calculator}. Di seguito diamo solo una breve parte del codice utilizzato.
+Il potenziale ZBL è stato implementato tramite una classe, in questo modo è possibile ereditare da ASE la struttura di un \texttt{calculator}. Di seguito diamo solo una breve parte del codice utilizzato.
 
 \begin{lstlisting}[caption={Snippet per la classe che implementa il potenziale ZBL}, label={code:zbl-class-implementation}, language=python]
 
@@ -213,7 +213,7 @@ class class_zbl(Calculator):
 
 \section{Algoritmo di Metropolis}
 
-Diamo in questa sezione una breve e schematica descrizione del codice utizzato per implementare l'algoritmo di Metropolis come descritto in \autoref{subsec:simulazione-metropolis-teoria}.
+Mostriamo in questa sezione una breve e schematica descrizione del codice utizzato per implementare l'algoritmo di Metropolis come descritto in \autoref{subsec:simulazione-metropolis-teoria}.
 
 \begin{lstlisting}[caption={Snippet per la classe che implementa l'algoritmo di Metropolis}, label={code:zbl-class-implementation}, language=python]
 
@@ -284,6 +284,6 @@ class class_makeMontecarlo:
 
 \end{lstlisting}
 
-il codice qui presentato non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione, è possibile anche muovere simultaneamente tutti gli atomi del sistema.
+il codice qui inserito non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione. Con tale codice è anche possibile anche muovere simultaneamente tutti gli atomi del sistema.
 
 Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta in \autoref{sch:markov-chain-schema}.

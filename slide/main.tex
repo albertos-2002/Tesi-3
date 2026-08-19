@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{booktabs} % Consigliato per tabelle professionali e pulite
+\usepackage{multicol}
 
 % --- Configurazione Tema Unipd ---
 % Indica a LaTeX dove trovare le immagini
@@ -24,35 +25,54 @@
 ]{Unipd}
 
 % --- Metadati ---
-\title[Titolo Breve per il Footer]{Messa a punto di un potenziale interatomico per la simulazione della tantala amorfa tramite machine-learning}
-\subtitle{Sottotitolo o Tipologia di Laurea}
-\author[Cognome]{Relatore: Prof. Paolo Umari \and Laureando: Alberto Stocco}
+\title[Potenziale interatomico tramite machine-learning]{Messa a punto di un potenziale interatomico per la simulazione della tantala amorfa tramite machine-learning}
+\subtitle{}
+\author[Alberto Stocco]{Relatore: Prof. Paolo Umari \and Laureando: Alberto Stocco}
 \date{Anno Accademico 2025/2026}
 
 \begin{document}
 
-% Pagina del Titolo
+% Pagina del Titolo ----------------------------------------------------------------------------------------------------------------
 \begin{frame}[plain, noframenumbering]
     \titlepage    
 \end{frame}
 
 % Indice
+%\begin{frame}{Indice}
+%    \begin{multicols}{2}
+%        \tableofcontents
+%    \end{multicols}    
+%\end{frame}
+
 \begin{frame}{Indice}
-    \tableofcontents
+    \begin{columns}[t]
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={1-2}]
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={3-4}]
+        \end{column}
+    \end{columns}
 \end{frame}
 
-% --- INIZIO PRESENTAZIONE ---
 
-\section{Introduzione}
-\begin{frame}{Titolo della Slide}
-    Questo è il normale testo della presentazione con tema scuro.
-    \begin{itemize}
-        \item Primo punto elenco
-        \item Secondo punto elenco
-    \end{itemize}
-\end{frame}
+% --- INIZIO PRESENTAZIONE --- ----------------------------------------------------------------------------------------------------
 
-% Slide Rossa per Cambi di Sezione
+\section{Struttura di lavoro}
+\input{chapter/sdl}
+
+\section{Python}
+\input{chapter/py}
+
+\section{Test sul dataset di QE}
+\input{chapter/test}
+
+\section{Simulazione}
+\input{chapter/sim}
+
+
+
+% Slide Rossa per Cambi di Sezione -----------------------------------------------------------------------------------------------
 \begin{emptyframe}
     Domande??
 \end{emptyframe}

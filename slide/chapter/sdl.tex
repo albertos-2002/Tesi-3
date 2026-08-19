@@ -12,19 +12,79 @@
         % Colonna Sinistra: Testo
         \begin{column}{0.48\textwidth}
         
-        -----
+        SOAP: Smooth Overlap of Atomic Positions
+        \vspace{10pt}
         
+        Generazione della mappa di densità
+%        \begin{equation}
+%            \small
+%            \rho_Z (\vec{r} \,) = \sum_{\alpha}^{Z} e^{-\frac{|\vec{r}-\vec{r}_{\alpha}\,|^2}{2\sigma^2}}
+%            \label{eq:density-map-formula}
+%        \end{equation}
+
+        \vspace{-10pt}
+        {\small
+        \begin{flalign}
+            \rho_Z (\vec{r} \,) = \sum_{\alpha}^{Z} e^{-\frac{|\vec{r}-\vec{r}_{\alpha}\,|^2}{2\sigma^2}} &&
+            \label{eq:density-map-formula}
+        \end{flalign}
+        }
+               
         \end{column}
         % Colonna Destra: Due immagini incolonnate
         \begin{column}{0.48\textwidth}
         
             \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=0.20]{./invnobg/soap-step1-example.png}
             
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{SOAP}
+    \begin{columns}[c]        
+        % Colonna Sinistra: Testo
+        \begin{column}{0.52\textwidth}
+        
+        Espansione in funzioni di base
+        {\scriptsize
+        \begin{flalign}
+            \rho_Z(\vec{r}) = \sum_{n=1}^{n_{max}} \sum_{l=1}^{l_{max}} \sum_{m=-l}^{l} c_Z(n,l,m) g(r \,;n) Y(\theta, \phi \,; l,m) &&
+        \end{flalign}
+        \vspace{-15pt}
+        \begin{flalign}
+            c_Z(n,l,m) = \int_{\mathbb{R}^3} \mathrm{d}r\, \mathrm{d}\theta\, \mathrm{d}\phi \;\; g(r \,;n) Y(\theta, \phi \,; l,m) \rho_Z(\vec{r}) &&
+        \end{flalign}
+        }
+        
+        
+        Calcolo del power spectrum
+        \vspace{-3pt}
+        {\scriptsize
+        \begin{flalign}
+            p_{Z_1Z_2}(n,n',l) = \pi \sqrt{\frac{8}{2l+1}} \sum_{m=-l}^{l} \overline{c_{Z_1}}(n,l,m) c_{Z_2}(n',l,m) &&
+            \label{eq:power-spectrum}
+        \end{flalign}
+        }
+        
+        
+        Risultato finale
+        \vspace{-3pt}
+        {\scriptsize
+        \begin{flalign}
+            \mathrm{dim} = (l_{max} + 1) \,\frac{1}{2}\, (S\cdot n_{max}) (S\cdot n_{max} +1) &&
+            \label{eq:formula-dimensione-semplificata}
+        \end{flalign}
+        }
+                
+        \end{column}
+        % Colonna Destra: Due immagini incolonnate
+        \begin{column}{0.44\textwidth}
             
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
+            \centering
+            \vspace{-10pt}
+            \includegraphics[scale=0.45]{./invnobg/schema-riassunto-soap - Selection.png}
+   
         \end{column}
     \end{columns}
 \end{frame}
@@ -34,26 +94,10 @@
 
 
 \begin{frame}{GAP}
-    \begin{columns}[c]        
-        % Colonna Sinistra: Testo
-        \begin{column}{0.48\textwidth}
-        
-        -----
-        
-        \end{column}
-        % Colonna Destra: Due immagini incolonnate
-        \begin{column}{0.48\textwidth}
-        
-            \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
-            
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
-        \end{column}
-    \end{columns}
+    \centering
+    \includegraphics[scale=1.1]{./invnobg/gap-schema - Selection.png} 
 \end{frame}
+
 
 \begin{frame}{GPR}
     \begin{columns}[c]        
@@ -67,11 +111,9 @@
         \begin{column}{0.48\textwidth}
         
             \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
-            
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=0.16]{./invnobg/curva-gaussiana.png}            
+            \vspace{5pt} % Spazio verticale tra le due immagini           
+            \includegraphics[scale=0.26]{./invnobg/bi-gaussiana_e.png}
             
         \end{column}
     \end{columns}
@@ -106,20 +148,27 @@
 \begin{frame}{ZBL}
     \begin{columns}[c]        
         % Colonna Sinistra: Testo
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.49\textwidth}
         
-        -----
+        ZBL: Potenziale Ziegler-Biersack-Littmark
+        
+        {\scriptsize
+        \begin{flalign}
+            & V(r_{ij}) = \frac{1}{4\pi\epsilon_0}\frac{Z_iZ_j}{r_{ij}} \phi\left(\frac{r_{ij}}{a_{ij}}\right)  && \\[7pt]
+            & \phi\left(\frac{r_{ij}}{a_{ij}}\right) = \phi(x) = 0.1818e^{-3.2x} + 0.5099e^{-0.9423x} + && \\[-3pt] 
+            & \hspace{42pt} + 0.2802e^{-0.4029x} + 0.02817e^{-0.2016x} && \notag \\[7pt]
+            & a_{ij} = \frac{0.8854\, a_0}{Z_i^{0.23} + Z_j^{0.23}} && \\[7pt]
+            & S(u) = -6u^5 + 15u^4 - 10u^3 +1 &&  \\[7pt]    
+            & u = \frac{r-r_{inner}}{r_{outer}-r_{inner}} &&    
+        \end{flalign}
+        }
         
         \end{column}
         % Colonna Destra: Due immagini incolonnate
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.47\textwidth}
         
             \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
-            
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=0.35]{./invnobg/switch_zbl.png}
             
         \end{column}
     \end{columns}
@@ -130,18 +179,20 @@
         % Colonna Sinistra: Testo
         \begin{column}{0.48\textwidth}
         
-        -----
+        {\scriptsize
+        \begin{flalign}
+            & P(A) \propto \mathrm{exp}\left(-\frac{E_{pot}(A)}{k_b\,T}\right)  && \\[10pt]
+            & \Delta E = E_{new} - E_{old}  && \\[10pt] 
+            & P_{acc} = \mathrm{exp}\left(-\frac{\Delta E}{k_bT} \right)  &&         
+        \end{flalign}
+        }
         
         \end{column}
         % Colonna Destra: Due immagini incolonnate
         \begin{column}{0.48\textwidth}
         
             \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
-            
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
-            
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=1]{./invnobg/markov-chain - Selection.png}
             
         \end{column}
     \end{columns}

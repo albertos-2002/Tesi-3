@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {1.5}Simulazione}{8}{section.1.5}%
 \contentsline {subsection}{\numberline {1.5.1}Simulazione NVE}{8}{subsection.1.5.1}%
 \contentsline {subsection}{\numberline {1.5.2}Simulazione NVE con ZBL}{8}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}Simulazione Montecarlo con algoritmo di Metropolis}{9}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.5.3}Simulazione Monte Carlo con algoritmo di Metropolis}{9}{subsection.1.5.3}%
 \contentsline {chapter}{\numberline {2}Python}{11}{chapter.2}%
 \contentsline {section}{\numberline {2.1}ASE}{11}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Lettura dei file di Quantum Espresso}{11}{subsection.2.1.1}%

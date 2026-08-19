@@ -43,4 +43,4 @@
 \contentsline {section}{\numberline {4.3}Simulazione con ZBL}{27}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Algoritmo di Metropolis}{28}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Conclusioni}{29}{section.4.5}%
-\contentsline {chapter}{\numberline {A}Calcolo esplicito della dimensione del vettore di power specturm}{31}{appendix.Alph1}%
+\contentsline {chapter}{\numberline {A}Calcolo esplicito della dimensione del vettore di power spectrum}{31}{appendix.Alph1}%

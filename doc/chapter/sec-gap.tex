@@ -13,7 +13,7 @@ Il core concept di questo metodo è quello di scomporre l'energia totale del sis
     \label{sch:schema-gap}
 \end{figure}
 
-Lo schema \ref{sch:schema-gap} descrive l'insieme di elementi che costituiscono il framework di un potenziale GAP.
+Lo schema (\ref{sch:schema-gap}) descrive l'insieme di elementi che costituiscono il framework di un potenziale GAP.
 
 Il processo matematico su cui si basa un potenziale GAP è la GPR (Gaussian Proces Regression). 
 Essendo questo un argomento vasto, anche per le innumerevoli applicazioni, nel seguito diamo una breve spiegazione del suo funzionamento senza soffermarci su particolari dettagli.
@@ -24,7 +24,7 @@ Questo ci permette di modellizzare sia relazioni non note che relazioni compless
 Il processo ci permette di utilizzare la coppia di dati $(x, f(x))$ per generare una previsione del valore di $f$ in un punto che non appartiene al set di dati.
 
 Per fare questa previsione utilizziamo un kernel (indicato spesso con $K$), ovvero una funzione che ci permette di definire la somiglianza tra due punti di input, ad esempio $(x_1, x_2)$, questo ci permette di imporre che punti tra loro vicini diano risultati non dissimili.
-Inoltre possiamo utilizzare i paraemtri del kernel per definire le interazioni tra i punti, infatti in base alla distribuzione dei dati potrebbe essere necessario far parlare tra loro punti lontati, come nel caso di periodicità, oppure limitare l'interazione solo ai prossimi vicini.
+Inoltre possiamo utilizzare i parametri del kernel per definire le interazioni tra i punti, infatti in base alla distribuzione dei dati potrebbe essere necessario far parlare tra loro punti lontati, come nel caso di periodicità, oppure limitare l'interazione solo ai prossimi vicini.
 
 
 Volendo dare alcuni dettagli aggiuntivi, quello che andiamo a fare è considerare l'insieme di tutte le funzioni $f$ che passando per l'insieme di punti $D$, questo rappresenta i dati osservati.
@@ -33,7 +33,7 @@ La funzione che cerchiamo è il valore di aspettazione di questa distribuzione e
 
 Usiamo una spiegazione geometrica, nel caso più semplice possibile, per descrivere l'idea del processo, assumiamo di avere i dati $(x, f(x))$, possiamo assumere che $x$ segua una distibuzione gaussina la cui media sia proprio il valore $f(x)$.
 
-Possiamo vedere una rappresentazione della distribuzione gaussiana nella seguente \ref{fig:curva-gaussiana}:
+Possiamo vedere una rappresentazione della distribuzione gaussiana nella seguente immagine (\ref{fig:curva-gaussiana}):
 
 \begin{figure}[!h]
     \centering
@@ -49,7 +49,7 @@ Inoltre il valor medio di $f(x^*) = f^*$, lo conosciamo in quanto si assume un v
 Abbiamo così costruito una distribuzione gaussiana bivariata.
 Ricordando che sappiamo il valore di $f(x)$ possiamo "tagliare" la funzione bivariata in corrispondenza del noto $x$ e ottenere la distribuzione di $f^*$ dopo aver considerato i dati, da questa nuova distribuzione estraiamo il valor medio, esso è la nostra previsione.
 
-La rappresentazione di questo concetto è data dalla seguente immagine \ref{fig:bi-gaussiana_e}:
+La rappresentazione di questo concetto è data dalla seguente immagine (\ref{fig:bi-gaussiana_e}):
 
 \begin{figure}[!h]
     \centering

@@ -21,7 +21,7 @@ Lo ZBL (Ziegler-Biersack-Littmark) è un potenziale repulsivo che utilizza una r
     V(r_{ij}) = \frac{1}{4\pi\epsilon_0}\frac{Z_iZ_j}{r_{ij}} \phi\left(\frac{r_{ij}}{a_{ij}}\right)
 \end{equation}
 
-dove si riconosce la prima parte, il potenziale di Coulomb, la funzione $\phi$ è detta \textit{funzione di schermatura universale}, questa permette di tenere in considerazione la schermatura prodotta dalla nuvola elettronica. La forma di questa funzione è stata ricavata tramite un fit su un grande numero di coppie e assume la forma seguente, data dalla somma di quattro esponenziali:
+dove si riconosce nella prima parte, il potenziale di Coulomb, la funzione $\phi$ è detta \textit{funzione di schermatura universale}, questa permette di tenere in considerazione la schermatura prodotta dalla nuvola elettronica. La forma di questa funzione è stata ricavata tramite un fit su un grande numero di coppie di atomi e assume la forma seguente, data dalla somma di quattro esponenziali:
 
 \begin{equation}
     \phi\left(\frac{r_{ij}}{a_{ij}}\right) = \phi(x) = 0.1818e^{-3.2x} + 0.5099e^{-0.9423x} + 0.2802e^{-0.4029x} + 0.02817e^{-0.2016x}
@@ -32,6 +32,8 @@ dove con $a_{ij}$, detto \textit{lunghezza di schermatura universale}, la scherm
 \begin{equation}
     a_{ij} = \frac{0.8854\, a_0}{Z_i^{0.23} + Z_j^{0.23}}
 \end{equation}
+
+dove $a_0$ è il raggio di Bohr.
 
 L'implementazione nel nostro caso ha un termine aggiuntivo, una funzione di smoothing: 
 
@@ -51,11 +53,11 @@ I parametri $r_{inner}$ e $r_{outer}$ rappresentano rispettivamente la distanza 
 \label{subsec:simulazione-metropolis-teoria}
 
 Questo tipo di simulazione prevede un cambio di paradigma rispetto a quello che abbiamo visto precedentemente.
-Per prima cosa partiamo considerando il nostro sistema composto da $126$ atomi, tra \ce{Ta} e \ce{O}, a questo possiamo associare uno \textit{spazio delle configurazioni}, ovvero uno spazio nel quale ogni punto rappresenta in modo univoco una configurazione del nostro sistema. 
+Per prima cosa partiamo considerando il nostro sistema composto da $126$ atomi, tra \ce{Ta} e \ce{O}, a questo possiamo associare uno \textit{spazio delle configurazioni} ($3N$), ovvero uno spazio nel quale ogni punto rappresenta in modo univoco una configurazione del nostro sistema. 
 
 Questa simulazione abbandona la dinamica molecolare e ci fa invece esplorare questo spazio, che contiene anche tutte le possibili configurazioni ottenute tramite dinamica molecolare una volta fissate le condizioni al contorno.
 
-Ogni configurazione spaziale ha una energia potenziale associata, utilizzando questa energia e la temperatura di riferimento a cui vogliamo studiare il sistema, possiamo calcolare la probabilità che il sistema si trovi in questa particolare configurazione, questo si ottiene tramite la \textit{distribuzione di Boltzman}:
+Ogni configurazione spaziale ha un' energia potenziale associata, utilizzando questa energia e la temperatura di riferimento a cui vogliamo studiare il sistema, possiamo calcolare la probabilità che il sistema si trovi in questa particolare configurazione, questo si ottiene tramite la \textit{distribuzione di Boltzman}:
 
 \begin{equation}
     P(A) \propto \mathrm{exp}\left(-\frac{E_{pot}(A)}{k_b\,T}\right)
@@ -86,7 +88,7 @@ da cui calcoliamo la probabilità di accettare la transizione a questo nuovo sta
 
 In ultimo, per determinare se lo stato viene accettato oppure rifiutato, generiamo un numero casuale compreso tra zero e uno e nel caso in cui il numero sia minore di $P_{acc}$ allora lo stato viene accettato e la configurazione \texttt{new} diventa il nuovo punto di partenza, altrimenti manteniamo la configurazione \texttt{old}.
 
-Rappresentiamo questo processo con lo schema \ref{sch:markov-chain-schema} dove, senza dare ulteriori dettagli, è possibile riconoscere la struttura di una Markov chain.
+Rappresentiamo questo processo con lo schema (\ref{sch:markov-chain-schema}) dove, senza dare ulteriori dettagli, è possibile riconoscere la struttura di una Markov chain.
 
 \begin{figure}[h!]
     \centering

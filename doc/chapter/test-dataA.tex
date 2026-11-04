@@ -9,7 +9,7 @@ Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5]{./img/cristallo-from-ase-frame-0-dataset-a.png}
+    \includegraphics[scale=0.33]{./img/cristallo-from-ase-frame-0-dataset-a.png}
     \caption{Rappresentazione generata tramite ASE della struttura atomica del dataset A}
     \label{fig:cristallo-from-ase-frame-0-dataset-a}
 \end{figure}
@@ -27,16 +27,14 @@ Dove abbiamo utilizzato \autoref{code:soap-dscribe} nel seguente modo
         periodic=True,       
         r_cut=5.0,      
         n_max=8,         
-        l_max=6 
-    )
-    
+        l_max=6 )
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
 
 \begin{tcolorbox}[
     center,
-    fontupper=\small,
+    fontupper=\footnotesize,
     colback=white,
     boxrule=0.8pt,
     colframe=gray!60,
@@ -45,8 +43,8 @@ Dove abbiamo utilizzato \autoref{code:soap-dscribe} nel seguente modo
 ]
 \textbf{Nota sui parametri}
 
-Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
-Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accuratezza dei risultati rispetto a quelli prodotti da Quantum Espresso.
+Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione. 
+%Un test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accuratezza dei risultati rispetto a quelli prodotti da Quantum Espresso.
 \end{tcolorbox}
 
 
@@ -65,7 +63,7 @@ Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5]{./img/kernel.png}
+    \includegraphics[scale=0.3]{./img/kernel.png}
     \caption{Rappresentazione del kernel per i frame del dataset A}
     \label{fig:kernel-dataset-a}
 \end{figure}
@@ -79,7 +77,6 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
 \subsection{Addestramento potenziale con Quippy}
 
 \begin{lstlisting}[caption={Snippet usato per il calcolo del GAP per il detaset A}, label={code:gap-dataset-a}, language=bash]
-
     gap_fit 
     at_file=train_data.extxyz 
     default_sigma={0.0002 0.1 0.0 0.0} 
@@ -92,8 +89,7 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
         covariance_type=dot_product 
         n_sparse=500 
         sparse_method=cur_points
-        delta=1
-        } 
+        delta=1 } 
     e0={Ta:-9884.889316093:O:-561.82449957} 
     energy_parameter_name=energy 
     force_parameter_name=forces 
@@ -104,7 +100,7 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
 
 \begin{tcolorbox}[
     center,
-    fontupper=\small,
+    fontupper=\footnotesize,
     colback=white,
     boxrule=0.8pt,
     colframe=gray!60,
@@ -113,8 +109,8 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
 ]
 \textbf{Nota sui parametri}
 
-Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione grazie a strumenti di AI che ne hanno fatto la revisione. 
-Data la spiegazione che abbiamo dato per essi, il test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accuratezza dei risultati rispetto a quelli prodotti da Quantum Espresso.
+Dato che ci stiamo ponendo come scopo quello di verificare che il metodo sia utilizzabile, i parametri riportati sopra non sono stati in alcun modo ottimizzati, essi sono stati reperiti negli esempi della documentazione. 
+%Un test che si potrebbe svolgere per la loro ottimizzazione è un tradeoff tra velocità di calcolo e accuratezza dei risultati rispetto a quelli prodotti da Quantum Espresso.
 \end{tcolorbox}
 
 
@@ -136,28 +132,50 @@ Per verificare se il potenziale così addestrato sia in grado di predire in modo
 
 Per prima cosa verifichiamo se utilizzando come dati di input quelli usati durante la fase di addestramento otteniamo il risultato atteso, se così non fosse, potremmo velocemente concludere che l'addestramento non sia andato a buon fine.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/parity_plot_gap_vs_qe-traindata.png}
-    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
-    \label{fig:parity_plot_gap_vs_qe-traindata}
-\end{figure}
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[scale=0.4]{./img/parity_plot_gap_vs_qe-traindata.png}
+%    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
+%    \label{fig:parity_plot_gap_vs_qe-traindata}
+%\end{figure}
 
-Dal grafico \ref{fig:parity_plot_gap_vs_qe-traindata} possiamo osservare che il risultato è compatibile con le aspettative e, le energie predette assomigliano a quelle calcolate da QE.
+Dal grafico (\ref{fig:parity_plot_gap_vs_qe-traindata}) possiamo osservare che il risultato è compatibile con le aspettative e, le energie predette assomigliano a quelle calcolate da QE.
 
 
 \subsubsection{Test set}
 
 In questa fase, invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato. Ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta del dataset A.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{./img/parity_plot_gap_vs_qe-testdata.png}
-    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
-    \label{fig:parity_plot_gap_vs_qe-testdata}
-\end{figure}
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[scale=0.4]{./img/parity_plot_gap_vs_qe-testdata.png}
+%    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
+%    \label{fig:parity_plot_gap_vs_qe-testdata}
+%\end{figure}
 
-Possiamo notare che i risultati non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
+Possiamo notare che i risultati (\ref{fig:parity_plot_gap_vs_qe-testdata}) non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
+
+
+{
+	\begin{figure}[ht]
+		\centering
+		\begin{subfigure}{0.45\textwidth}
+		    \centering
+    		\includegraphics[scale=0.29]{./img/parity_plot_gap_vs_qe-traindata.png}
+    		\caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
+    		\label{fig:parity_plot_gap_vs_qe-traindata}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.45\textwidth}
+		    \centering
+		    \includegraphics[scale=0.29]{./img/parity_plot_gap_vs_qe-testdata.png}
+		    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
+    		\label{fig:parity_plot_gap_vs_qe-testdata}
+		\end{subfigure}
+		\label{fig:energie-test+train-set}
+	\end{figure}
+}
+
 
 
 \subsection{Verifica delle forze}
@@ -170,7 +188,7 @@ Il seguente grafico mostra il confronto tra le forze calcolate da QE e quelle pr
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{./img/parity_plot_forze-traindata.png}
+    \includegraphics[scale=0.31]{./img/parity_plot_forze-traindata.png}
     \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da QE e dal potenziale addestrato.}
     \label{fig:parity_plot_forze-traindata}
 \end{figure}
@@ -182,7 +200,7 @@ Procediamo adesso come sopra ad utilizzare l'altra parte del dataset per verific
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{./img/parity_plot_forze-testdata.png}
+    \includegraphics[scale=0.32]{./img/parity_plot_forze-testdata.png}
     \caption{Confronto, suddiviso per asse di riferimento, tra i valori di forza calcolati a partire da QE e dal potenziale addestrato}
     \label{fig:parity_plot_forze-testdata}
 \end{figure}

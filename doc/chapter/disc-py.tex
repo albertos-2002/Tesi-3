@@ -71,9 +71,8 @@ Abbiamo impostato la simulazione al modo seguente, la versione riportata è una 
           timestep=TIMESTEP, 
           trajectory=PATH_TRAJ_OUTPUT,
           logfile=PATH_LOG_OUTPUT,
-          loginterval=1
-   )     
-
+          loginterval=1 )     
+          
     #Avvio della simulazione
     dyn.run(passi_totali)
 \end{lstlisting}
@@ -93,9 +92,7 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
         periodic= , # condizione di periodicità    
         r_cut= ,    # raggio di cutoff
         n_max= ,    # numero funzioni radiali     
-        l_max=      # grado massimo armoniche sferiche
-    )
-    
+        l_max=      # grado massimo armoniche sferiche )
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
@@ -125,8 +122,6 @@ Quippy è la libreria che si occupa della gestione del potenziale GAP \cite{quip
 In particolare andremo ad utilizzare la funzione \texttt{gap\_fit} 
 \footnote{La documentazione è reperibile al seguente: \url{https://libatoms.github.io/GAP/gap_fit.html} }
 
-
-\clearpage
 
 \begin{lstlisting}[caption={Snippet per il calcolo del GAP}, label={code:gap-libatom}, language=bash]
 
@@ -193,23 +188,18 @@ class class_zbl(Calculator):
 
     #implementa la funzione di switch per il potenziale e la derivata della funzione di switch
     def switch(self, distances): #----------
-        .
-        .
-        .
+        . . .
         return switch, dswitch_dr
 
     #implementa il vero e proprio calcolatore
     def calculate(self, atoms=None, properties=("energy",), system_changes=all_changes):
         super().calculate(atoms, properties, system_changes)
-        .
-        .
-        .
+        . . .
         # Salvataggio nel dizionario interno di ASE
         self.results = {
             "energy": energy, 
             "free_energy": energy, 
-            "forces": forces
-        }
+            "forces": forces }
         
 \end{lstlisting}
 
@@ -236,8 +226,7 @@ class class_makeMontecarlo:
         
         self.MCsteps = setConfig.PASSI_TOTALI * len(self.atomi_md) 
         #self.MCsteps: Numero totale di tentativi Monte Carlo
-
-
+        
     #Esegue una simulazione Monte Carlo di Metropolis nell'insieme NVT.
     def runMetropolisMC(self):
 

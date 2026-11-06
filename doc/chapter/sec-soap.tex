@@ -1,7 +1,7 @@
 
 
 \section{SOAP}
-In questa sezione ci poniamo come obiettivo quello di dare una breve ma decente spiegazione, per quanto possibile completa e chiusa, del metodo SOAP (Smooth Overlap of Atomic Positions). 
+In questa sezione ci poniamo come obiettivo quello di dare una breve ma adeguata spiegazione, per quanto possibile completa e chiusa, del metodo SOAP (Smooth Overlap of Atomic Positions). 
 
 Il punto fondamentale per comprendere la necessità di utilizzare una procedura come SOAP risiede nel concetto di invarianze fisiche. È infatti comune per le leggi della fisica essere invarianti per determinate proprietà, come lo possono essere le rotazioni, le traslazioni spaziali e lo scambio tra atomi uguali. Queste simmetrie emergono in modo naturale dalle leggi utilizzate, ma come un fisico deve impararle e con fatica ricavarle, anche un modello di ML necessiterebbe di imparare queste simmetrie ogni singola volta e questo richiede una spesa sia dal punto di vista computazionale che da quello temporale. Questo problema viene facilmente risolto utilizzando una rappresentazione che sia naturale espressione delle simmetrie del sistema, in questo modo non sarà necessario il training sulle simmetrie, rendendo il tutto più semplice.
 
@@ -39,7 +39,7 @@ Vogliamo dare adesso una rappresentazione grafica di questo concetto, facciamo r
 
 questa immagine è la somma di tutte le singole mappe prodotte per gli atomi interni al $r_{cut}$, dove è stato preso come riferimento l'atomo color oro posto al centro del sistema di coordinate. Il risultato finale si ottiene prendendo come atomo color oro, a turno, ognuno degli atomi presenti. Per semplicità di rappresentazione la struttura atomica è stata generata aggiungendo rumore ad un cristallo periodico, questo non rappresenta nessuna struttura particolare, è solo una semplice griglia sulle cui intersezioni è stato posizionato un generico atomo.
 
-Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresentato nella seguente (\ref{fig:soap-step1-example-sigma-big_small}):
+Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresentato nella seguente immagine (\ref{fig:soap-step1-example-sigma-big_small}):
 
 \begin{figure}[h]
     \centering
@@ -48,7 +48,7 @@ Il controllo che viene dato dal parametro $\sigma$ della gaussiana è rappresent
     \label{fig:soap-step1-example-sigma-big_small}
 \end{figure}
 
-dove il pannello a sx rappresenta il caso di una $\sigma$ eccessivamente piccola e quello a dx il caso di una $\sigma$ eccessivamente grande. In entrambi i casi è possibile notare come l'informazione che se ne ricava non sia adeguata agli scopi descritti sopra. Infatti, come detto, vogliamo che l'aggiunta di una piccola quantità di rumore non modifichi in modo sensibile il fattore di somiglianza tra le due strutture. Nel primo caso la minima variazione di posizione porta a decretare che gli ambienti sono sensibilmente diversi, mentre nel secondo caso, anche una decisa modifica delle posizioni, porta alla conclusione che i due ambienti siano simili.
+dove il pannello a sinistra rappresenta il caso di una $\sigma$ eccessivamente piccola e quello a destra il caso di una $\sigma$ eccessivamente grande. In entrambi i casi è possibile notare come l'informazione che se ne ricava non sia adeguata agli scopi descritti sopra. Infatti, come detto, vogliamo che l'aggiunta di una piccola quantità di rumore non modifichi in modo sensibile il fattore di somiglianza tra le due strutture. Nel primo caso la minima variazione di posizione porta a decretare che gli ambienti sono sensibilmente diversi, mentre nel secondo caso, anche una decisa modifica delle posizioni porta alla conclusione che i due ambienti siano simili.
 
 Per quanto riguarda il valore di $r_{cut}$, esso controlla il significato che diamo ad "atomi vicini". Se fosse troppo piccolo si perdono informazioni riguardanti la struttura in esame, mentre se troppo grande arriviamo ad avere un vettore di feature complesso e pesante che non fornisce particolari vantaggi.
 
@@ -106,7 +106,7 @@ Per una spiegazione su come ottenere questa formula si veda \autoref{app:dimpows
 
 \subsubsection{Schema riassuntivo}
 
-Diamo adesso una rappresentazione riassuntiva del processo completo (\ref{fig:schema-riassunto-soap}), compresa anche la possibilità di dinamica molecolare suddivisa per frame. In particolare, il metodo di archiviazione della struttura di SOAP e la sua indicizzazione / organizzazione è lasciato pienamente in gestione alle librerie utilizzate, notiamo che l'ordine del vettore di feature non è trascurabile.
+Diamo adesso una rappresentazione riassuntiva del processo completo (\autoref{fig:schema-riassunto-soap}), compresa anche la possibilità di dinamica molecolare suddivisa per frame. In particolare, il metodo di archiviazione della struttura di SOAP e la sua indicizzazione / organizzazione è lasciato pienamente in gestione alle librerie utilizzate, notiamo che l'ordine del vettore di feature non è trascurabile.
 
 \begin{figure}[h]
     \centering

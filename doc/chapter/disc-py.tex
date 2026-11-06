@@ -41,7 +41,7 @@ Diamo adesso una descrizione del codice utilizzato per svolgere questo processo,
     calc.name_ = "GAP" 
 \end{lstlisting}
 
-sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \texttt{atoms} di ASE tramite \verb|atomi.calc = calc|.
+Sarà poi possibile associare il calcolatore \texttt{calc} ad un oggetto \texttt{atoms} di ASE tramite \verb|atomi.calc = calc|.
 
 \subsubsection{Simulazione NVE}
 \label{subsec:simulazione-nve-ase}
@@ -96,7 +96,7 @@ Riportiamo adesso l'uso che abbiamo fatto di questo pacchetto:
     features = soap_obj.create(QE_data, n_jobs=-1)
 \end{lstlisting}
 
-dove \texttt{soap\_obj} è una configurazione per SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il parametro $\sigma$ discusso in \eqref{eq:density-map-formula} assume come valore predefinito 1.
+dove \texttt{soap\_obj} è una configurazione per SOAP, \texttt{species} definisce tutti gli atomi che saranno incontrati nella struttura in esame, \texttt{periodic} serve per impostare l'uso della struttura periodica (precedentemente definita in ASE), \texttt{r\_cut} definisce un cutoff per la rappresentazione locale (espresso in \r{A}), \texttt{n\_max} è il numero di funzioni radiali di base, \texttt{l\_max} il massimo grado delle armoniche sferiche \footnote{La documentazione è reperibile al seguente: \url{https://singroup.github.io/dscribe/latest/tutorials/descriptors/soap.html}}. Il parametro $\sigma$ discusso in equazione \eqref{eq:density-map-formula} assume come valore predefinito 1.
 
 In particolare, l'accuratezza della rappresentazione, come il numero delle feature, cresce proporzionalmente al valore di \texttt{n\_max} e \texttt{l\_max}.
 
@@ -277,4 +277,4 @@ class class_makeMontecarlo:
 
 il codice qui inserito non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione. Con tale codice è anche possibile muovere simultaneamente tutti gli atomi del sistema.
 
-Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta in \autoref{sch:markov-chain-schema}.
+Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta nello schema \ref{sch:markov-chain-schema}.

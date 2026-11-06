@@ -3,7 +3,7 @@
 Il dataset A consiste dei risultati di una simulazione di MD eseguita con QE per una struttura amorfa costituita da \ce{Ta2O5}, pentossido di ditantalio (a cui ci riferiamo anche come tantala). 
 
 
-Esso è composto da una serie di file di QE che costituiscono la dinamica molecolare di una struttura di tantala a circa 3000K.
+Esso è composto da una serie di file di QE che costituiscono la dinamica molecolare di una struttura di tantala a circa $3'000$ K.
 
 Usando la libreria ASE abbiamo generato una rappresentazione della cella atomica dai dati di QE analizzati, essendo questa una simulazione di dinamica molecolare, riportiamo solo uno degli step a cui diamo il nome di frame. L'immagine di seguito (\ref{fig:cristallo-from-ase-frame-0-dataset-a}) è stata generata tramite matplotlib.
 
@@ -72,7 +72,7 @@ Osservando \autoref{fig:kernel-dataset-a}, il risultato è esattamente quello at
 \\
 
 \section{Sessione di testing}
-In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimentare il funzionamento del workflow descritto in \autoref{sch:schema-gap}.
+In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimentare il funzionamento del workflow descritto nello schema \ref{sch:schema-gap}.
 
 \subsection{Addestramento potenziale con Quippy}
 
@@ -153,7 +153,7 @@ In questa fase, invece vogliamo verificare come si comporta il potenziale nel ca
 %    \label{fig:parity_plot_gap_vs_qe-testdata}
 %\end{figure}
 
-Possiamo notare che i risultati (\ref{fig:parity_plot_gap_vs_qe-testdata}) non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
+Possiamo notare che i risultati in \autoref{fig:parity_plot_gap_vs_qe-testdata} non si allineano perfettamente con le aspettative, ma date le limitazioni dei parametri di addestramento del potenziale e dalla rapidità di calcolo ottenuta, possiamo considerare questo un buon risultato iniziale.
 
 
 {
@@ -161,18 +161,19 @@ Possiamo notare che i risultati (\ref{fig:parity_plot_gap_vs_qe-testdata}) non s
 		\centering
 		\begin{subfigure}{0.45\textwidth}
 		    \centering
-    		\includegraphics[scale=0.29]{./img/parity_plot_gap_vs_qe-traindata.png}
+    		\includegraphics[scale=0.25]{./img/parity_plot_gap_vs_qe-traindata.png}
     		\caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
     		\label{fig:parity_plot_gap_vs_qe-traindata}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}{0.45\textwidth}
 		    \centering
-		    \includegraphics[scale=0.29]{./img/parity_plot_gap_vs_qe-testdata.png}
+		    \includegraphics[scale=0.25]{./img/parity_plot_gap_vs_qe-testdata.png}
 		    \caption{Confronto tra i valori di energia potenziale predetti dal potenziale GAP e quelli calcolati tramite Quantum Espresso}
     		\label{fig:parity_plot_gap_vs_qe-testdata}
 		\end{subfigure}
 		\label{fig:energie-test+train-set}
+		\caption{}
 	\end{figure}
 }
 

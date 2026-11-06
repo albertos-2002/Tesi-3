@@ -21,7 +21,7 @@ Considerando la discussione svolta per spiegare SOAP, unita alla spiegazione rig
 
 Dove abbiamo utilizzato \autoref{code:soap-dscribe} nel seguente modo
 
-\begin{lstlisting}[caption={Snippet usato per il detaset A}, label={code:soap-dataset-a}, language=Python]
+\begin{lstlisting}[caption={Snippet usato per il dataset A}, label={code:soap-dataset-a}, language=Python]
     soap_obj = SOAP(
         species=["Ta", "O"],
         periodic=True,       
@@ -59,7 +59,7 @@ Un kernel è una funzione che ci permette di misurare quanto due descrittori SOA
 
 Il risultato che ci aspettiamo è che lungo tutti i frame il valore di questa funzione sia circa uno, data la struttura dei dati, infatti ogni frame rappresenta un piccolo scostamento temporale di una dinamica molecolare continua.
 
-Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il confrnto tra il frame 1 e 2, e così per tutti gli altri indici) e sull'asse delle y mettiamo il valore del kernel ottenimo:
+Se produciamo un grafico dove lungo l'asse x poniamo un indice (1 rappresenta il confronto tra il frame 1 e 2, e così per tutti gli altri indici) e sull'asse delle y mettiamo il valore del kernel otteniamo:
 
 \begin{figure}[h]
     \centering
@@ -76,7 +76,7 @@ In questa sezione spiegheremo come è stato utilizzato il dataset A per sperimen
 
 \subsection{Addestramento potenziale con Quippy}
 
-\begin{lstlisting}[caption={Snippet usato per il calcolo del GAP per il detaset A}, label={code:gap-dataset-a}, language=bash]
+\begin{lstlisting}[caption={Snippet usato per il calcolo del GAP per il dataset A}, label={code:gap-dataset-a}, language=bash]
     gap_fit 
     at_file=train_data.extxyz 
     default_sigma={0.0002 0.1 0.0 0.0} 
@@ -139,12 +139,12 @@ Per prima cosa verifichiamo se utilizzando come dati di input quelli usati duran
 %    \label{fig:parity_plot_gap_vs_qe-traindata}
 %\end{figure}
 
-Dal grafico (\ref{fig:parity_plot_gap_vs_qe-traindata}) possiamo osservare che il risultato è compatibile con le aspettative e, le energie predette assomigliano a quelle calcolate da QE.
+Dal grafico (\ref{fig:parity_plot_gap_vs_qe-traindata}) possiamo osservare che il risultato è compatibile con le aspettative e le energie predette assomigliano a quelle calcolate da QE.
 
 
 \subsubsection{Test set}
 
-In questa fase, invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato. Ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta del dataset A.
+In questa fase, invece vogliamo verificare come si comporta il potenziale nel caso di dati su cui non è stato addestrato. Ricordiamo che questo set è composto dalla seconda metà della dinamica totale descritta dal dataset A.
 
 %\begin{figure}[h]
 %    \centering

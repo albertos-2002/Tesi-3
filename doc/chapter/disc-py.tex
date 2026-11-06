@@ -1,7 +1,7 @@
 
 
 \section{ASE} %----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-La libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
+La libreria \cite{ase-doc} ci permette di analizzare le simulazioni di dinamica molecolare prodotte tramite QE. Essenzialmente possiamo dire che essa svolge il ruolo di ponte tra una struttura fatta di coordinate e una che sia computazionalmente utilizzabile. Questo ci permette di trasportare le informazioni che QE utilizza per svolgere i calcoli, come le condizioni di periodicità, in un formato poi accessibile anche da altre librerie.
 Inoltre questa libreria rende possibile svolgere semplici simulazioni di dinamica molecolare.
 \\
 
@@ -26,7 +26,7 @@ La specifica sezione della documentazione è reperibile al seguente link: \url{h
 
 \subsection{Simulazione con un potenziale ML}
 
-I potenziali generati tramite ML vengo utilizzati come dei \textit{calculator} \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/calculators/calculators.html}} per la dinamica molecolare.
+I potenziali generati tramite ML vengono utilizzati come dei \textit{calculator} \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/calculators/calculators.html}} per la dinamica molecolare.
 Questo oggetto può essere descritto come una calcolatrice che data una configurazione restituisce i valori delle energie e delle forze.
 
 Lo step successivo è utilizzare un motore di dinamica molecolare \footnote{Si veda la documentazione: \url{https://docs.ase-lib.org/ase/md.html}}
@@ -77,7 +77,7 @@ Abbiamo impostato la simulazione al modo seguente, la versione riportata è una 
     dyn.run(passi_totali)
 \end{lstlisting}
 
-per le velocità iniziali, si è provato a reperirle dal file di QE, ma questo non le riportava, sono quindi state estratte dalla distribuzione di Maxwell-Boltzman.
+per le velocità iniziali, si è provato a reperirle dal file di QE, ma questo non le riportava, sono quindi state estratte dalla distribuzione di Maxwell-Boltzmann.
 
 
 \section{DScribe} %------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ La funzione \texttt{create} si occupa poi di creare il vero e proprio SOAP, in i
 
 Il risultato di questi calcoli è un complesso oggetto, indicizzato come segue:
 
-{\centering \verb|[num frames, num atomi, feature vector]|}
+{\centering \verb|[num frame, num atomi, feature vector]|}
 
 Vogliamo far notare che questa libreria è stata utilizzata solo inizialmente per verificare la possibilità di utilizzare SOAP sui dati a nostra disposizione, successivamente l'intero processo è stato svolto da QUIP.
 
@@ -143,7 +143,7 @@ In particolare andremo ad utilizzare la funzione \texttt{gap\_fit}
         covariance_type=     #tipologia di kernel per il 
                              # confronto degli ambienti
         n_sparse=            #numero punti per lo sparse method
-        sparse_method=       #tipolgia di sparse method
+        sparse_method=       #tipologia di sparse method
         delta=               #
         } 
     e0=                           #energia di atomo libero
@@ -205,7 +205,7 @@ class class_zbl(Calculator):
 
 \section{Algoritmo di Metropolis}
 
-Mostriamo in questa sezione una breve e schematica descrizione del codice utizzato per implementare l'algoritmo di Metropolis come descritto in \autoref{subsec:simulazione-metropolis-teoria}.
+Mostriamo in questa sezione una breve e schematica descrizione del codice utilizzato per implementare l'algoritmo di Metropolis come descritto in \autoref{subsec:simulazione-metropolis-teoria}.
 
 \begin{lstlisting}[caption={Snippet per la classe che implementa l'algoritmo di Metropolis}, label={code:zbl-class-implementation}, language=python]
 
@@ -275,6 +275,6 @@ class class_makeMontecarlo:
 
 \end{lstlisting}
 
-il codice qui inserito non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione. Con tale codice è anche possibile anche muovere simultaneamente tutti gli atomi del sistema.
+il codice qui inserito non rappresenta fedelmente quello utilizzato in fase di simulazione, in quanto abbiamo presentato una versione semplificata al solo scopo di fornire un metodo di implementazione. In questo contesto abbiamo mostrato un codice che seleziona un atomo casualmente e muove solo esso per proporre una nuova configurazione. Con tale codice è anche possibile muovere simultaneamente tutti gli atomi del sistema.
 
 Il ciclo \texttt{for} qui presentato è l'implementazione della Markov chain descritta in \autoref{sch:markov-chain-schema}.

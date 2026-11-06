@@ -8,7 +8,7 @@ Questa struttura è stata utilizzata come punto di partenza per il calcolo di en
 Seguendo la struttura descritta precedentemente è stata impostata la simulazione con i seguenti parametri: timestep pari a $4.8$fs (come quello usato in QE) e un totale di $2'000$ step.
 Come detto, data la diversa configurazione, i risultati non possono essere confrontati direttamente con quelli prodotti da QE. 
 Per verificare la stabilità dei risultati facciamo un grafico della temperatura e dell'energia in funzione dello step temporale.
-Si è provato a reperire i valori delle velocità iniziali dal file di output di QE, ma non essendo presenti, le abbiamo estratte da una distribuzione di Maxwell-Boltzman per una temperatura di $3'000$K.
+Si è provato a reperire i valori delle velocità iniziali dal file di output di QE, ma non essendo presenti, le abbiamo estratte da una distribuzione di Maxwell-Boltzmann per una temperatura di $3'000$K.
 \\
 
 I risultati di energia e temperatura che otteniamo sono i seguenti (\ref{fig:andamento_nve-testdata}):
@@ -43,7 +43,7 @@ In questa sezione ci proponiamo di modificare a turno vari parametri, o combinaz
 
 Come primo test abbiamo provato a modificare la temperatura dalla quale venivano estratti i valori di velocità. 
 Si è impostato questo valore a $0$K, mentre gli altri parametri sono rimasti invariati. 
-Anche in questo caso diamo sia i riaultati per i valori di energia sia di temperatura (\ref{fig:andamento_nve-traindata_0k}):
+Anche in questo caso diamo sia i risultati per i valori di energia sia di temperatura (\ref{fig:andamento_nve-traindata_0k}):
 
 \begin{figure}[h]
     \centering
@@ -152,9 +152,9 @@ Questo diventa rilevante nel momento in cui andiamo ad analizzare i valori di di
 
 I risultati della sezione precedente sono il principale motivo per il quale andiamo ad addizionare un potenziale repulsivo come lo ZBL.
 
-Anche in questo caso sono stati svolti diversi test, cambiando di volta in volta diversi parametri, non riteniamo necessario riportare tutti questi risultati, inseriamo solo uno di questi, dove l'unica modifica rispetto ai casi precedeti è un timestep di $1$fs.
+Anche in questo caso sono stati svolti diversi test, cambiando di volta in volta diversi parametri, non riteniamo necessario riportare tutti questi risultati, inseriamo solo uno di questi, dove l'unica modifica rispetto ai casi precedenti è un timestep di $1$fs.
 
-I parametri per i raggi che abbiamo utilizzato sono dati dal seguente ragionamento, per il $r_{outer} = 1.5$\AA \hspace{2pt} abbiamo deciso di impostare un valore prossimo ai minimi ragistrati nelle configurazioni di training, in questo modo volevamo evitare che lo ZBL si sovrapponesse alle previsioni del GAP. Per quanto riguarda il valore di $r_{inner} = 0.5$\AA \hspace{2pt} abbiamo inserito un valore al quale gli atomi sarebbero sovrapposti e quindi, anche se potrebbe essere alzato, un limite inferiore che dovrebbe essere invalicabile, come si vedrà questo non avviene.
+I parametri per i raggi che abbiamo utilizzato sono dati dal seguente ragionamento, per il $r_{outer} = 1.5$\AA \hspace{2pt} abbiamo deciso di impostare un valore prossimo ai minimi registrati nelle configurazioni di training, in questo modo volevamo evitare che lo ZBL si sovrapponesse alle previsioni del GAP. Per quanto riguarda il valore di $r_{inner} = 0.5$\AA \hspace{2pt} abbiamo inserito un valore al quale gli atomi sarebbero sovrapposti e quindi, anche se potrebbe essere alzato, un limite inferiore che dovrebbe essere invalicabile, come si vedrà questo non avviene.
 
 Riportiamo per prima cosa i valori di energia e temperatura (\ref{fig:andamento_energia_zbl}):
 
@@ -190,7 +190,7 @@ Guardiamo adesso direttamente la relazione tra forze e distanze:
 \end{figure}
 }
 
-In questo caso è anche utile guardare al confronto tra i due contributi di forza (\ref{fig:confronto_forze_vs_distanza_minima_zbl}), osserviamo come i valori di distanza tra i primi vicini arrivino comunque sotto la soglia imposta come minima. Proponiamo come spiegazione di questo fenomeno il fatto che la correzione dello ZBL non sia adeguata a compensare i valori prodotti dal potenziale GAP, essendo questi molto distanti dalle configurazioni di training. Inoltre vogliamo far notare come i moduli delle forze a distanze piccole siano dati quasi totalmente dalla repulsione prodotta dallo ZBL, questo ci permette di confermare il suo comportamento adeguato. In conclusione non è immediatamente chiaro il motivo per il quale questa correzione non porti a risulati più in linea con le previsioni fatte.
+In questo caso è anche utile guardare al confronto tra i due contributi di forza (\ref{fig:confronto_forze_vs_distanza_minima_zbl}), osserviamo come i valori di distanza tra i primi vicini arrivino comunque sotto la soglia imposta come minima. Proponiamo come spiegazione di questo fenomeno il fatto che la correzione dello ZBL non sia adeguata a compensare i valori prodotti dal potenziale GAP, essendo questi molto distanti dalle configurazioni di training. Inoltre vogliamo far notare come i moduli delle forze a distanze piccole siano dati quasi totalmente dalla repulsione prodotta dallo ZBL, questo ci permette di confermare il suo comportamento adeguato. In conclusione non è immediatamente chiaro il motivo per il quale questa correzione non porti a risultati più in linea con le previsioni fatte.
 
 \begin{figure}[h]
     \centering
@@ -214,7 +214,7 @@ In questo caso l'unico grafico di energia che ha senso guardare è quello per l'
     \label{fig:andamento_energia_montecarlo}
 \end{figure}
 
-notiamo che in questo caso i valori di energia rimangono stabili anche per molte iterazioni. Possiamo riconosce ancora una tendenza a diminuire, ma in questo caso abbiamo anche sezioni in cui il valore oscilla senza un preciso trend.
+notiamo che in questo caso i valori di energia rimangono stabili anche per molte iterazioni. Possiamo riconoscere ancora una tendenza a diminuire, ma in questo caso abbiamo anche sezioni in cui il valore oscilla senza un preciso trend.
 
 Allo stesso modo abbiamo valori di forza che rimangono contenuti (\ref{fig:andamento_forze_totali_montecarlo}).
 
@@ -250,4 +250,4 @@ Come anticipato le distanze minime rimangono contenute e non degenerano verso ze
 
 \section{Conclusioni}
 
-In conclusione, possiamo dire che, è possibile utilizzare metodi di machine learning per velocizzare le simulazioni di meteriali. È però fondamentale ricordare che essendo metodi di regressione non parametrici il risultato ottenibile, in fatto di range di configurazioni riproducibili, dipende fortemente dalle configurazioni utilizzate nella fase di training, oltre a questo, è anche fondamentale il descrittore che viene utilizzato per mappare l'ambiente che circonda un atomo. L'investimento computazionale iniziale usato per la fase di training, sotto le adeguate condizioni, permette di ottenere simulazioni sensibilmente più veloci.
+In conclusione, possiamo dire che, è possibile utilizzare metodi di machine learning per velocizzare le simulazioni di materiali. È però fondamentale ricordare che essendo metodi di regressione non parametrici il risultato ottenibile, in fatto di range di configurazioni riproducibili, dipende fortemente dalle configurazioni utilizzate nella fase di training, oltre a questo, è anche fondamentale il descrittore che viene utilizzato per mappare l'ambiente che circonda un atomo. L'investimento computazionale iniziale usato per la fase di training, sotto le adeguate condizioni, permette di ottenere simulazioni sensibilmente più veloci.

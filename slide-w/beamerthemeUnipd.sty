@@ -7,15 +7,15 @@
 
 %% --- Gestione Immagini Standard ---
 \newcommand{\safeincludeimage}[2][]{%
-    \IfFileExists{#2}{%
-        \includegraphics[#1]{#2}%
+  \IfFileExists{#2}{%
+    \includegraphics[#1]{#2}%
+  }{%
+    \IfFileExists{images/#2}{%
+      \includegraphics[#1]{images/#2}%
     }{%
-        \IfFileExists{images/#2}{%
-            \includegraphics[#1]{images/#2}%
-        }{%
-            \framebox{\textcolor{red}{\small Logo non trovato: #2}}%
-        }%
+      \framebox{\textcolor{red}{\small Logo non trovato: #2}}%
     }%
+  }%
 }
 
 %% --- Gestione Opzioni (Inizializzazione Corretta) ---
@@ -35,19 +35,19 @@
 \mode<presentation>
 
 %% --- 1. COLOR THEME ---
-\definecolor{nice_dark_bg}{HTML}{1b212c}
-\definecolor{nice_text}{HTML}{f0f0f0}
+\definecolor{nice_light_bg}{HTML}{ffffff}
+\definecolor{nice_text}{HTML}{000000}
 \definecolor{nice_title}{HTML}{ffffff}
 \definecolor{red_unipd}{RGB}{155, 0, 20}
 \definecolor{darker_red}{HTML}{850011}
 \definecolor{block_color}{RGB}{0, 82, 155}
 
-% Colori Canvas e Testo
-%\setbeamercolor{background canvas}{bg=nice_dark_bg}
-%\setbeamercolor{normal text}{fg=nice_text, bg=nice_dark_bg}
+% Colori Canvas e Testo (Sfondo bianco e testo nero)
+\setbeamercolor{background canvas}{bg=nice_light_bg}
+\setbeamercolor{normal text}{fg=nice_text, bg=nice_light_bg}
 
 % Applicazione immediata del colore testo
-%\usebeamercolor[fg]{normal text}
+\usebeamercolor[fg]{normal text}
 
 \setbeamercolor{structure}{fg=red_unipd}
 \setbeamercolor{title}{fg=nice_title}
@@ -56,24 +56,30 @@
 \setbeamercolor{title page}{bg=darker_red,fg=nice_title}
 \setbeamercolor{footer font}{fg=nice_title}
 
-% Elenchi e Indice
-%\setbeamercolor{itemize/enumerate body}{fg=nice_text}
-%\setbeamercolor{itemize/enumerate subbody}{fg=nice_text}
-%\setbeamercolor{itemize item}{fg=nice_text}
-%\setbeamercolor{itemize subitem}{fg=nice_text}
-%\setbeamercolor{item}{fg=nice_text}
-%\setbeamercolor{subitem}{fg=nice_text}
+% Formule matematiche (Black text for equations)
+\setbeamercolor{math text}{fg=nice_text}
+\setbeamercolor{math text inlined}{fg=nice_text}
+\setbeamercolor{math text displayed}{fg=nice_text}
+\setbeamercolor{normal text in math}{fg=nice_text}
 
-%\setbeamercolor{section in toc}{fg=nice_text}
-%\setbeamercolor{section in toc section number}{fg=red_unipd}
+% Elenchi e Indice
+\setbeamercolor{itemize/enumerate body}{fg=nice_text}
+\setbeamercolor{itemize/enumerate subbody}{fg=nice_text}
+\setbeamercolor{itemize item}{fg=red_unipd}
+\setbeamercolor{itemize subitem}{fg=red_unipd}
+\setbeamercolor{item}{fg=red_unipd}
+\setbeamercolor{subitem}{fg=red_unipd}
+
+\setbeamercolor{section in toc}{fg=nice_text}
+\setbeamercolor{section in toc section number}{fg=red_unipd}
 
 % Blocchi
-%\setbeamercolor{block title}{use=structure,fg=nice_title,bg=block_color}
-%\setbeamercolor{block body}{fg=nice_text,bg=nice_dark_bg!80!white}
-%\setbeamercolor{block title example}{use=example text,fg=nice_title,bg=green!50!black}
-%\setbeamercolor{block body example}{fg=nice_text,bg=nice_dark_bg!80!white}
-%\setbeamercolor{block title alerted}{use=alerted text,fg=nice_title,bg=darker_red}
-%\setbeamercolor{block body alerted}{fg=nice_text,bg=nice_dark_bg!80!white}
+\setbeamercolor{block title}{use=structure,fg=nice_title,bg=block_color}
+\setbeamercolor{block body}{fg=nice_text,bg=gray!10!white}
+\setbeamercolor{block title example}{use=example text,fg=nice_title,bg=green!50!black}
+\setbeamercolor{block body example}{fg=nice_text,bg=gray!10!white}
+\setbeamercolor{block title alerted}{use=alerted text,fg=nice_title,bg=darker_red}
+\setbeamercolor{block body alerted}{fg=nice_text,bg=gray!10!white}
 
 %% --- 2. FONT THEME ---
 \setbeamerfont{big title}{size=\Huge}
@@ -86,34 +92,34 @@
 
 %% --- 3. INNER THEME ---
 \defbeamertemplate*{title page}{pres theme}[1]{%
-    \begin{tikzpicture}[overlay, remember picture]
-        \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);
-        \node[anchor=north] at ([yshift=-0.8cm] current page.north) {%
-            \ifx\beamer@unipd@logo\@empty
-                \safeincludeimage[height=.22\paperheight, keepaspectratio]{unipd_logo.png}%
-            \else
-                \safeincludeimage[height=.18\paperheight, keepaspectratio]{unipd_logo.png}%
-                \hspace{0.5cm}%
-                \safeincludeimage[height=.18\paperheight, keepaspectratio]{\beamer@unipd@logo}%
-            \fi
-        };
-    \end{tikzpicture}%
-    \vspace*{0.22\paperheight}%
-    \vfill
-    {\centering\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
-    \ifx \insertsubtitle\@empty\else%
-        \vskip 1.5ex%
-        {\centering\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-    \fi%
-    \vskip 3ex%
-    \ifx\insertauthor\@empty\else%
-        {\centering\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
-    \fi%
-    \ifx\insertdate\@empty\else%
-        \vskip 1ex%
-        {\centering\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
-    \fi%
-    \vfill
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw[fill=darker_red, draw=darker_red] (current page.south west) rectangle (current page.north east);
+    \node[anchor=north] at ([yshift=-0.8cm] current page.north) {%
+      \ifx\beamer@unipd@logo\@empty
+        \safeincludeimage[height=.22\paperheight, keepaspectratio]{unipd_logo.png}%
+      \else
+        \safeincludeimage[height=.18\paperheight, keepaspectratio]{unipd_logo.png}%
+        \hspace{0.5cm}%
+        \safeincludeimage[height=.18\paperheight, keepaspectratio]{\beamer@unipd@logo}%
+      \fi
+    };
+  \end{tikzpicture}%
+  \vspace*{0.22\paperheight}%
+  \vfill
+  {\centering\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+  \ifx \insertsubtitle\@empty\else%
+    \vskip 1.5ex%
+    {\centering\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+  \fi%
+  \vskip 3ex%
+  \ifx\insertauthor\@empty\else%
+    {\centering\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+  \fi%
+  \ifx\insertdate\@empty\else%
+    \vskip 1ex%
+    {\centering\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+  \fi%
+  \vfill
 }
 
 \setbeamertemplate{itemize items}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
@@ -122,57 +128,53 @@
 
 %% --- 4. OUTER THEME ---
 \defbeamertemplate*{frametitle}{pres theme}{%
-    \nointerlineskip
-    \begin{beamercolorbox}[wd=\paperwidth,ht=6.5ex,dp=0pt]{frametitle}%
-        \vbox to 6.5ex{%
-            \vfil
-            \hspace*{2.5ex}%
-            \usebeamerfont{frametitle}\insertframetitle
-            \vfil
-        }%
-    \end{beamercolorbox}%
-    \begin{tikzpicture}[overlay, remember picture]
-        \node[anchor=east] at ([xshift=-2.5ex + (\beamer@unipd@logoxshift), yshift=-3.25ex + (\beamer@unipd@logoyshift)] current page.north east) {%
-            \safeincludeimage[height=4.5ex, keepaspectratio]{unipd_logo.png}%
-        };
-    \end{tikzpicture}%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=6.5ex,dp=0pt]{frametitle}%
+    \vbox to 6.5ex{%
+      \vfil
+      \hspace*{2.5ex}%
+      \usebeamerfont{frametitle}\insertframetitle
+      \vfil
+    }%
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[overlay, remember picture]
+    \node[anchor=east] at ([xshift=-2.5ex + (\beamer@unipd@logoxshift), yshift=-3.25ex + (\beamer@unipd@logoyshift)] current page.north east) {%
+      \safeincludeimage[height=4.5ex, keepaspectratio]{unipd_logo.png}%
+    };
+  \end{tikzpicture}%
 }
 
 \defbeamertemplate*{footline}{pres theme}{%
-    \ifnum\value{framenumber}>1
-        \leavevmode%
-        \hbox{%
-            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
-                \usebeamerfont{footer font}\insertshortauthor
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
-                \usebeamerfont{footer font}\insertshorttitle
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
-                \usebeamerfont{footer font}\insertframenumber{} \beamer@unipd@pageofpages{} \inserttotalframenumber
-            \end{beamercolorbox}%
-        }%
-        \vskip0cm%
-    \fi
+  \ifnum\value{framenumber}>1
+    \leavevmode%
+    \hbox{%
+      \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+        \usebeamerfont{footer font}\insertshortauthor
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+        \usebeamerfont{footer font}\insertshorttitle
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{frametitle}%
+        \usebeamerfont{footer font}\insertframenumber{} \beamer@unipd@pageofpages{} \inserttotalframenumber
+      \end{beamercolorbox}%
+    }%
+    \vskip0cm%
+  \fi
 }
-
 
 %% --- 5. SLIDE ROSSA CENTRATA (emptyframe) ---
 \newenvironment{emptyframe}{%
-    \setbeamercolor{background canvas}{bg=darker_red}%
-    \setbeamercolor{normal text}{fg=nice_title}%
-    \usebeamercolor[fg]{normal text}%
-    \begin{frame}[plain, noframenumbering, environment=emptyframe]%
-    \vspace*{\fill}%
-    \centering%
-    \usebeamerfont{big title}%
+  \setbeamercolor{background canvas}{bg=darker_red}%
+  \setbeamercolor{normal text}{fg=nice_title}%
+  \usebeamercolor[fg]{normal text}%
+  \begin{frame}[plain, noframenumbering, environment=emptyframe]%
+  \vspace*{\fill}%
+  \centering%
+  \usebeamerfont{big title}%
 }{%
-    \vspace*{\fill}%
-    \end{frame}%
+  \vspace*{\fill}%
+  \end{frame}%
 }
-
-
-
 
 \setbeamertemplate{navigation symbols}{}
 

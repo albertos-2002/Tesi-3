@@ -1,0 +1,80 @@
+\documentclass[aspectratio=169, 10pt]{beamer} % Formato panoramico 16:9 (standard moderno)
+
+% --- Pacchetti Consigliati ---
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % Consigliato per tabelle professionali e pulite
+\usepackage{multicol}
+
+% --- Configurazione Tema Unipd ---
+% Indica a LaTeX dove trovare le immagini
+\graphicspath{{./}} 
+
+% Carica il tema dal file beamerthemeUnipd.sty
+% Opzioni:
+% - pageofpages=di : cambia la dicitura nel conteggio pagine in basso
+% - logo=unipd_logo_dipartimento.png : aggiunge un secondo logo alla prima pagina
+% Se lo vuoi spostare un po' più a destra e in basso
+\usetheme[
+    pageofpages=di,
+    % Regolazione logo slide interne:
+    logoxshift=3mm,       % Sposta a dx (+) o sx (-) nelle slide interne
+    logoyshift=0mm        % Sposta in alto (+) o in basso (-) nelle slide interne    
+]{Unipd}
+
+% --- Metadati ---
+\title[Potenziale interatomico tramite machine-learning]{Messa a punto di un potenziale interatomico per la simulazione della tantala amorfa tramite machine-learning}
+\subtitle{}
+\author[Alberto Stocco]{Relatore: Prof. Paolo Umari \and Laureando: Alberto Stocco}
+\date{Anno Accademico 2025/2026}
+
+\begin{document}
+
+% Pagina del Titolo ----------------------------------------------------------------------------------------------------------------
+\begin{frame}[plain, noframenumbering]
+    \titlepage    
+\end{frame}
+
+% Indice
+%\begin{frame}{Indice}
+%    \begin{multicols}{2}
+%        \tableofcontents
+%    \end{multicols}    
+%\end{frame}
+
+\begin{frame}{Indice}
+    \begin{columns}[t]
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={1-2}]
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={3-4}]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% --- INIZIO PRESENTAZIONE --- ----------------------------------------------------------------------------------------------------
+
+\section{Struttura di lavoro}
+\input{chapter/sdl}
+
+\section{Python}
+\input{chapter/py}
+
+\section{Test sul dataset di QE}
+\input{chapter/test}
+
+\section{Simulazione}
+\input{chapter/sim}
+
+
+
+% Slide Rossa per Cambi di Sezione -----------------------------------------------------------------------------------------------
+\begin{emptyframe}
+    Domande??
+\end{emptyframe}
+
+\end{document}

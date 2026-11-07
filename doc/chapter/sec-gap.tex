@@ -23,11 +23,11 @@ Questo ci permette di modellizzare sia relazioni non note che relazioni compless
 
 Il processo ci permette di utilizzare la coppia di dati $(x, f(x))$ per generare una previsione del valore di $f$ in un punto che non appartiene al set di dati.
 
-Per fare questa previsione utilizziamo un kernel (indicato spesso con $K$), ovvero una funzione che ci permette di definire la somiglianza tra due punti di input, ad esempio $(x_1, x_2)$, questo ci permette di imporre che punti tra loro vicini diano risultati non dissimili.
+Per fare questa previsione utilizziamo un kernel (indicato spesso con $K$), ovvero una funzione che ci permette di definire la somiglianza tra due punti di input, esempio $(x_1, x_2)$, questo ci permette di imporre che punti tra loro vicini diano risultati non dissimili.
 Inoltre possiamo utilizzare i parametri del kernel per definire le interazioni tra i punti, infatti in base alla distribuzione dei dati potrebbe essere necessario far parlare tra loro punti lontani, come nel caso di periodicità, oppure limitare l'interazione solo ai prossimi vicini.
 
 
-Volendo dare alcuni dettagli aggiuntivi, quello che andiamo a fare è considerare l'insieme di tutte le funzioni $f$ che passando per l'insieme di punti $D$, questo rappresenta i dati osservati.
+Volendo dare alcuni dettagli aggiuntivi, quello che andiamo a fare è considerare l'insieme di tutte le funzioni $f$ che passando per l'insieme di punti $D$, il quale rappresenta i dati osservati.
 Si costruisce una distribuzione di probabilità associata a queste funzioni, questa è una distribuzione gaussiana multivariata.
 La funzione che cerchiamo è il valore di aspettazione di questa distribuzione e il kernel svolge il ruolo di matrice di covarianza.
 

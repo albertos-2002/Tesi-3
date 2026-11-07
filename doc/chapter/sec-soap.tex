@@ -7,7 +7,7 @@ Il punto fondamentale per comprendere la necessità di utilizzare una procedura 
 
 \subsubsection{Generazione della mappa di densità}
 
-Il primo step è quello di costruire la densità atomica associata a un determinato $Z$ tramite una funzione gaussiana. Questo ci permette di passare da una forma discreta a una continua, ottenibile applicando la seguente:
+Il primo step è quello di costruire la densità atomica associata a un determinato $Z$ tramite una funzione gaussiana. Questo ci permette di passare da una forma discreta a una continua, ottenibile applicando la seguente formula:
 
 %\begin{equation}
 %    \LARGE
@@ -55,7 +55,7 @@ Per quanto riguarda il valore di $r_{cut}$, esso controlla il significato che di
 \subsubsection{Espansione in funzioni di base}
 A questo punto ci poniamo di trovare un metodo che ci permetta di riassumere in modo compatto una funzione continua come quella rappresentata dalla mappa di densità. Per fare questo ci procuriamo delle funzioni di base, nel nostro caso radiali e angolari.
 
-L'espansione in serie per la mappa di densità è data da:
+L'espansione in serie per la mappa di densità è data dalla formula:
 
 \begin{equation}
     \rho_Z(\vec{r}) = \sum_{n=1}^{n_{max}} \sum_{l=0}^{l_{max}} \sum_{m=-l}^{l} c_Z(n,l,m) g(r \,;n) Y(\theta, \phi \,; l,m)

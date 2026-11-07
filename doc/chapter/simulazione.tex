@@ -3,7 +3,7 @@ In questo capitolo ci occupiamo di utilizzare il potenziale ottenuto precedentem
 
 \section{Simulazione NVE}
 
-Abbiamo provato ad effettuare una simulazione di tipo NVE, costruita nel seguente modo. Dai file di QE, per il set di test, abbiamo estratto la configurazione spaziale iniziale degli atomi.
+Abbiamo provato a effettuare una simulazione di tipo NVE, costruita nel seguente modo. Dai file di QE, per il set di test, abbiamo estratto la configurazione spaziale iniziale degli atomi.
 Questa struttura è stata utilizzata come punto di partenza per il calcolo di energie e forze: la sua evoluzione darà poi configurazioni diverse rispetto a quelle prodotte da QE.
 Seguendo la struttura descritta precedentemente è stata impostata la simulazione con i seguenti parametri: timestep pari a $4.8$ fs (come quello usato in QE) e un totale di $2'000$ step.
 Come detto, data la diversa configurazione, i risultati non possono essere confrontati direttamente con quelli prodotti da QE. 
@@ -90,7 +90,7 @@ I valori di energia e temperatura sono rappresentati nel grafico (\ref{fig:andam
 
 
 Considerando questo risultato (\autoref{fig:andamento_nve_energie_timestep}) la prima cosa che si vede è una diminuzione del range in cui i valori di temperatura e di energia variano.
-Ad ogni modo possiamo notare che entrambe mantengono la medesima forma vista in precedenza, possiamo quindi presumere che stiano comunque divergendo, ma ad un rate estremamente basso.
+A ogni modo possiamo notare che entrambe mantengono la medesima forma vista in precedenza, possiamo quindi presumere che stiano comunque divergendo, ma a un rate estremamente basso.
 Anche i valori delle forze sono contenuti.
 Considerando la tipologia di integratore numerico utilizzato in questa simulazione, questo risultato era prevedibile.
 

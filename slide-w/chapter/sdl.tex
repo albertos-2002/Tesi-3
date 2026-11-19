@@ -46,44 +46,41 @@
         % Colonna Sinistra: Testo
         \begin{column}{0.52\textwidth}
         
-        Espansione in funzioni di base
-        {\scriptsize
-        \begin{flalign}
-            \rho_Z(\vec{r}) = \sum_{n=1}^{n_{max}} \sum_{l=0}^{l_{max}} \sum_{m=-l}^{l} c_Z(n,l,m) g(r \,;n) Y(\theta, \phi \,; l,m) &&
-        \end{flalign}
-        \vspace{-15pt}
-        \begin{flalign}
-            c_Z(n,l,m) = \int_{\mathbb{R}^3} \mathrm{d}r\, \mathrm{d}\theta\, \mathrm{d}\phi \;\; g(r \,;n) Y(\theta, \phi \,; l,m) \rho_Z(\vec{r}) &&
-        \end{flalign}
-        }
+        	Espansione in funzioni di base
+        	{\scriptsize
+        	\begin{flalign}
+            	\rho_Z(\vec{r}) = \sum_{n=1}^{n_{max}} \sum_{l=0}^{l_{max}} \sum_{m=-l}^{l} c_Z(n,l,m) g(r \,;n) Y(\theta, \phi \,; l,m) &&
+        	\end{flalign}
+        	\vspace{-15pt}
+        	\begin{flalign}
+            	c_Z(n,l,m) = \int_{\mathbb{R}^3} \mathrm{d}r\, \mathrm{d}\theta\, \mathrm{d}\phi \;\; g(r \,;n) Y(\theta, \phi \,; l,m) \rho_Z(\vec{r}) &&
+        		\end{flalign}
+        	}
         
+        	Calcolo del power spectrum
+        	\vspace{-3pt}
+        	{\scriptsize
+        	\begin{flalign}
+            	p_{Z_1Z_2}(n,n',l) = \pi \sqrt{\frac{8}{2l+1}} \sum_{m=-l}^{l} \overline{c_{Z_1}}(n,l,m) c_{Z_2}(n',l,m) &&
+            	\label{eq:power-spectrum}
+        	\end{flalign}
+        	}
         
-        Calcolo del power spectrum
-        \vspace{-3pt}
-        {\scriptsize
-        \begin{flalign}
-            p_{Z_1Z_2}(n,n',l) = \pi \sqrt{\frac{8}{2l+1}} \sum_{m=-l}^{l} \overline{c_{Z_1}}(n,l,m) c_{Z_2}(n',l,m) &&
-            \label{eq:power-spectrum}
-        \end{flalign}
-        }
-        
-        
-        Risultato finale
-        \vspace{-3pt}
-        {\scriptsize
-        \begin{flalign}
-            \mathrm{dim} = (l_{max} + 1) \,\frac{1}{2}\, (S\cdot n_{max}) (S\cdot n_{max} +1) &&
-            \label{eq:formula-dimensione-semplificata}
-        \end{flalign}
-        }
+        	Risultato finale
+        	\vspace{-3pt}
+        	{\scriptsize
+        	\begin{flalign}
+            	\mathrm{dim} = (l_{max} + 1) \,\frac{1}{2}\, (S\cdot n_{max}) (S\cdot n_{max} +1) &&
+            	\label{eq:formula-dimensione-semplificata}
+        	\end{flalign}
+        	}
                 
         \end{column}
         % Colonna Destra: Due immagini incolonnate
         \begin{column}{0.44\textwidth}
-            
-            \centering
-            \vspace{-10pt}
-            \includegraphics[scale=0.45]{./invnobg/schema-riassunto-soap-n.png}
+            	\centering
+            	\vspace{-10pt}
+            	\includegraphics[scale=0.12]{./invnobg/schema-riassunto-soap-n.png}
    
         \end{column}
     \end{columns}
@@ -95,7 +92,7 @@
 
 \begin{frame}{GAP}
     \centering
-    \includegraphics[scale=1.1]{./invnobg/gap-schema-n.png} 
+    \includegraphics[scale=0.2]{./invnobg/gap-schema-n.png} 
 \end{frame}
 
 

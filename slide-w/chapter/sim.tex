@@ -33,36 +33,37 @@
 
 \begin{columns}[c]        
 	% Colonna Sinistra: Testo
-	\begin{column}{0.48\textwidth}
-
-		\centering
+	\begin{column}{0.33\textwidth}
 		
-		Distanza tra i primi vicini
+		Analizziamo i valori di distanza tra i primi vicini
 		
-		\vspace{5pt}
+		\vspace{10pt}
 		
-		Set di dati simulato con GAP
+		Set di dati simulato con GAP (alto) e set di dati di training (basso)
 		
-		\includegraphics[scale=0.18]{./invnobg/histo_distanze_nve_testdata.png}
+		\vspace{12pt}
+		
+		Si nota una differenza tra i due picchi per le posizioni e nella forma per la parte relativa alle forze
+		
+		
+	\end{column}
+		
+	\begin{column}{0.33\textwidth}
+		
+		\includegraphics[scale=0.20]{./invnobg/histo_distanze_nve_testdata.png}
 		\vspace{0.2em} % Spazio verticale tra le due immagini
-		\includegraphics[scale=0.18]{./invnobg/histo_distanze_qe_traindata.png}
-		
-		Set di dati di training
+		\includegraphics[scale=0.20]{./invnobg/histo_distanze_qe_traindata.png}
 		
 	\end{column}
 	% Colonna Destra: Due immagini incolonnate
-	\begin{column}{0.48\textwidth}
+	\begin{column}{0.33\textwidth}
 		
 		\centering
-		
-		\vspace{20pt}
-		
 		Relazione forza-distanza
 		
 		\includegraphics[scale=0.17]{./invnobg/andamento_forze_totali_distanza_nve_testdata.png}		
 		\vspace{0.2em} % Spazio verticale tra le due immagini		
 		\includegraphics[scale=0.17]{./invnobg/andamento_forze_totali_distanza_qe_traindata.png}
-		
 		
 	\end{column}
 \end{columns}
@@ -78,18 +79,23 @@
         % Colonna Sinistra: Testo
         \begin{column}{0.48\textwidth}
         
-        -----
+        Guardiamo direttamente ai risultati di forza e distanza e analizziamo successivamente le componenti di forza che ritroviamo.
+        
+        \vspace{0.6em}
+        
+        \centering
+        \includegraphics[scale=0.2]{./invnobg/confronto_forze_vs_distanza_minima_zbl.png}
         
         \end{column}
         % Colonna Destra: Due immagini incolonnate
         \begin{column}{0.48\textwidth}
         
             \centering
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=0.25]{./invnobg/histo_distanze_zbl.png}
             
-            \vspace{0.4cm} % Spazio verticale tra le due immagini
+            \vspace{0.2em} % Spazio verticale tra le due immagini
             
-            %\includegraphics[height=0.32\paperheight, keepaspectratio]{images/.png}
+            \includegraphics[scale=0.2]{./invnobg/andamento_forze_totali_distanza_zbl.png}
             
         \end{column}
     \end{columns}
@@ -145,6 +151,9 @@
 			Relazione forze-distanza		
 			
 		\end{column}
+		
+		Dove è stato eliminato il problema sulle distanze riscontrato per la simulazione NVE
+		
 	\end{columns}
 	
 \end{frame}

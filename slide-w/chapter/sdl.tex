@@ -90,25 +90,25 @@
 \subsection{Addestramento GAP} %----------------------------------------------------------------------------------------------------------------------------
 
 
-\begin{frame}{GAP}
+\begin{frame}{Addestramento (GAP)}
 	\begin{columns}[c]
-	\begin{column}{0.3\textwidth}
-		QE associa ad ogni configurazione un valore di energia
+	\begin{column}{0.33\textwidth}
+		QE associa ad ogni configurazione un valore di energia totale ($E_f$)
 		
 		Questi valori sono usati per addestrate il potenziale GAP
 		
-		Si usa il potenziale per determinare l'energia in una nuova configurazione supponendo che: 
+		Si usa poi il potenziale per determinare l'energia in una nuova configurazione supponendo che: 
 		
 		{%\scriptsize
 			\begin{equation}
-				E_{f} = \sum_{atomo} E_{f,atomo}^{(GAP)}
+				E_{f}^{GAP} = \sum_{i \in atomi} E_{f,i}^{(GAP)}
 			\end{equation}
 		} 
 		
 	\end{column}
-	\begin{column}{0.68\textwidth}
+	\begin{column}{0.65\textwidth}
     	\centering
-    	\includegraphics[scale=0.30]{./pdfpic/gap-schema.pdf} 
+    	\includegraphics[scale=0.27]{./pdfpic/gap-schema.pdf} 
 	\end{column}
 	\end{columns}
 \end{frame}
@@ -119,20 +119,60 @@
         % Colonna Sinistra: Testo
         \begin{column}{0.48\textwidth}
         
-        Usiamo le con
+        Consideriamo il dato di training $(x,E)$ e la predizione $(x^*,E^*)$, dove si assume che essi seguano una distribuzione gaussiana.
+        
+        \vspace{5pt}
+        La funzione di kernel (K) genera le correlazioni tra i dati osservati ($x$) e la predizione da generare in ($x^*$)
+        
+        \vspace{5pt}
+        Si usano i dati per condizionare la distribuzione di $E^*$
+        
+        \vspace{5pt}
+        Si estrae la miglior stima considerando i dati
         
         \end{column}
         % Colonna Destra: Due immagini incolonnate
         \begin{column}{0.48\textwidth}
-        
-            \centering
-            \includegraphics[scale=0.16]{./invnobg/curva-gaussiana.png}            
-            \vspace{5pt} % Spazio verticale tra le due immagini           
+        	
+            \centering         
             \includegraphics[scale=0.26]{./invnobg/bi-gaussiana_e.png}
             
         \end{column}
     \end{columns}
 \end{frame}
+
+
+\begin{frame}{Addestramento (Applicazione)}
+	\begin{columns}[c]
+		\begin{column}{0.48\textwidth}
+			
+			Nel contesto del training $x \rightarrow p_i$ l'ambiente SOAP ed $E \rightarrow E_i(p_i)$
+			
+			\vspace{5pt}
+			Decomposizione locale per l'energia:
+			
+			\begin{equation}
+				E_{f,i}^{(GAP)} = \sum_{m \in D} c_m K(p_i, q_m)
+			\end{equation}
+			
+			con $K(p_i, q_m)$ funzione di kernel e $c_m$ sono i pesi del modello.
+			
+			I dati di training sono usati come vincolo per determinare i pesi di addestramento.
+			
+		\end{column}
+		
+		\begin{column}{0.48\textwidth}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+
+
+
+
 
 
 \subsection{Simulazione} %-------------------------------------------------------------------------------------------------------------------
